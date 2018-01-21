@@ -1,0 +1,50 @@
+.ebtable .ctrl     { height: 30px;  margin: 5px 0 0 0;}
+.ebtable .ctrl div { margin: 4px 1px;}
+
+.ebtable .ctrl .ui-button                      { padding-top: 1px;  padding-bottom: 3px; height: 22px;}
+.ebtable .ctrl .ui-icon                        { padding: 0px;   margin: 0px; }
+.ebtable .ctrl .ui-selectmenu-button           { height: 15px;}
+.ebtable .ctrl .ui-selectmenu-button.ui-button { padding-top: 3px;  padding-bottom: 3px;  width: 50px;}
+
+.ebtable #ctrlInfo, .ebtable #ctrlAddInfo{  padding: 3px;  margin: 1px;}
+
+
+.ebtable #data, .ebtable table{ width: 100%;}
+.ebtable #data, .ebtable #head{ background-color:#eee;}
+
+.ebtable #data th{ 
+  background: linear-gradient(#c6c6b6, #e8e8d4);
+  padding: 4px 0px 4px 0px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 20px;
+}
+.ebtable #data th div .ui-icon ui-icon-blank{ transform: scale(1.0); margin: 0px; padding: 0px; width:11px; }
+.ebtable #data th div .ui-icon  ui-icon-arrow-1-s{ transform: scale(1.0); margin: 0px; padding: 0px; width:11px; }
+.ebtable #data th div .ui-icon  ui-icon-arrow-1-n{ transform: scale(1.0); margin: 0px; padding: 0px; width:11px; }
+.ebtable #data th div{ height: 16px;}
+.ebtable #data th input[type=text], .ebtable #data th select {  width: 95%;  box-sizing: border-box;}
+
+.ebtable #data td            { background: #e8e8d4;  padding: 2px 1px 2px 1px;}
+.ebtable #data td.group      { background-color: #c7c7da;}
+.ebtable #data td.groupheader{ background-color: #c3c3d0;}
+.ebtable #data .selectCol{ width: 20px;  margin: 0px;  padding: 2px 1px 2px 1px;}
+
+.ebtablefix, .ebtablefix th, .ebtablefix td{ 
+  table-layout: fixed;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* resize handle for table */
+.ebtable>div.ui-resizable-e { cursor: e-resize; width: 16px; right: -16px;  }
+
+/* resize handle for head of columns */
+
+/* resize handle for head of columns */
+.ebtable #data th .ui-resizable-e { cursor:col-resize; width:10px; height: 100%;}
+
+/* ConfigDlg */
+.ebtableSelectable { list-style-type: none; padding: 0px; width: 100%; }
+.ebtableSelectable li.visible  { margin: 3px 0 0 0;  padding: 3px; font-size: 10px; font-weight: bold; background-color:#c6c6b6; }
+.ebtableSelectable li.invisible{ margin: 3px 0 0 0;  padding: 3px; font-size: 10px; font-weight: bold; background-color:#f8f8ea; }

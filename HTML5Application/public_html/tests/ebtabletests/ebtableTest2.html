@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Beispiel 2</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/vendor/jQueryUI-1.12.0/jquery-ui.css">
+    <link rel="stylesheet" href="/css/ebtable.css">
+    <style>
+      * {font-family:Arial; color: black; font-size: 10px;}
+      body { width: 1000px; }
+    </style>
+
+    <script src="/vendor/underscore-1.8.3/underscore.js"></script>
+    <script src="/vendor/jQuery-1.11.3/jquery.js"></script>
+    <script src="/vendor/jQueryUI-1.12.0/jquery-ui.js"></script>
+    <script src="/js/ebtable/mx.js"></script>
+    <script src="/js/ebtable/ebtable.js"></script>
+    <script src="/data/ebtabletestsData.js"></script>
+    <script>
+      /* global basketTestdata */
+      'use strict';
+
+      var renderers = {
+        myrender: function (data, row) {
+          return data + ' -- ' + row[0];
+        }
+      };
+
+      var opts = {
+        columns: [
+          {name: "Paket", invisible: false},
+          {name: 'xx', invisible: false},
+          {name: "Datum"},
+          {name: "Name", render: renderers.myrender},
+          {name: "Fälligkeit"},
+          {name: "Auftragspaket"},
+          {name: "Frage des AG"},
+          {name: "Produkt"},
+          {name: "Bearbeiter"},
+          {name: "Eingang"},
+          {name: "DTA Nummern"}
+        ],
+        selectionCol: true,
+        colsResizable: true
+      };
+      var grid;
+      $().ready(function () {
+        grid = $('#grid').ebtable(opts, basketTestdata);
+      });
+    </script>
+  </head>
+  <body>
+    <div id="grid"></div>
+  </body>
+</html>

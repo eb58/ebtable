@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Beispiel</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/vendor/jQueryUI-1.12.0/jquery-ui.css">
+    <link rel="stylesheet" href="/css/ebtable.css">
+    <style>
+      * {font-family:Arial;color: black;font-size: 12px;      }
+      body { background:#FAFAF0; margin: 10px 10px 10px 10px; width: 400px; }
+      .ui-icon { transform: scale(1.2); margin: 1px; padding: 1px;}
+    </style>
+
+    <script src="/vendor/underscore-1.8.3/underscore.js"></script>
+    <script src="/vendor/jQuery-1.11.3/jquery.js"></script>
+    <script src="/vendor/jQueryUI-1.12.0/jquery-ui.js"></script>
+    <script src="/js/ebtable/ebtable.js"></script>
+    <script src="/js/ebtable/mx.js"></script>
+    <script>
+      'use strict';
+      var basketTestdata = [
+        ['Wolperdinger', '31.08.1915', 'Herder, Johann Gottfried', 5],
+        ['Yeti        ', '31.08.2016', 'Lichtenberg, Georg Christoph ', 31],
+        ['Esel        ', '05.08.2011', 'Liebig, Ellen,', 1],
+        ['Affe        ', '10.06.2013', 'Heine, Heinrich', 2],
+        ['Maus        ', '15.09.2014', 'Manne, Antonia', 4],
+        ['Hase        ', '15.09.2014', 'Liebig, Gustav', 8],
+        ['Hund        ', '31.08.2015', 'Mann, Heinrich Gustav Friedhelm Egon Friedrich August', 16],
+        ['Fliege      ', '31.08.2009', 'Mann, Thomas', 0],
+        ['Biene       ', '31.08.2001', 'Lessing, Gottfried', 7],
+        ['Hummel      ', '01.08.1759', 'Schiller, Friedrich', 0],
+        ['Wespe       ', '31.06.1900', 'Storm, Theodor', 0],
+        ['Karpfen     ', '31.08.2009', 'Mann, Thomas', 0],
+        ['Forelle     ', '31.08.2001', 'Lessing, Gottfried', 7],
+        ['Einhorn     ', '04.11.2017', 'Goethe, Johann Wolfgang', 63],
+        ['Einhorn     ', '04.11.2017', 'Göthe2, Johann Wolfgang', 63],
+        ['Einhorn     ', '04.11.2017', 'Gothe1, Johann Wolfgang', 63],
+        ['Einhorn     ', '04.11.2017', 'Gothe3, Johann Wolfgang', 63],
+        ['Einhorn     ', '04.11.2017', 'Gathe, Johann Wolfgang', 63],
+        ['Einhorn     ', '04.11.2017', 'Guthe, Johann Wolfgang', 63],
+        ['Lindwurm    ', '31.12.2018', 'Schiller, Friedrich', 255]
+      ];
+
+      //#######################################################################
+
+      var opts = {
+        debug: true,
+        bodyWidth: '700px',
+        flags: {
+          clearFilter: true,
+          colsResizable: true,
+        },
+        columns: [
+          {name: "Tierart", match: 'contains', sortorder: 'desc', valuelist: ['', 'Karpfen', 'Forelle']},
+          {name: "Datum", sortformat: 'date-de', width: '150px', css: 'text-align: center'},
+          {name: "Name"},
+          {name: "Flag", css: 'text-align: left'}
+        ],
+        sortcolname: 'Name',
+        selectionCol: true,
+        pageCur:0,
+        //lang:'en'
+      };
+      var grid;
+      $().ready(function () {
+        grid = $('#grid').ebtable(opts, basketTestdata);
+        $('#saveGridStatus').on('click', grid.saveSessionState)
+        $('#loadGridStatus').on('click', function () {
+          var mixopts = _.extend({}, opts, $.fn.ebtable.loadSessionState());
+          grid = $('#grid').ebtable(mixopts, basketTestdata).setFilterValues(mixopts.filters);
+        })
+      });
+    </script>
+  </head>
+  <body>
+    <div id="grid"></div>
+    <button id="saveGridStatus">SaveGridStatus</button>
+    <button id="loadGridStatus">LoadGridStatus</button>
+  </body>
+</html>

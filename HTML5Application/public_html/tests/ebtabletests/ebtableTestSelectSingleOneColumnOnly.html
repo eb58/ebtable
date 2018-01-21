@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Beispiel</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/vendor/jQueryUI-1.12.0/jquery-ui.css">
+    <link rel="stylesheet" href="/css/ebtable.css">
+    <style>
+      * { font-family:Arial; color: black; font-size: 12px; }
+      #xgrid .ebtable .ctrl { display: none}
+      #grid .ebtable thead { display: none}
+
+    </style>
+
+    <script src="/vendor/underscore-1.8.3/underscore.js"></script>
+    <script src="/vendor/jQuery-1.11.3/jquery.js"></script>
+    <script src="/vendor/jQueryUI-1.12.0/jquery-ui.js"></script>
+    <script src="/js/ebtable/mx.js"></script>
+    <script src="/js/ebtable/ebtable.js"></script>
+    <script>
+      'use strict';
+      var mdks = [
+        {mdkid: 1, mdkname: 'Berlin-Brandenburg'},
+        {mdkid: 2, mdkname: 'Hamburg'},
+        {mdkid: 3, mdkname: 'Bremen'},
+        {mdkid: 11, mdkname: 'Schleswig-Holstein'},
+        {mdkid: 12, mdkname: 'Niedersachsen'},
+        {mdkid: 13, mdkname: 'Westfalen-Lippe'},
+        {mdkid: 14, mdkname: 'Nordrhein'},
+        {mdkid: 15, mdkname: 'Hessen'},
+        {mdkid: 16, mdkname: 'Rheinland-Pfalz'},
+        {mdkid: 17, mdkname: 'Saarland'},
+        {mdkid: 18, mdkname: 'Baden-Württemberg'},
+        {mdkid: 19, mdkname: 'Bayern'},
+        {mdkid: 21, mdkname: 'Mecklenburg-Vorpommern'},
+        {mdkid: 23, mdkname: 'Sachsen-Anhalt'},
+        {mdkid: 24, mdkname: 'Thüringen'},
+        {mdkid: 25, mdkname: 'Sachsen'},
+        {mdkid: 50, mdkname: 'itso'},
+      ];
+
+      //#######################################################################
+
+      var opts = {
+        debug: true,
+        rowsPerPage: 100,
+        bodyWidth: '200px',
+        columns: [
+          {name: "mdkid", invisible: true},
+          {name: "Mdkname"},
+        ],
+        selectionCol: {singleSelection: true, selectOnRowClick: true},
+        flags: {filter: false, withsorting: false, ctrls: false},
+      };
+      var grid;
+      $().ready(function () {
+        grid = $('#grid').ebtable(opts, mdks.map(mdk => [mdk.mdkid, mdk.mdkname]));
+        grid.setSelectedRows(function(row){
+          return row[0] === 11
+        })
+      });
+    </script>
+  </head>
+  <body>
+    <div id="grid"></div>
+  </body>
+</html>
