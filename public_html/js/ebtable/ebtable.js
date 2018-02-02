@@ -16,7 +16,7 @@
     var dlgopts = {
       open: function () {
         $('ol#' + opts.gridid + 'selectable').sortable();
-        $('#' + opts.gridid + 'configDlg li').off().on('click', function (event) {
+        $('#' + opts.gridid + 'configDlg li').off('click').on('click', function (event) {
           $('#' + opts.gridid + 'configDlg [id="' + event.target.id + '"]').toggleClass('invisible').toggleClass('visible');
         });
       },
@@ -31,7 +31,7 @@
     };
     dlgopts.buttons[opts.cancelstring] = function () {
       $(this).dialog("destroy");
-    };
+    };    
 
     $(dlgtempl).dialog(dlgopts).parent().find('.ui-widget-header').hide();
   };
@@ -54,7 +54,6 @@
           }, [])
         };
         var stateWidth = {
-          bodyWidth: $(selgridid + '.ebtable').width(),
           colwidths: util.getColWidths()
         };
         var state = _.extend({}, stateGeneral, myopts.flags.colsResizable ? stateWidth : {});
@@ -67,8 +66,10 @@
         return localStorage[localStorageKey] ? JSON.parse(localStorage[localStorageKey]) : null;
       },
       loadState: function loadState(state) {
-        if (!state)
+        if (!state){
+          util.setDefaultWidthForColumns();
           return;
+        }
         myopts.rowsPerPage = state.rowsPerPage;
         myopts.colorder = [];
         state.colorderByName.forEach(function (colname) {
@@ -193,6 +194,19 @@
         }).filter(function (o) {
           return o.name;
         });
+      },
+      setDefaultWidthForColumns: function () {
+        if( myopts.flags.colsResizable ) {
+          $(selgridid + '#data table').removeClass('ebtablefix');
+          $(selgridid + '#data table th').removeAttr('style');
+          var colWidths = util.getColWidths();
+          colWidths && colWidths.forEach(function (o) {
+            var id = util.colIdFromName(o.name);
+            $(selgridid + 'table th#' + id).width(o.width);
+          });
+          $(selgridid + '#data table').addClass('ebtablefix');
+          stateUtil.saveState();
+        }
       }
     };
 
@@ -202,7 +216,7 @@
       selectRow: function selectRow(rowNr, row, b) { // b = true/false ~ on/off
         if (!row || row.disabled)
           return;
-
+        
         myopts.selectionCol.onStartSelection && myopts.selectionCol.onStartSelection(rowNr, row, origData, b);
 
         row.selected = b;
@@ -229,7 +243,7 @@
         util.log('selectRows', event);
         if (!myopts.selectionCol)
           return;
-
+        
         var checked = $(event.target).prop('checked');
         if (event.target.id === 'checkAll') {
           if (checked) {
@@ -408,13 +422,14 @@
         pagelenctrl: true,
         config: true,
         withsorting: true,
-        clearFilter: false,
+        clearFilterButton: false,
+        arrangeColumnsButton: true,
         colsResizable: false,
         jqueryuiTooltips: true,
         ctrls: true,
       },
-      bodyHeight: Math.max(200, $(window).height() - 100),
-      bodyWidth: '',
+      bodyHeight: Math.max(200, $(window).height() - 180),
+      bodyWidth: '', //Math.max(700, $(window).width() - 40),
       rowsPerPageSelectValues: [10, 25, 50, 100],
       rowsPerPage: 10,
       pageCur: 0,
@@ -437,7 +452,7 @@
       groupdefs: {}, // {grouplabel: 0, groupcnt: 1, groupid: 2, groupsortstring: 3, groupname: 4, grouphead: 'GA', groupelem: 'GB'},
       openGroups: [],
       hasMoreResults: hasMoreResults,
-      clickOnRowHandler: null, // function (rowData, row) {}, 
+      clickOnRowHandler: function (rowData, row) {}, // just for docu
       lang: 'de',
       afterRedraw: null,
       predefinedFilters: [],
@@ -460,7 +475,7 @@
     var tblData = origData;
     var pageCurMax = Math.floor(Math.max(0, origData.length - 1) / myopts.rowsPerPage);
     var pageCur = Math.min(Math.max(0, myopts.pageCur), pageCurMax);
-
+    
 
     util.checkConfig(myopts, origData);
 
@@ -493,8 +508,9 @@
         <div class='ebtable'>\n\
           <div class='ctrl' <%=ctrlStyle%>>\n\
             <div id='ctrlLength' style='float: left;'><%= selectLen  %></div>\n\
-            <div id='ctrlConfig' style='float: left;'><%= configBtn  %></div>\n\
-            <div id='ctrlClearFilter' style='float: left;'><%= clearFilter  %></div>\n\
+            <div id='ctrlConfig'         style='float: left;'><%= configButton %></div>\n\
+            <div id='ctrlClearFilter'    style='float: left;'><%= clearFilterButton %></div>\n\
+            <div id='ctrlArrangeColumns' style='float: left;'><%= arrangeColumnsButton %></div>\n\
             <div id='ctrlPage1'  style='float: right;'><%= browseBtns %></div>\n\
           </div>\n\
           <div id='data' style='overflow-y:auto;overflow-x:auto; max-height:<%= bodyHeight %>px; width:100%'>\n\
@@ -513,8 +529,9 @@
         head: tableHead(),
         data: '', //tableData(pageCur),
         selectLen: selectLenCtrl(),
-        configBtn: configBtn(),
-        clearFilter: clearFilterBtn(),
+        configButton: configButton(),
+        clearFilterButton: clearFilterButton(),
+        arrangeColumnsButton: arrangeColumnsButton(),
         browseBtns: pageBrowseCtrl(),
         info: '', //ctrlInfo(),
         addInfo: '', //ctrlAddInfo(),
@@ -527,14 +544,18 @@
       redraw(pageCur);
     }
 
-    function configBtn() {
-      return myopts.flags.config ? '<button id="configBtn">' + util.translate('Anpassen') + ' <span class="ui-icon ui-icon-shuffle"></button>' : '';
+    function configButton() {
+      return myopts.flags.config ? '<button id="configButton">' + util.translate('Spalten verwalten') + ' <span class="ui-icon ui-icon-shuffle"></button>' : '';
     }
 
-    function clearFilterBtn() {
-      return myopts.flags.filter && myopts.flags.clearFilter ? '<button id="clearFilterBtn"><span class="ui-icon ui-icon-minus" title="' + util.translate('Alle Filter entfernen') + '"></button>' : '';
+    function clearFilterButton() {
+      return myopts.flags.filter && myopts.flags.clearFilterButton ? '<button id="clearFilterButton"><span class="ui-icon ui-icon-minus" title="' + util.translate('Alle Filter entfernen') + '"></button>' : '';
     }
-
+    
+    function arrangeColumnsButton() {
+      return myopts.flags.arrangeColumnsButton ? '<button id="arrangeColumnsButton"><span class="ui-icon ui-icon-arrow-2-e-w" title="' + util.translate('Spaltenbreite automatisch abpassen') + '"></button>' : '';
+    }
+    
     function tableHead() {
       var res = myopts.selectionCol ? '<th class="selectCol"><input id="checkAll" type="checkbox"></th>' : '';
       for (var c = 0; c < myopts.columns.length; c++) {
@@ -651,11 +672,11 @@
     function ctrlAddInfo() {
       return (myopts.addInfo && myopts.addInfo(myopts)) || '';
     }
-
+    
     function redrawAddInfo() {
       var addInfo = ctrlAddInfo();
       $(selgridid + '#ctrlAddInfo').toggle(!!addInfo).html(addInfo);
-    }
+    } 
 
     function reloading(event) { // reloading on <CR> in filter fields
       if (event.which === 13 && myopts.reloadData) {
@@ -730,7 +751,7 @@
           myopts.saveState && myopts.saveState();
         }
       });
-      $(selgridid + '#configBtn').button().off().on('click', function () {
+      $(selgridid + '#configButton').button().off().on('click', function () {
         var listOfColumnNames = myopts.colorder.reduce(function (acc, idx) {
           var t = _.template('<li id="<%=name%>" class="ui-widget-content <%=cls%>"><%=name%></li>');
           var coldef = myopts.columns[idx];
@@ -740,7 +761,7 @@
           listOfColumnNames: listOfColumnNames,
           gridid: gridid,
           cancelstring: util.translate('Abbrechen'),
-          anchor: '#' + gridid + ' #configBtn',
+          anchor: '#' + gridid + ' #configButton',
           callBack: function () {
             $('#' + gridid + 'configDlg li.visible').each(function (idx, o) {
               myopts.columns[util.colIdxFromName($(o).prop('id'))].invisible = false;
@@ -780,7 +801,7 @@
         pageCur = pageCurMax;
         redraw(pageCur);
       });
-      $(selgridid + '#clearFilterBtn').button().off().on('click', function () {
+      $(selgridid + '#clearFilterButton').button().off().on('click', function () {
         $(selgridid + 'thead input[type=text]').val('');
         myopts.reloadData && myopts.reloadData();
         filteringFcts.filtering();
@@ -790,19 +811,8 @@
         myopts.clickOnRowHandler && myopts.clickOnRowHandler(rowData, $(this));
       });
       $(selgridid + '#data input[type=checkbox]', selgridid + '#data input[type=radio]').off().on('change', selectionFcts.selectRows);
-      $(selgridid + '.ctrl').off().on('dblclick', function (evt) {
-        if ($(selgridid + '#data table.ebtablefix').length) {
-          $(selgridid + '#data table').removeClass('ebtablefix');
-          $(selgridid + '#data table th').removeAttr('style');
-          var colWidths = util.getColWidths();
-          colWidths && colWidths.forEach(function (o) {
-            var id = util.colIdFromName(o.name);
-            $(selgridid + 'table th#' + id).width(o.width);
-          });
-          $(selgridid + '#data table').addClass('ebtablefix');
-          stateUtil.saveState();
-        }
-      });
+      //$(selgridid + '.ctrl').off().on('dblclick', util.setDefaultWidthForColumns);
+      $(selgridid + '#arrangeColumnsButton').button().off().on('click',util.setDefaultWidthForColumns) ;
 
       initHeaderActions();
     }
@@ -818,6 +828,7 @@
       unselect: selectionFcts.unselect,
       saveSessionState: sessionStateUtil.saveSessionState,
       redrawAddInfo: redrawAddInfo,
+
       toggleGroupIsOpen: function (groupid) {
         origData.groupsdata[groupid].isOpen = !origData.groupsdata[groupid].isOpen;
         filteringFcts.filterData();
@@ -837,13 +848,15 @@
         return pageCur;
       },
       getData: function () {
-        tblData.groupsdata = origData.groupsdata;
-        return tblData;
+        return origData;
       },
       setData: function (data) {
         origData = mx(data, myopts.groupdefs);
         tblData = origData;
         pageCurMax = Math.floor(Math.max(0, origData.length - 1) / myopts.rowsPerPage);
+        pageCur = Math.min(pageCur, pageCurMax);
+        filteringFcts.filterData();
+        redraw(pageCur);
       }
     });
 
@@ -926,10 +939,10 @@
     'en': {
       '(<%=len%> Eintr\u00e4ge insgesamt)': '(<%=len%> entries)',
       '<%=start%> bis <%=end%> von <%=count%> Zeilen <%= filtered %>': '<%=start%> to <%=end%> of <%=count%> shown entries <%= filtered %>',
-      'Anpassen': 'Configure',
+      'Spalten verwalten': 'Configure',
       'Alle Filter entfernen': 'Remove all filters',
       'Abbrechen': 'Cancel'
-    }
+    },
   };
 
   // ##########  sessionState  ############ 

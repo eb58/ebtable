@@ -14,7 +14,7 @@
 
 .ebtable #data th{ 
   background: linear-gradient(#c6c6b6, #e8e8d4);
-  padding: 4px 0px 4px 0px;
+  padding: 6px 0px 6px 0px;
   overflow: hidden;
   text-overflow: ellipsis;
   min-width: 20px;
@@ -37,9 +37,7 @@
 }
 
 /* resize handle for table */
-.ebtable>div.ui-resizable-e { cursor: e-resize; width: 16px; right: -16px;  }
-
-/* resize handle for head of columns */
+.ebtable>div.ui-resizable-e { cursor: e-resize; width: 10px; }
 
 /* resize handle for head of columns */
 .ebtable #data th .ui-resizable-e { cursor:col-resize; width:10px; height: 100%;}
