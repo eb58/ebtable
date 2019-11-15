@@ -99,7 +99,7 @@ var result2 = {
       null,
       "Klinikum der Universität München",
       "BZ 1",
-      "Mario Fehrenbach"
+      "Mario Mustermann"
     ],
     [
       50000007272,
@@ -145,7 +145,7 @@ var result2 = {
       2,
       "Test Storno 01",
       "08",
-      "Mario Fehrenbach",
+      "Mario Mustermann",
       "Stornierung von der Krankenkasse zurückgezogen",
       "Begehung in Planung",
       "JG-BGL 20160831 20160801154429",
@@ -199,7 +199,7 @@ var result2 = {
       2,
       "Test Storno 01",
       "08",
-      "Mario Fehrenbach",
+      "Mario Mustermann",
       "Sonstiges",
       "Zur Disposition",
       "",
