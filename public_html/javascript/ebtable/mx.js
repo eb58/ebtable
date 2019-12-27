@@ -5,15 +5,16 @@ const mx = (m, groupdef) => {  //groupdef see below
   const isArray = o => Array.isArray(o);
   const isFunction = o => typeof o === 'function';
   const isString = o => typeof o === 'string';
-
+  const cmp = (x,y) => (x < y) ? -1 : ((x > y) ? 1 : 0);
+  
   const basicapi = {
     zero: () => m.fill(0),
     row: n => m[n],
     rows: p => m.filter((r, idx) => isFunction(p) ? p(m[r]) : p.indexOf(idx) >= 0), // p = predicate-function or array [1,4,5]
     withoutRows: p => m.filter((r, idx) => isFunction(p) ? !p(r) : p.indexOf(idx) < 0), // p = predicate-function or array [1,4,5]
     col: n => range(m.length).map(r => m[r][n]),
-    cols: arr => arr.map(c => basicapi.col(c)),
-    withoutCols: arr => basicapi.cols(ol.range((m[0].length).filter(c => !arr.includes(c)))),
+    cols: arr => m.map(row => row.filter((x, idx) => arr.includes(idx))),
+    withoutCols: arr => m.map(row => row.filter((x, idx) => !arr.includes(idx)))
   };
 //####################################  filtering #######################
   const filtering = (() => {
@@ -28,7 +29,7 @@ const mx = (m, groupdef) => {  //groupdef see below
     };
   })();
 //####################################  grouping #######################
-  const grouping = ( () =>  {
+  const grouping = (() => {
     // // groupdefs  ~ {grouplabel: 0, groupcnt: 1, groupid: 2, groupsortstring: 3, groupname: 4, grouphead: 'GA', groupelem: 'GB'}
     const fcts = {
       normalizeGroupId: id => id <= 0 ? 0 : id,
@@ -72,25 +73,24 @@ const mx = (m, groupdef) => {  //groupdef see below
     };
   })();
   //####################################  sorting #######################
-  const sorting = (() => {
-    const fcts = {
+  sorting = (function () {
+    var fcts = {
       toLower: o => isString(o) ? o.toLowerCase() : o,
       isAsc: cdef => !cdef.sortorder || cdef.sortorder.indexOf('desc') < 0,
       prepareItem: (row, col, fmt, groups, sortorder) => fcts.toLower(fmt ? fmt(row[col] || '', row, groups, sortorder) : row[col] || ''),
-      rowCmpCols: (coldefs, groups) => {
-        coldefs = coldefs.length ? coldefs : [coldefs]; // [ {col:1,sortorder:asc,sortformat:fmtfct1},{col:3, sortorder:desc, sortformat:fmtfct2},... ]  
+      rowCmpCols: function rowCmpCols(coldefs, groups) {
+        coldefs = isArray(coldefs) ? coldefs : [coldefs]; // [ {col:1,sortorder:asc,sortformat:fmtfct1},{col:3, sortorder:desc, sortformat:fmtfct2},... ]  
         return (r1, r2) => {
-          for (var i = 0; i < coldefs.length; i++) {
+          for (let i = 0; i < coldefs.length; i++) {
             const cdef = coldefs[i];
             const fmt = cdef.sortformat ? $.fn.ebtable.sortformats[cdef.sortformat] : undefined;
             const x = fcts.prepareItem(r1, cdef.col, fmt, groups, cdef.sortorder);
             const y = fcts.prepareItem(r2, cdef.col, fmt, groups, cdef.sortorder);
-            const ret = isIstring(x) && isString(y)
-                    ? x.localeCompare(y)
-                    : ((x < y) ? -1 : ((x > y) ? 1 : 0));
-          }
-          if (ret !== 0) {
-            return fcts.isAsc(cdef) ? ret : -ret;
+            const ret = (isString(x) && isString(y)) ? x.localeCompare(y) : cmp(x,y);
+            if (ret !== 0) {
+              const bAsc = !cdef.sortorder || cdef.sortorder.indexOf('desc') < 0;
+              return bAsc ? ret : -ret;
+            }
           }
         }
         return 0;
@@ -101,7 +101,7 @@ const mx = (m, groupdef) => {  //groupdef see below
     };
   })();
   //####################################  pageing #######################
-  const pageing = ( () => {
+  const pageing = (() => {
     const [page, pageSize] = [0, 10];
     const pageMax = Math.floor((m.length - 1) / pageSize);
     const api = {

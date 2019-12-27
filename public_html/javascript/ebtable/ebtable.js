@@ -31,7 +31,7 @@
     };
     dlgopts.buttons[opts.cancelstring] = function () {
       $(this).dialog("destroy");
-    };    
+    };
 
     $(dlgtempl).dialog(dlgopts).parent().find('.ui-widget-header').hide();
   };
@@ -45,7 +45,7 @@
         const stateGeneral = {
           rowsPerPage: myopts.rowsPerPage,
           colorderByName: myopts.colorder.map(function (idx) {
-            return myopts.columns[idx].name;
+            return myopts.columns[idx] ? myopts.columns[idx].name : null;
           }),
           invisibleColnames: myopts.columns.reduce(function (acc, o) {
             if (o.invisible && !o.technical)
@@ -62,7 +62,7 @@
       saveState: () => localStorage[localStorageKey] = stateUtil.getStateAsJSON(),
       getState: () => localStorage[localStorageKey] ? JSON.parse(localStorage[localStorageKey]) : null,
       loadState: state => {
-        if (!state){
+        if (!state) {
           util.setDefaultWidthForColumns();
           return;
         }
@@ -192,7 +192,7 @@
         });
       },
       setDefaultWidthForColumns: function () {
-        if( myopts.flags.colsResizable ) {
+        if (myopts.flags.colsResizable) {
           $(selgridid + '#data table').removeClass('ebtablefix');
           $(selgridid + '#data table th').removeAttr('style');
           const colWidths = util.getColWidths();
@@ -212,7 +212,7 @@
       selectRow: function selectRow(rowNr, row, b) { // b = true/false ~ on/off
         if (!row || row.disabled)
           return;
-        
+
         myopts.selectionCol.onStartSelection && myopts.selectionCol.onStartSelection(rowNr, row, origData, b);
 
         row.selected = b;
@@ -232,6 +232,11 @@
           util.log('Row ' + (b ? 'selected!' : 'unselected!'), rowNr);
           $(selgridid + '#check' + rowNr).prop('checked', b);
         }
+        if (b && myopts.selectionCol && myopts.selectionCol.destCol
+                && $(selgridid + '#destRow' + rowNr).prop('checked') && typeof (destId) != 'undefined') {
+          $(selgridid + '#destRow' + rowNr).prop('checked', false);
+          destId = null;
+        }
         myopts.selectionCol && myopts.selectionCol.onSelection && myopts.selectionCol.onSelection(rowNr, row, origData, b);
         $(selgridid + ' #ctrlInfo').html(ctrlInfo());
       },
@@ -239,7 +244,7 @@
         util.log('selectRows', event);
         if (!myopts.selectionCol)
           return;
-        
+
         const checked = $(event.target).prop('checked');
         if (event.target.id === 'checkAll') {
           if (checked) {
@@ -247,6 +252,8 @@
             tblData.forEach(function (row, rowNr) {
               selectionFcts.selectRow(rowNr, tblData[rowNr], checked);
             });
+            if (typeof (destId) != 'undefined')
+              destId = null;
           } else {
             selectionFcts.deselectAllRows();
           }
@@ -261,6 +268,15 @@
           selectionFcts.selectRow(rowNr, tblData[rowNr], checked);
           $(selgridid + '#checkAll').prop('checked', false);
         }
+      },
+      selectDestRow: function selectDestRow(event) { // select row
+        if (!myopts.selectionCol || !myopts.selectionCol.destCol)
+          return;
+        var rowNr = event.target.id.replace('destRow', '');
+        var checked = $(event.target).prop('checked');
+        myopts.selectionCol.destCol(rowNr, tblData[rowNr], checked);
+        selectionFcts.selectRow(rowNr, tblData[rowNr], false);
+        $(selgridid + '#checkAll').prop('checked', false);
       },
       deselectAllRows: function deselectAllRows() {
         if (!myopts.selectionCol)
@@ -425,22 +441,24 @@
         ctrls: true,
       },
       bodyHeight: Math.max(200, $(window).height() - 180),
-      bodyWidth: '', //Math.max(700, $(window).width() - 40),
-      rowsPerPageSelectValues: [10, 25, 50, 100],
-      rowsPerPage: 10,
+      bodyWidth: '', // Math.max(700, $(window).width() - 40),
+      rowsPerPageSelectValues: [15, 25, 50, 100],
+      rowsPerPage: 15,
       pageCur: 0,
       colorder: _.range(opts.columns.length), // [0,1,2,... ]
       selectionCol: false, // or true or  
       // { 
       //   singleSelection: true,                                 // default: false
+      //   selectAll: false,                                      // default: true
+      //   destCol: true (call selectDestRow()),                  // default: false - keine Zielspalte bei Admin Stammdaten-Dlgs
       //   selectOnRowClick: true,                                // default: false
       //   render : function(origData, row, checked){},           // default: null
       //   onStartSelection: function(rowNr, row, origData, b){}, // default: null
       //   onSelection: function(rowNr, row, origData, b){},      // default: null
       //   onSelectAll: function(){}                              // default: null
-      //   onSelectAll: function(){}                              // default: null
+      //   onUnSelectAll: function(){}                            // default: null
       // }
-      
+
       saveState: stateUtil.saveState,
       loadState: stateUtil.loadState,
       getState: stateUtil.getState,
@@ -458,6 +476,13 @@
       opts.flags = _.extend(defopts.flags, opts.flags);
       if (opts.flags.colsResizable)
         opts.saveState = defopts.saveState;
+
+      if (opts.selectionCol === true) {
+        opts.selectionCol = {selectAll: true}
+      }
+      if (opts.selectionCol && opts.selectionCol.selectAll === undefined) {
+        opts.selectionCol.selectAll = true;
+      }
       opts.saveState = typeof opts.saveState === 'boolean' ? stateUtil.saveState : opts.saveState;
     }
 
@@ -468,10 +493,10 @@
     const myopts = $.extend({}, defopts, opts);
 
     const origData = mx(data, myopts.groupdefs);
-    const tblData = origData;
-    const pageCurMax = Math.floor(Math.max(0, origData.length - 1) / myopts.rowsPerPage);
-    const pageCur = Math.min(Math.max(0, myopts.pageCur), pageCurMax);
-    
+    let tblData = origData;
+    let pageCurMax = Math.floor(Math.max(0, origData.length - 1) / myopts.rowsPerPage);
+    let pageCur = Math.min(Math.max(0, myopts.pageCur), pageCurMax);
+
 
     util.checkConfig(myopts, origData);
 
@@ -547,19 +572,29 @@
     function clearFilterButton() {
       return myopts.flags.filter && myopts.flags.clearFilterButton ? '<button id="clearFilterButton"><span class="ui-icon ui-icon-minus" title="' + util.translate('Alle Filter entfernen') + '"></button>' : '';
     }
-    
+
     function arrangeColumnsButton() {
-      return myopts.flags.arrangeColumnsButton ? '<button id="arrangeColumnsButton"><span class="ui-icon ui-icon-arrow-2-e-w" title="' + util.translate('Spaltenbreite automatisch abpassen') + '"></button>' : '';
+      return myopts.flags.arrangeColumnsButton ? '<button id="arrangeColumnsButton"><span class="ui-icon ui-icon-arrow-2-e-w" title="' + util.translate('Spaltenbreite automatisch anpassen') + '"></button>' : '';
     }
-    
+
     function tableHead() {
-      const res = myopts.selectionCol ? '<th class="selectCol"><input id="checkAll" type="checkbox"></th>' : '';
+      let res = '';
+      if (myopts.selectionCol) {
+        res += '<th class="selectCol">';
+        res += (myopts.selectionCol.selectAll ? '<input id="checkAll" type="checkbox">' : '') + '</th>';
+      }
+      res += myopts.selectionCol && myopts.selectionCol.destCol ? '<th class="selectCol"></th>' : '';
       for (var c = 0; c < myopts.columns.length; c++) {
-        const coldef = myopts.columns[myopts.colorder[c]];
+        var coldef = myopts.columns[myopts.colorder[c]];
+        if (!coldef) {
+          console.log('no coldef found: colorder idx=' + c + '; columns idx=' + myopts.colorder[c]);
+          continue;
+        }
+
         if (!coldef.invisible) {
-          const t_inputfld = '<input type="text" id="<%=colid%>" value="<%=filter%> "title="<%=tooltip%>"/>';
-          const t_selectfld = '<select id="<%=colid%>" value="<%=filter%>"><%=opts%></select>';
-          const opts = (coldef.valuelist || []).reduce(function (acc, o) {
+          var t_inputfld = '<input type="text" id="<%=colid%>" value="<%=filter%> "title="<%=tooltip%>"/>';
+          var t_selectfld = '<select id="<%=colid%>" value="<%=filter%>"><%=opts%></select>';
+          var opts = (coldef.valuelist || []).reduce(function (acc, o) {
             return acc + '<option>' + o + '</option>\n';
           }, '');
           const t = coldef.valuelist ? t_selectfld : t_inputfld;
@@ -582,7 +617,7 @@
             fld: fld,
             thstyle: thstyle,
             tooltip: coldef.tooltip,
-            filtersvisible: (myopts.flags.filter ? '' : ' style="display:none"'),
+            filtersvisible: (myopts.flags.filter && !coldef.noFilter) ? '' : ' style="display:none"',
           });
         }
       }
@@ -604,11 +639,13 @@
         if (gc && row.isGroupElement && !origData.groupsdata[tblData[r][gc.groupid]].isOpen)
           continue;
 
-        const cls = row.isGroupElement ? ' class="group"' : '';
-        cls = row.isGroupHeader ? ' class="groupheader"' : cls;
-        res += '<tr>';
         const checked = !!tblData[r].selected ? ' checked="checked" ' : '';
         const disabled = !!tblData[r].disabled ? ' disabled="disabled" ' : '';
+
+        var cls = row.isGroupElement ? ' class="group"' : '';
+        cls = row.isGroupHeader ? ' class="groupheader"' : cls;
+        cls = disabled ? ' class="disabled"' : cls;
+        res += '<tr>';
 
         if (myopts.selectionCol) {
           if (myopts.selectionCol.render) {
@@ -624,7 +661,7 @@
         const colorder = myopts.colorder;
         for (var c = 0; c < myopts.columns.length; c++) {
           const coldef = myopts.columns[colorder[c]];
-          if (!coldef.invisible) {
+          if (coldef && !coldef.invisible) {
             const xx = tblData[r][colorder[c]];
             const v = _.isNumber(xx) ? xx : (xx || '');
             const val = coldef.render ? coldef.render(v, row, r, origData) : v;
@@ -668,11 +705,11 @@
     function ctrlAddInfo() {
       return (myopts.addInfo && myopts.addInfo(myopts)) || '';
     }
-    
+
     function redrawAddInfo() {
       const addInfo = ctrlAddInfo();
       $(selgridid + '#ctrlAddInfo').toggle(!!addInfo).html(addInfo);
-    } 
+    }
 
     function reloading(event) { // reloading on <CR> in filter fields
       if (event.which === 13 && myopts.reloadData) {
@@ -702,6 +739,7 @@
       myopts.selectionCol && myopts.selectionCol.selectOnRowClick && $(selgridid + '#data tr td:not(:first-child)').off().on('click', function (evt) {
         $(event.target).parent().find('input').trigger('click');
       });
+      myopts.selectionCol && myopts.selectionCol.destCol && $(selgridid + '#data .destCol').off().on('change', selectionFcts.selectDestRow);
       myopts.selectionCol && myopts.selectionCol.singleSelection && $(selgridid + '#checkAll').hide();
       myopts.afterRedraw && myopts.afterRedraw($(gridid));
     }
@@ -713,7 +751,7 @@
 
     function initHeaderActions() {
       $(selgridid + 'thead th').off().on('click', sortingFcts.sorting);
-      $(selgridid + 'thead input[type=text]').off().on('keypress', reloading).on('keyup', filteringFcts.filtering).on('click', ignoreSorting);
+      $(selgridid + 'thead input[type=text]').off().on('keypress', reloading).on('keyup', filteringFcts.filtering).on('input', filteringFcts.filtering).on('click', ignoreSorting);
       $(selgridid + 'thead select').off().on('change', filteringFcts.filtering).on('click', ignoreSorting);
       if (myopts.flags.colsResizable) {
         $(selgridid + '.ebtable').resizable({
@@ -773,10 +811,24 @@
               return col.technical || col.mandatory ? idx : util.colIdxFromName(colnames.shift());
             });
             myopts.saveState && myopts.saveState();
-            myopts.bodyWidth = Math.min(myopts.bodyWidth || $(window).width() - 20, $(window).width() - 20);
-            //const filters = self.getFilterValues();
+            if (myopts.onSaveColConfig) {
+              const visibleCols = [];
+              myopts.columns.map(function (o) {
+                if (!o.mandatory && !o.invisible)
+                  visibleCols.push(o.dbcol);
+              });
+              const config = {};
+              config['visibleCols'] = visibleCols;
+              config['colorder'] = myopts.colorder.join();
+              myopts.onSaveColConfig(JSON.stringify(config));
+            }
+            if (myopts.bodyWidth == undefined || myopts.bodyWidth == '')
+              myopts.bodyWidth = $(window).width() - 20;
+            else
+              myopts.bodyWidth = Math.min(myopts.bodyWidth, $(window).width() - 20);
+
             redraw(pageCur, true);
-            //self.setFilterValues(filters);
+            util.setDefaultWidthForColumns();
           }
         };
         dlgConfig(dlgopts);
@@ -807,8 +859,7 @@
         myopts.clickOnRowHandler && myopts.clickOnRowHandler(rowData, $(this));
       });
       $(selgridid + '#data input[type=checkbox]', selgridid + '#data input[type=radio]').off().on('change', selectionFcts.selectRows);
-      //$(selgridid + '.ctrl').off().on('dblclick', util.setDefaultWidthForColumns);
-      $(selgridid + '#arrangeColumnsButton').button().off().on('click',util.setDefaultWidthForColumns) ;
+      $(selgridid + '#arrangeColumnsButton').button().off().on('click', util.setDefaultWidthForColumns);
 
       initHeaderActions();
     }
@@ -875,7 +926,7 @@
   // ##########  sortformats ############  
 
   $.fn.ebtable.sortformats = {
-    'date-de':  a => { // '01.01.2013' -->   '20130101' 
+    'date-de': a => { // '01.01.2013' -->   '20130101' 
       const d = a.match(/^(\d{2})\.(\d{2})\.(\d{4})$/);
       return d ? (d[3] + d[2] + d[1]) : '';
     },
@@ -883,11 +934,11 @@
       const d = a.match(/^(\d{2})\.(\d{2})\.(\d{4}) (\d{2}):(\d{2})$/);
       return d ? (d[3] + d[2] + d[1] + d[4] + d[5]) : '';
     },
-    'datetime-sec-de':  a => { // '01.01.2013 12:36:59'  -->  '20130101123659' 
+    'datetime-sec-de': a => { // '01.01.2013 12:36:59'  -->  '20130101123659' 
       const d = a.match(/^(\d{2})\.(\d{2})\.(\d{4}) (\d{2}):(\d{2}):(\d{2})$/);
       return d ? (d[3] + d[2] + d[1] + d[4] + d[5] + d[6]) : '';
     },
-    'scientific': a =>  parseFloat(a),  // '1e+3'  -->  '1000' 
+    'scientific': a => parseFloat(a), // '1e+3'  -->  '1000' 
   };
 
   // ##########  matcher ############ 
@@ -907,7 +958,7 @@
     'contains': (cellData, searchTxt) => cellData.toLowerCase().indexOf(searchTxt.toLowerCase()) >= 0,
     'starts-with': (cellData, searchTxt) => cellData.toLowerCase().indexOf(searchTxt.toLowerCase()) === 0,
     'matches': (cellData, searchTxt) => cellData.match(new RegExp('.*' + searchTxt, 'i')),
-    'starts-with-matches': (cellData, searchTxt)=> cellData.match(new RegExp('^' + searchTxt.replace(/\*/g, '.*'), 'i')),
+    'starts-with-matches': (cellData, searchTxt) => cellData.match(new RegExp('^' + searchTxt.replace(/\*/g, '.*'), 'i')),
     'matches-date': (cellData, searchTxt) => $.fn.ebtable.matcher.util.getFormatedDate(new Date(parseInt(cellData))).substr(10).indexOf(searchTxt) >= 0,
     'matches-date-time': (cellData, searchTxt) => $.fn.ebtable.matcher.util.getFormatedDate(new Date(parseInt(cellData))).substr(16).indexOf(searchTxt) >= 0,
     'matches-date-time-sec': (cellData, searchTxt) => $.fn.ebtable.matcher.util.getFormatedDate(new Date(parseInt(cellData))).indexOf(searchTxt) >= 0,

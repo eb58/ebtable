@@ -60,8 +60,7 @@ QUnit.test('testset: grouping functions', function (assert) {
     ["GB", 1, 20, "Insekten 20", "Biene       ", "31.08.2001", "Lessing, Gottfried", 7],
     ["GB", 1, 20, "Insekten 20", "Fliege      ", "31.08.2009", "Mann, Thomas", 0],
     ["GA", 2, 30, "Fische 30", "Fische      ", "", "", 0]
-  ]
-    );
+  ]);
 });
 
 QUnit.test('testset: sorting functions', function (assert) {
