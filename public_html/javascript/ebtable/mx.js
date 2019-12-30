@@ -5,8 +5,8 @@ const mx = (m, groupdef) => {  //groupdef see below
   const isArray = o => Array.isArray(o);
   const isFunction = o => typeof o === 'function';
   const isString = o => typeof o === 'string';
-  const cmp = (x,y) => (x < y) ? -1 : ((x > y) ? 1 : 0);
-  
+  const cmp = (x, y) => (x < y) ? -1 : ((x > y) ? 1 : 0);
+
   const basicapi = {
     zero: () => m.fill(0),
     row: n => m[n],
@@ -86,14 +86,14 @@ const mx = (m, groupdef) => {  //groupdef see below
             const fmt = cdef.sortformat ? $.fn.ebtable.sortformats[cdef.sortformat] : undefined;
             const x = fcts.prepareItem(r1, cdef.col, fmt, groups, cdef.sortorder);
             const y = fcts.prepareItem(r2, cdef.col, fmt, groups, cdef.sortorder);
-            const ret = (isString(x) && isString(y)) ? x.localeCompare(y) : cmp(x,y);
+            const ret = (isString(x) && isString(y)) ? x.localeCompare(y) : cmp(x, y);
             if (ret !== 0) {
               const bAsc = !cdef.sortorder || cdef.sortorder.indexOf('desc') < 0;
               return bAsc ? ret : -ret;
             }
           }
+          return 0;
         }
-        return 0;
       }
     };
     return {

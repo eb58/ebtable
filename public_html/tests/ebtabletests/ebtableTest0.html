@@ -4,6 +4,7 @@
     <title>Beispiel</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/vendor/font-awesome-4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/vendor/jQueryUI-1.12.0/jquery-ui.css">
     <link rel="stylesheet" href="/css/ebtable.css">
     <style>
@@ -48,19 +49,21 @@
         debug: true,
         bodyWidth: '700px',
         flags: {
-          clearFilter: true,
+          clearFilterButton: true,
           colsResizable: true,
         },
         columns: [
           {name: "Tierart", match: 'contains', sortorder: 'desc', valuelist: ['', 'Karpfen', 'Forelle']},
           {name: "Datum", sortformat: 'date-de', width: '150px', css: 'text-align: center'},
           {name: "Name"},
-          {name: "Flag", css: 'text-align: left'}
+          {name: "Flag"}
         ],
         sortcolname: 'Name',
         selectionCol: true,
-        pageCur:0,
-        //lang:'en'
+        pageCur: 0,
+        rowsPerPageSelectValues: [10, 15, 25, 50, 100],
+        rowsPerPage: 10,
+        lang: 'en'
       };
       var grid;
       $().ready(function () {
