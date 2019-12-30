@@ -870,6 +870,7 @@
       '(<%=len%> Eintr\u00e4ge insgesamt)': '(<%=len%> entries)',
       '<%=start%> bis <%=end%> von <%=count%> Zeilen <%= filtered %>': '<%=start%> to <%=end%> of <%=count%> shown entries <%= filtered %>',
       'Spalten verwalten': 'Configure',
+      'Spaltenbreite automatisch anpassen': 'Adjust width of columns automatically',
       'Alle Filter entfernen': 'Remove all filters',
       'Abbrechen': 'Cancel'
     },
