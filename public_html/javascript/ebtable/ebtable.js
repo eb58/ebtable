@@ -7,19 +7,19 @@
   const sessionStorageKey = 'ebtable-' + doctitle + '-v1.0';
   let suppressSorting = false;
 
-  const dlgConfig = function (opts) {
-    const dlgtempl = _.template('\
-        <div id="<%=gridid%>configDlg">\n\
-          <ol id="<%=gridid%>selectable" class="ebtableSelectable"> \n\
-            <%= listOfColumnNames %> \n\
-          </ol>\n\
-        </div>')({listOfColumnNames: opts.listOfColumnNames, gridid: opts.gridid});
+  const dlgConfig = opts => {
+    const dlgtempl = `
+        <div id="${opts.gridid}configDlg">\n
+          <ol id="${opts.gridid}selectable" class="ebtableSelectable">\n
+            ${opts.listOfColumnNames}\n
+          </ol>\n
+        </div>`;
 
     const dlgopts = {
       open: () => {
-        $('ol#' + opts.gridid + 'selectable').sortable();
-        $('#' + opts.gridid + 'configDlg li').off('click').on('click', event => {
-          $('#' + opts.gridid + 'configDlg [id="' + event.target.id + '"]').toggleClass('invisible').toggleClass('visible');
+        $(`ol#${opts.gridid}selectable`).sortable();
+        $(`#${opts.gridid}configDlg li`).off('click').on('click', event => {
+          $(`#${opts.gridid}configDlg [id="${event.target.id}"]`).toggleClass('invisible').toggleClass('visible');
         });
       },
       position: {my: "left top", at: "left bottom", of: opts.anchor},
@@ -56,7 +56,7 @@
         const stateWidth = {
           colwidths: util.getColWidths()
         };
-        const state = _.extend({}, stateGeneral, myopts.flags.colsResizable ? stateWidth : {});
+        const state = Object.assign({}, stateGeneral, myopts.flags.colsResizable ? stateWidth : {});
         return JSON.stringify(state);
       },
       saveState: () => localStorage[localStorageKey] = stateUtil.getStateAsJSON(),
@@ -96,19 +96,14 @@
       }
     };
 
-    const sessionStateUtil = (() => {// saving/loading state
-      const saveSessionState = () => {
-        const openGroups = getOpenGroups();
-        sessionStorage[sessionStorageKey] = JSON.stringify({
-          pageCur: self.getPageCur(),
-          filters: filteringFcts.getFilterValues(),
-          myopts: $.extend({}, myopts, {openGroups: openGroups})
-        });
-      };
-      return {// api
-        saveSessionState: saveSessionState
-      };
-    })();
+    const saveSessionState = () => {
+      const openGroups = getOpenGroups();
+      sessionStorage[sessionStorageKey] = JSON.stringify({
+        pageCur: self.getPageCur(),
+        filters: filteringFcts.getFilterValues(),
+        myopts: $.extend({}, myopts, {openGroups: openGroups})
+      });
+    };
 
     // ##############################################################################
 
@@ -327,9 +322,9 @@
         });
         return filter;
       },
-      setFilterValues: function (filter, n) {
+      setFilterValues: (filter, n) => {
         n = n || 0;
-        if (Object.keys(filter).length === 0)
+        if (!filter || Object.keys(filter).length === 0)
           return this;
         $(selgridid + 'thead th input[type=text],' + selgridid + 'thead th select').each((idx, o) => $(o).val(filter[o.id]));
         filteringFcts.filterData();
@@ -365,14 +360,12 @@
       }
     };
 
-    const getOpenGroups = () => !origData.groupsdata ? [] : origData.groupsdata.reduce((acc, val, key) => !val.isOpen ? acc : acc.concat([parseInt(key)]), []);
+    const getOpenGroups = () => _.reduce(origData.groupsdata, (acc, val, key) => !val.isOpen ? acc : acc.concat([parseInt(key)]), []);
     const configButton = () => myopts.flags.config ? `<button id="configButton"> ${util.translate('Spalten verwalten')} <i class="fa fa-random fa-xs"/></button>` : '';
     const clearFilterButton = () => myopts.flags.filter && myopts.flags.clearFilterButton ? `<button id="clearFilterButton"> <i class="fa fa-minus fa-xs" title="${util.translate('Alle Filter entfernen')}"/></button>` : '';
     const arrangeColumnsButton = () => myopts.flags.arrangeColumnsButton ? `<button id="arrangeColumnsButton"> <i class="fa fa-arrows-h" title="${util.translate('Spaltenbreite automatisch anpassen')}"/></button>` : '';
     const selectLenCtrl = () => {
-      if (!myopts.flags.pagelenctrl)
-        return '';
-      const options = myopts.rowsPerPageSelectValues.reduce((acc, o) => {
+      const options = !myopts.flags.pagelenctrl ? '' : myopts.rowsPerPageSelectValues.reduce((acc, o) => {
         const selected = o === myopts.rowsPerPage ? 'selected' : '';
         return acc + '<option value="' + o + '" ' + selected + '>' + o + '</option>\n';
       }, '');
@@ -390,11 +383,9 @@
       const cntSel = selectionFcts.getSelectedRows().length;
       const startRow = Math.min(myopts.rowsPerPage * pageCur + 1, tblData.length);
       const endRow = Math.min(startRow + myopts.rowsPerPage - 1, tblData.length);
-      const filtered = origData.length === tblData.length ? '' : _.template(util.translate('(<%=len%> Eintr\u00e4ge insgesamt)'))({len: origData.length});
-      const cntSelected = (!cntSel || !myopts.selectionCol || myopts.selectionCol.singleSelection) ? '' : _.template(util.translate('(<%=len%> ausgew\u00e4hlt)'))({len: cntSel});
-      const templ = _.template(util.translate("<%=start%> bis <%=end%> von <%=count%> Zeilen <%=filtered%> <%=cntsel%>"));
-      const label = templ({start: startRow, end: endRow, count: tblData.length, filtered: filtered, cntsel: cntSelected});
-      return label;
+      const filtered = origData.length === tblData.length ? '' : `(${origData.length} ${util.translate('Eintr\u00e4ge')})`;
+      const cntSelected = (!cntSel || !myopts.selectionCol || myopts.selectionCol.singleSelection) ? '' : `(${cntSel} ${util.translate('ausgew\u00e4hlt')})`;
+      return _.template(util.translate("<%=start%> bis <%=end%> von <%=count%> Zeilen <%=filtered%> <%=cntsel%>"))({start: startRow, end: endRow, count: tblData.length, filtered: filtered, cntsel: cntSelected});
     }
 
     const ctrlAddInfo = () => myopts.addInfo && myopts.addInfo(myopts) || '';
@@ -726,15 +717,14 @@
       groupdefs: {}, // {grouplabel: 0, groupcnt: 1, groupid: 2, groupsortstring: 3, groupname: 4, grouphead: 'GA', groupelem: 'GB'},
       openGroups: [],
       hasMoreResults: hasMoreResults,
-      clickOnRowHandler: (rowData, row) => {
-      }, // just for docu
+      clickOnRowHandler: (rowData, row) => rowData, // just for docu
       lang: 'de',
       afterRedraw: null,
       predefinedFilters: [],
     };
 
     { // trimming opts param
-      opts.flags = _.extend(defopts.flags, opts.flags);
+      opts.flags = Object.assign(defopts.flags, opts.flags);
       if (opts.flags.colsResizable)
         opts.saveState = defopts.saveState;
 
@@ -783,8 +773,8 @@
       getSelectedRows: selectionFcts.getSelectedRows,
       setSelectedRows: selectionFcts.setSelectedRows,
       unselect: selectionFcts.unselect,
-      saveSessionState: sessionStateUtil.saveSessionState,
-      redrawAddInfo: redrawAddInfo,
+      saveSessionState,
+      redrawAddInfo,
 
       toggleGroupIsOpen: groupid => {
         origData.groupsdata[groupid].isOpen = !origData.groupsdata[groupid].isOpen;
@@ -867,8 +857,9 @@
   $.fn.ebtable.lang = {
     'de': {},
     'en': {
-      '(<%=len%> Eintr\u00e4ge insgesamt)': '(<%=len%> entries)',
-      '<%=start%> bis <%=end%> von <%=count%> Zeilen <%= filtered %>': '<%=start%> to <%=end%> of <%=count%> shown entries <%= filtered %>',
+      'Eintr\u00e4ge': 'entries',
+      'ausgew\u00e4hlt': 'selected',
+      '<%=start%> bis <%=end%> von <%=count%> Zeilen <%=filtered%> <%=cntsel%>': '<%=start%> to <%=end%> of <%=count%> lines <%= filtered %> <%=cntsel%>',
       'Spalten verwalten': 'Configure',
       'Spaltenbreite automatisch anpassen': 'Adjust width of columns automatically',
       'Alle Filter entfernen': 'Remove all filters',

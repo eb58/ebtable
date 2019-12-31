@@ -19,7 +19,7 @@ const mx = (m, groupdef) => {  //groupdef see below
 //####################################  filtering #######################
   const filtering = (() => {
     const rowMatch = filters => row => (isArray(filters) ? filters : [filters]).reduce((acc, f) => {
-          const cellData = row[f.col].trim()
+          const cellData = (''+row[f.col]).trim()
           const matchfct = f.match || $.fn.ebtable.matcher['starts-with-matches'];
           return acc && matchfct(cellData, f.searchtext, row, m);
         }, true);
