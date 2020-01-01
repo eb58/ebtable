@@ -1,2 +1,3 @@
-/HTML5Application/nbproject/private/
-/nbproject/private/
+nbproject/
+node_modules
+.history

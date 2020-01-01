@@ -13,10 +13,8 @@ var tblData = [
   ['GB', 1, 30, 'Karpfen     ', '31.08.2009', 'Mann, Thomas', 0],
   ['GB', 1, 30, 'Forelle     ', '31.08.2001', 'Lessing, Gottfried', 7],
   ['  ', 1, -1, 'Einhorn     ', '04.11.2017', 'Goethe, Johann Wolfgang', 63]
-];
-tblData.forEach(function (row) {
-  row.splice(3, 0, 'XXX');
-});
+]
+tblData.forEach(row => row.splice(3, 0, 'XXX'));
 
 
 QUnit.test('testset: grouping functions', function (assert) {

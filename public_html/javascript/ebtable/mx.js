@@ -76,7 +76,7 @@ const mx = (m, groupdef) => {  //groupdef see below
   sorting = (function () {
     var fcts = {
       toLower: o => isString(o) ? o.toLowerCase() : o,
-      isAsc: cdef => !cdef.sortorder || cdef.sortorder.indexOf('desc') < 0,
+      isAsc: cdef => !cdef.sortorder || cdef.sortorder.toLowerCase().indexOf('desc') < 0,
       prepareItem: (row, col, fmt, groups, sortorder) => fcts.toLower(fmt ? fmt(row[col] || '', row, groups, sortorder) : row[col] || ''),
       rowCmpCols: function rowCmpCols(coldefs, groups) {
         coldefs = isArray(coldefs) ? coldefs : [coldefs]; // [ {col:1,sortorder:asc,sortformat:fmtfct1},{col:3, sortorder:desc, sortformat:fmtfct2},... ]  
