@@ -1,15 +1,17 @@
 <!DOCTYPE html>
-<html>
+<html lang="de">
   <head>
     <title>Beispiel 4 Nur ein TEST</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"/>
     <link rel="stylesheet" href="../../vendor/jQueryUI-1.12.0/jquery-ui.css">
     <link rel="stylesheet" href="../../css/ebtable.css">
     <style>
       * {font-family:Arial; color: black; font-size: 10px;}
-      xbody { width: 1000px; }
+      body { width: 1000px; background: #8699A4; margin: 10px 10px 10px 10px; }
+
     </style>
 
     <script src="../../vendor/underscore-1.8.3/underscore.js"></script>
@@ -17,14 +19,11 @@
     <script src="../../vendor/jQueryUI-1.12.0/jquery-ui.js"></script>
     <script src="../../javascript/ebtable/mx.js"></script>
     <script src="../../javascript/ebtable/ebtable.js"></script>
-    <!--<script src="../../data/ebTableGroupExternalSmall.js"></script>-->
-    <!--<script src="../../data/ebTableTestDataKhbasketSmall.js"></script>-->
-    <!--<script src="../../data/ebTableTestDataKhbasketLarge.js"></script>-->
     <script src="../../data/ebTableTestdataKhBasket1.js"></script>
     <script>
       'use strict';
 
-      var flagsdef = [
+      const flagsdef = [
         {key: '!', id: 1, img: 'important.gif', alt: 'Eilauftrag'},
         {key: '*', id: 2, img: 'blackstar.gif', alt: 'Spezialfall'},
         {key: 'P', id: 4, img: 'problem.gif', alt: 'Problemfall'},

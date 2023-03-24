@@ -1,14 +1,21 @@
 <!DOCTYPE html>
-<html>
-  <head>
+<html lang="de">
+<head>
     <title>Beispiel 1</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"/>
     <link rel="stylesheet" href="../../vendor/jQueryUI-1.12.0/jquery-ui.css">
     <link rel="stylesheet" href="../../css/ebtable.css">
     <style>
-      * {font-family:Arial; font-size: 12px;}
-      body { width: 1000px; }
+        * {
+            font-family: Arial;
+            font-size: 12px;
+        }
+        body {
+            width: 1000px;
+            background: #8699A4
+        }
     </style>
 
     <script src="../../vendor/underscore-1.8.3/underscore.js"></script>
@@ -17,140 +24,157 @@
     <script src="../../javascript/ebtable/mx.js"></script>
     <script src="../../javascript/ebtable/ebtable.js"></script>
     <script>
-      'use strict';
-      var basketTestdata = [
-        ['  ', 1, -1, 'Wolperdinger', '31.08.1915', 'Herder, Johann Gottfried', 5],
-        ['  ', 1, -1, 'Yeti        ', '31.08.2016', 'Lichtenberg, Georg Christoph ', 31],
-        ['GA', 5, 10, 'Säugetiere  ', '', '', 0],
-        ['GB', 1, 10, 'Esel        ', '05.08.2011', 'Liebig, Ellen,', 1],
-        ['GB', 1, 10, 'Affe        ', '10.06.2013', 'Heine, Heinrich', 2],
-        ['GB', 1, 10, 'Maus        ', '15.09.2014', 'Manne, Antonia', 4],
-        ['GB', 1, 10, 'Hase        ', '15.09.2014', 'Liebig, Gustav', 8],
-        ['GB', 1, 10, 'Hund        ', '31.08.2015', 'Mann, Heinrich Gustav Friedhelm', 16],
-        ['GA', 4, 20, 'Insekten    ', '', '', 0],
-        ['GB', 1, 20, 'Fliege      ', '31.08.2009', 'Mann, Thomas', 0],
-        ['GB', 1, 20, 'Biene       ', '31.08.2001', 'Lessing, Gottfried', 7],
-        ['GB', 1, 20, 'Hummel      ', '01.08.1759', 'Schiller, Friedrich', 0],
-        ['GB', 1, 20, 'Wespe       ', '31.06.1900', 'Storm, Theodor', 0],
-        ['GA', 2, 30, 'Fische      ', '', '', 0],
-        ['GB', 1, 30, 'Karpfen     ', '31.08.2009', 'Mann, Thomas', 0],
-        ['GB', 1, 30, 'Forelle     ', '31.08.2001', 'Lessing, Gottfried', 7],
-        ['  ', 1, -1, 'Einhorn     ', '04.11.2017', 'Goethe, Johann Wolfgang', 63],
-        ['  ', 1, -1, 'Lindwurm    ', '31.12.2018', 'Schiller, Friedrich', 255]
-      ];
-      for (var i = 0; i < basketTestdata.length; i++) {
-        basketTestdata[i].splice(3, 0, 'XXX');
-      }
-
-      //#######################################################################
-
-      var flagutils = {
-        flagsdef: [
-          {key: '!', id: 1, img: 'important.gif', alt: 'Eilauftrag'},
-          {key: '*', id: 2, img: 'blackstar.gif', alt: 'Spezialfall'},
-          {key: 'P', id: 4, img: 'problem.gif', alt: 'Problemfall'},
-          {key: 'F', id: 8, img: 'caseConsolidation.gif', alt: 'Fallzusammenführung'},
-          {key: 'G', id: 16, img: 'isPrg.gif', alt: 'Prg'},
-          {key: 'K', id: 32, img: 'korrekturauftrag.gif', alt: 'Korrekturauftrag'},
-          {key: 'S', id: 64, img: 'sperre.gif', alt: 'Sperre'},
-          {key: 'C', id: 128, img: 'storniert.gif', alt: 'Stornierung angefordert'}
-        ],
-        flags: _.pluck(this.flagsdef, 'key').join(''), // -> '!*PFGKSC'
-        fromBitNumber: function (bits) { // 5 (101)  -->  '!P' # 7 (111) -> '!*p' # 8 (1000) -> F
-          return _.reduce(Number(bits).toString(2).split('').reverse(), function (acc, o, i) {
-            return acc += (o === '1' && flagutils.flags[i] ? flagutilsflags[i] : '');
-          }, '');
-        },
-        toBitNumber: function (str) { // '!P' -> 5 (101), '!PG' -> 21
-          return _.reduce(str.toUpperCase().split(''), function (acc, c) {
-            var x = _.findWhere(flagutils.flagsdef, {key: c});
-            return acc += x ? x.id : 0;
-          }, 0);
+        'use strict';
+        const basketTestdata = [
+            ['  ', 1, -1, 'Wolperdinger', '31.08.1915', 'Herder, Johann Gottfried', 5],
+            ['  ', 1, -1, 'Yeti        ', '31.08.2016', 'Lichtenberg, Georg Christoph ', 31],
+            ['GA', 5, 10, 'Säugetiere  ', '', '', 0],
+            ['GB', 1, 10, 'Esel        ', '05.08.2011', 'Liebig, Ellen,', 1],
+            ['GB', 1, 10, 'Affe        ', '10.06.2013', 'Heine, Heinrich', 2],
+            ['GB', 1, 10, 'Maus        ', '15.09.2014', 'Manne, Antonia', 4],
+            ['GB', 1, 10, 'Hase        ', '15.09.2014', 'Liebig, Gustav', 8],
+            ['GB', 1, 10, 'Hund        ', '31.08.2015', 'Mann, Heinrich Gustav Friedhelm', 16],
+            ['GA', 4, 20, 'Insekten    ', '', '', 0],
+            ['GB', 1, 20, 'Fliege      ', '31.08.2009', 'Mann, Thomas', 0],
+            ['GB', 1, 20, 'Biene       ', '31.08.2001', 'Lessing, Gottfried', 7],
+            ['GB', 1, 20, 'Hummel      ', '01.08.1759', 'Schiller, Friedrich', 0],
+            ['GB', 1, 20, 'Wespe       ', '31.06.1900', 'Storm, Theodor', 0],
+            ['GA', 2, 30, 'Fische      ', '', '', 0],
+            ['GB', 1, 30, 'Karpfen     ', '31.08.2009', 'Mann, Thomas', 0],
+            ['GB', 1, 30, 'Forelle     ', '31.08.2001', 'Lessing, Gottfried', 7],
+            ['  ', 1, -1, 'Einhorn     ', '04.11.2017', 'Goethe, Johann Wolfgang', 63],
+            ['  ', 1, -1, 'Lindwurm    ', '31.12.2018', 'Schiller, Friedrich', 255]
+        ];
+        for (var i = 0; i < basketTestdata.length; i++) {
+            basketTestdata[i].splice(3, 0, 'XXX');
         }
-      };
 
-      $.extend($.fn.ebtable.sortformats, {
-        flags: flagutils.fromBitNumber
-      });
+        //#######################################################################
 
-      var matcher = {
-        flags: flagutils.fromBitNumber
-      };
-
-      var idx = {gtyp: 0, gcnt: 1, gid: 2, gss: 3};
-      var renderer = {
-        tierart: function (data, row) {
-          var groupid = row[idx.gid];
-          if (groupid < 0)
-            return data;
-
-          var isOpen = grid ? grid.groupIsOpen(groupid) : false;
-          var imgsrc = '../../images/details_' + (isOpen ? 'opened' : 'closed') + '.png';
-          var link = '<img src="' + imgsrc + '" onclick="grid.toggleGroupIsOpen(\'' + groupid + '\')" /><b>&nbsp;' + data + '</b>';
-          return row[idx.gtyp] === 'GA' ? link : data;
-        },
-        flags: function (data) {
-          return _.reduce(flagsdef, function (acc, o) {
-            return acc + ((data & o.id) ? _.template("<img src='../../images/<\%=img%>' title='<\%=title%>' height='10px'/>")({img: o.img, title: o.alt}) : '');
-          }, '');
-        }
-      };
-      
-      $.fn.ebtable.lang['mdk'] = {
-        'Anpassen': 'Spalten verwalten'
-      }
-
-      const gridopts = {
-        sortmaster: [{col: idx.gid}, {col: idx.gtyp}], //[{col:1,sortorder:'asc',sortformat:'date-de'},{col:2,sortorder:'desc'}]
-        sortcolname: 'Datum',
-        columns: [
-          {name: "Grouping", invisible: true, technical: true, sortorder: 'asc-fix'},
-          {name: "GroupCnt", invisible: true, technical: true},
-          {name: "GroupIds", invisible: true, technical: true},
-          {name: "GroupSort", invisible: true, technical: true},
-          {name: "Tierart", render: renderer.tierart, sortmaster: [{col: idx.gss}, {col: idx.gtyp}]},
-          {name: "Datum", sortformat: 'date-de'},
-          {name: "Name/Über"},
-          {name: "Flag", render: renderer.renderFlags, sortformat: 'flags', match: matcher.flags, tooltip: 'Mögliche Werte:!*pfgksc'}
-        ],
-        rowsPerPageSelectValues: [5, 10, 25, 50, 100],
-        bodyHeight: 500,
-        flags: {
-          colsResizable: true
-        },
-        selectionCol: {
-          //{render: function (rowNr, row, origData) { console.log('onSelection', rowNr, row, origData);    }},
-          xonSelection: function (rowNr, row) {
-            if (row[0] !== '  ') {
-              row.selected = false;
-              $('#check' + rowNr).prop('checked', false).prop('disabled', true);
+        const flagUtils = {
+            flagsDef: [
+                {key: '!', id: 1, img: 'important.gif', alt: 'Eilauftrag'},
+                {key: '*', id: 2, img: 'blackstar.gif', alt: 'Spezialfall'},
+                {key: 'P', id: 4, img: 'problem.gif', alt: 'Problemfall'},
+                {key: 'F', id: 8, img: 'caseConsolidation.gif', alt: 'Fallzusammenführung'},
+                {key: 'G', id: 16, img: 'isPrg.gif', alt: 'Prg'},
+                {key: 'K', id: 32, img: 'korrekturauftrag.gif', alt: 'Korrekturauftrag'},
+                {key: 'S', id: 64, img: 'sperre.gif', alt: 'Sperre'},
+                {key: 'C', id: 128, img: 'storniert.gif', alt: 'Stornierung angefordert'}
+            ],
+            flags: _.pluck(this.flagsDef, 'key').join(''), // -> '!*PFGKSC'
+            fromBitNumber: (bits) => { // 5 (101)  -->  '!P' # 7 (111) -> '!*p' # 8 (1000) -> F
+                return Number(bits).toString(2).split('').reverse().reduce((acc, o, i) => {
+                    return acc += (o === '1' && flagUtils.flags[i] ? flagutilsflags[i] : '');
+                }, '');
+            },
+            toBitNumber: (str) => { // '!P' -> 5 (101), '!PG' -> 21
+                str.toUpperCase().split('').reduce((acc, c) => {
+                    const x = _.findWhere(flagUtils.flagsDef, {key: c});
+                    return acc += x ? x.id : 0;
+                }, 0)
             }
-            console.log('onSelection', rowNr, row);
-          }
-        },
-        groupdefs: {grouplabel: 0, groupcnt: 1, groupid: 2, groupsortstring: 3, groupname: 4, grouphead: 'GA', groupelem: 'GB'},
-        reloadData: function () {
-          var ss = $.fn.ebtable.loadSessionState();
-          const gridopts = $.extend(true, {}, gridopts, ss.myopts);
-          grid = $('#grid').ebtable(gridopts, basketTestdata);
-        },
-        lang: 'en',
-      };
-      var grid;
-      $().ready(function () {
-        grid = $('#grid').ebtable(gridopts, basketTestdata);
-        $('#saveGridStatus').on('click', grid.saveSessionState)
-        $('#loadGridStatus').on('click', function () {
-          var ss = $.extend($.fn.ebtable.loadSessionState());
-          const gridopts = $.extend(true, {}, gridopts, ss ? ss.myopts : {});
-          grid = $('#grid').ebtable(gridopts, basketTestdata).setFilterValues(ss.filters);
-        })
-      });
+        };
+
+        $.extend($.fn.ebtable.sortformats, {
+            flags: flagUtils.fromBitNumber
+        });
+
+        const matcher = {
+            flags: flagUtils.fromBitNumber
+        };
+
+        const idx = {gtyp: 0, gcnt: 1, gid: 2, gss: 3};
+        const renderer = {
+            tierart: function (data, row) {
+                const groupid = row[idx.gid];
+                if (groupid < 0)
+                    return data;
+
+                const isOpen = grid ? grid.groupIsOpen(groupid) : false;
+                const imgsrc = '../../images/details_' + (isOpen ? 'opened' : 'closed') + '.png';
+                const link = '<img src="' + imgsrc + '" onclick="grid.toggleGroupIsOpen(\'' + groupid + '\')" /><b>&nbsp;' + data + '</b>';
+                return row[idx.gtyp] === 'GA' ? link : data;
+            },
+            flags: function (data) {
+                return _.reduce(flagsdef, function (acc, o) {
+                    return acc + ((data & o.id) ? _.template("<img src='../../images/<\%=img%>' title='<\%=title%>' height='10px'/>")({
+                        img: o.img,
+                        title: o.alt
+                    }) : '');
+                }, '');
+            }
+        };
+
+        $.fn.ebtable.lang['mdk'] = {
+            'Anpassen': 'Spalten verwalten'
+        }
+
+        const gridOpts = {
+            sortmaster: [{col: idx.gid}, {col: idx.gtyp}], //[{col:1,sortorder:'asc',sortformat:'date-de'},{col:2,sortorder:'desc'}]
+            sortcolname: 'Datum',
+            columns: [
+                {name: "Grouping", invisible: true, technical: true, sortorder: 'asc-fix'},
+                {name: "GroupCnt", invisible: true, technical: true},
+                {name: "GroupIds", invisible: true, technical: true},
+                {name: "GroupSort", invisible: true, technical: true},
+                {name: "Tierart", render: renderer.tierart, sortmaster: [{col: idx.gss}, {col: idx.gtyp}]},
+                {name: "Datum", sortformat: 'date-de'},
+                {name: "Name/Über"},
+                {
+                    name: "Flag",
+                    render: renderer.renderFlags,
+                    sortformat: 'flags',
+                    match: matcher.flags,
+                    tooltip: 'Mögliche Werte:!*pfgksc'
+                }
+            ],
+            rowsPerPageSelectValues: [5, 10, 25, 50, 100],
+            bodyHeight: 500,
+            flags: {
+                colsResizable: true
+            },
+            selectionCol: {
+                //{render: function (rowNr, row, origData) { console.log('onSelection', rowNr, row, origData);    }},
+                xonSelection: function (rowNr, row) {
+                    if (row[0] !== '  ') {
+                        row.selected = false;
+                        $('#check' + rowNr).prop('checked', false).prop('disabled', true);
+                    }
+                    console.log('onSelection', rowNr, row);
+                }
+            },
+            groupdefs: {
+                grouplabel: 0,
+                groupcnt: 1,
+                groupid: 2,
+                groupsortstring: 3,
+                groupname: 4,
+                grouphead: 'GA',
+                groupelem: 'GB'
+            },
+            reloadData: function () {
+                const ss = $.fn.ebtable.loadSessionState();
+                const gridOpts = $.extend(true, {}, gridOpts, ss.myopts);
+                grid = $('#grid').ebtable(gridOpts, basketTestdata);
+            },
+            lang: 'en',
+        };
+        var grid;
+        $().ready(function () {
+            grid = $('#grid').ebtable(gridOpts, basketTestdata);
+            $('#saveGridStatus').on('click', grid.saveSessionState)
+            $('#loadGridStatus').on('click', function () {
+                const ss = $.extend($.fn.ebtable.loadSessionState());
+                const gridOpts = $.extend(true, {}, gridopts, ss ? ss.myopts : {});
+                grid = $('#grid').ebtable(gridOpts, basketTestdata).setFilterValues(ss.filters);
+            })
+        });
     </script>
-  </head>
-  <body>
-    <div id="grid"></div>
-    <button id="saveGridStatus">SaveGridStatus</button>
-    <button id="loadGridStatus">LoadGridStatus</button>
-  </body>
+</head>
+<body>
+<div id="grid"></div>
+<button id="saveGridStatus">SaveGridStatus</button>
+<button id="loadGridStatus">LoadGridStatus</button>
+</body>
 </html>

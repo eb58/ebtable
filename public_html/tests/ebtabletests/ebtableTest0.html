@@ -1,14 +1,15 @@
 <!DOCTYPE html>
-<html>
+<html lang="de">
   <head>
     <title>Beispiel</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"/>
     <link rel="stylesheet" href="../../vendor/jQueryUI-1.12.0/jquery-ui.css">
     <link rel="stylesheet" href="../../css/ebtable.css">
     <style>
       * {font-family:Arial;color: black;font-size: 12px;      }
-      body { background:#FAFAF0; margin: 10px 10px 10px 10px; width: 400px; }
+      body { width: 1000px; background: #8699A4; margin: 10px 10px 10px 10px; }
       .ui-icon { transform: scale(1.2); margin: 1px; padding: 1px;}
     </style>
 
@@ -55,7 +56,7 @@
           {name: "Tierart", match: 'contains', sortorder: 'desc', valuelist: ['', 'Karpfen', 'Forelle']},
           {name: "Datum", sortformat: 'date-de', width: '150px', css: 'text-align: center'},
           {name: "Name"},
-          {name: "Flag", css: 'text-align: left'}
+          {name: "Flag" }
         ],
         sortcolname: 'Name',
         selectionCol: true,
