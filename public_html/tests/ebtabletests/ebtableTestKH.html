@@ -5,22 +5,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="/vendor/jQueryUI-1.12.0/jquery-ui.css">
-    <link rel="stylesheet" href="/css/ebtable.css">
+    <link rel="stylesheet" href="../../vendor/jQueryUI-1.12.0/jquery-ui.css">
+    <link rel="stylesheet" href="../../css/ebtable.css">
     <style>
       * {font-family:Arial; color: black; font-size: 10px;}
       xbody { width: 1000px; }
     </style>
 
-    <script src="/vendor/underscore-1.8.3/underscore-1.8.3.js"></script>
-    <script src="/vendor/jQuery-1.11.3/jquery-1.11.3.min.js"></script>
-    <script src="/vendor/jQueryUI-1.12.0/jquery-ui.js"></script>
-    <script src="/javascript/ebtable/mx.js"></script>
-    <script src="/javascript/ebtable/ebtable.js"></script>
-    <!--<script src="/data/ebTableGroupExternalSmall.js"></script>-->
-    <!--<script src="/data/ebTableTestDataKhbasketSmall.js"></script>-->
-    <!--<script src="/data/ebTableTestDataKhbasketLarge.js"></script>-->
-    <script src="/data/ebTableTestdataKhBasket1.js"></script>
+    <script src="../../vendor/underscore-1.8.3/underscore.js"></script>
+    <script src="../../vendor/jQuery-1.11.3/jquery.js"></script>
+    <script src="../../vendor/jQueryUI-1.12.0/jquery-ui.js"></script>
+    <script src="../../javascript/ebtable/mx.js"></script>
+    <script src="../../javascript/ebtable/ebtable.js"></script>
+    <!--<script src="../../data/ebTableGroupExternalSmall.js"></script>-->
+    <!--<script src="../../data/ebTableTestDataKhbasketSmall.js"></script>-->
+    <!--<script src="../../data/ebTableTestDataKhbasketLarge.js"></script>-->
+    <script src="../../data/ebTableTestdataKhBasket1.js"></script>
     <script>
       'use strict';
 
@@ -149,9 +149,9 @@
           var name = data.substring(0, 30).replace(/ /g, '\u00a0') + data.substring(30); // a0 = &nbsp; -> prevent line wrap in table cell if data.length <30
 
           if (row[0] === 'W') { //  render workorder
-            var winfo = row[idx.winfo] ? _.template('<a href=# onclick="showAuftragInfo    (<\%=wid%>,\'<\%=data%>\')"><img src="/images/info.gif"           border="0" height="12px" title="Details Auftrag"></a>&nbsp;')({wid: row[idx.wid], data: data.replace("'", "\\'")}) : '';
-            var vinfo = row[idx.vinfo] ? _.template('<a href=# onclick="showInsurantComment(<\%=wid%>,\'<\%=data%>\')"><img src="/images/insurantComment.gif" border="0" height="12px" title="Hinweise zum Versicherten"></a>&nbsp;')({wid: row[idx.wid], data: data.replace("'", "\\'")}) : '';
-            var isdwn = row[idx.isdwn] ? _.template('<img id="isDownloaded_<\%=wid%>" border="0" src="/images/downloaded.gif" title="Es wurde ein Download ohne Upload ausgeführt">')({wid: row[idx.wid]}) : '';
+            var winfo = row[idx.winfo] ? _.template('<a href=# onclick="showAuftragInfo    (<\%=wid%>,\'<\%=data%>\')"><img src="../../images/info.gif"           border="0" height="12px" title="Details Auftrag"></a>&nbsp;')({wid: row[idx.wid], data: data.replace("'", "\\'")}) : '';
+            var vinfo = row[idx.vinfo] ? _.template('<a href=# onclick="showInsurantComment(<\%=wid%>,\'<\%=data%>\')"><img src="../../images/insurantComment.gif" border="0" height="12px" title="Hinweise zum Versicherten"></a>&nbsp;')({wid: row[idx.wid], data: data.replace("'", "\\'")}) : '';
+            var isdwn = row[idx.isdwn] ? _.template('<img id="isDownloaded_<\%=wid%>" border="0" src="../../images/downloaded.gif" title="Es wurde ein Download ohne Upload ausgeführt">')({wid: row[idx.wid]}) : '';
             var t = _.template(
               '<input type="hidden" id="name_<\%=wid%>" value="<\%=data%>"/>\n\
                 <a onclick="showOrder(<\%=wid%>,<\%=pageCur%> )" title="<\%=wid%>"><\%=data%></a>\n\
@@ -159,7 +159,7 @@
             return t({winfo: winfo, vinfo: vinfo, wid: row[idx.wid], data: name, sid: '${pageContext.session.id}', isdwn: isdwn, pageCur: pageCur});
           } else { // render charge
             var isOpen = tbldata.groupsdata[chargeId].isOpen;
-            var imgsrc = isOpen ? '/images/details_opened.png' : '/images/details_closed.png';
+            var imgsrc = isOpen ? '../../images/details_opened.png' : '../../images/details_closed.png';
             var auftrag = row[idx.gcnt] === 1 ? 'Auftrag' : 'Aufträge';
             var chargeName = function () {
               ;
@@ -182,17 +182,17 @@
         flags: function (data, row) {
           var mima_status_0 = '';
           if (row[0] === 'W' && (row[1] & 1792) === 0)  // mimastatus-Behandlung
-            mima_status_0 = "<img src='/images/empty_link.gif' alt='' id='mima_marker_" + row[4] + "' title='' height='0px'/>";
+            mima_status_0 = "<img src='../../images/empty_link.gif' alt='' id='mima_marker_" + row[4] + "' title='' height='0px'/>";
           return _.reduce(flagsdef, function (acc, o) {
             var imgid = '';
             if (row[0] === 'W' && (o.id & 1792) === o.id)
               imgid = 'id="mima_marker_' + row[4] + '"';
-            return acc += (data & o.id) ? _.template("<img src='/images/<\%=img%>' alt='<\%=alt%>' <\%=id%> title='<\%=alt%>' height='10px'/>")({img: o.img, alt: o.alt, id: imgid}) : '';
+            return acc += (data & o.id) ? _.template("<img src='../../images/<\%=img%>' alt='<\%=alt%>' <\%=id%> title='<\%=alt%>' height='10px'/>")({img: o.img, alt: o.alt, id: imgid}) : '';
           }, '') + mima_status_0;
         },
         downflags: function (data, row) {
           return _.reduce(downflagsdef, function (acc, o) {
-            return acc += (data & o.id) ? _.template("<img src='/images/<\%=img%>' alt='<\%=alt%>' title='<\%=alt%>' height='10px'/>")({img: o.img, alt: o.alt}) : '';
+            return acc += (data & o.id) ? _.template("<img src='../../images/<\%=img%>' alt='<\%=alt%>' title='<\%=alt%>' height='10px'/>")({img: o.img, alt: o.alt}) : '';
           }, '');
         },
         frist: function (data, row) {
@@ -202,10 +202,10 @@
           return data.replace(/,/g, ', ');
         },
         pruefanz: function (data) {
-          return data ? _.template("&nbsp;<img src='/images/releaseable.gif' alt='<\%=alt%>' title='<\%=alt%>' height='10px'/>")({alt: 'Prüfanzeige versendet'}) : '';
+          return data ? _.template("&nbsp;<img src='../../images/releaseable.gif' alt='<\%=alt%>' title='<\%=alt%>' height='10px'/>")({alt: 'Prüfanzeige versendet'}) : '';
         },
         unterlag: function (data) {
-          return data ? _.template("&nbsp;<img src='/images/releaseable.gif' alt='<\%=alt%>' title='<\%=alt%>' height='10px'/>")({alt: 'Unterlagen vollständig'}) : '';
+          return data ? _.template("&nbsp;<img src='../../images/releaseable.gif' alt='<\%=alt%>' title='<\%=alt%>' height='10px'/>")({alt: 'Unterlagen vollständig'}) : '';
         }
       };
 

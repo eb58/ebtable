@@ -1,4 +1,4 @@
-var adata = {
+const adata = {
   "workorderComments": [
     {
       "workorderCommentsId": 9,
@@ -72,7 +72,7 @@ var adata = {
   "errorCode": null
 };
 
-var idata = {
+const idata = {
   "insurantComments": [
     {
       "insurantCommentsId": 2,

@@ -1,4 +1,4 @@
-var gIcddata = [
+const gIcddata = [
     [141713, "Keine i.S. der Kodierrichtlinien relevante Diagnose", "---.-"],
     [141714, "Cholera", "A00.-"],
     [141715, "Cholera durch Vibrio cholerae O:1, Biovar cholerae", "A00.0"],

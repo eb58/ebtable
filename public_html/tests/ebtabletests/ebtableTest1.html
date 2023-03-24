@@ -4,18 +4,18 @@
     <title>Beispiel 1</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/vendor/jQueryUI-1.12.0/jquery-ui.css">
-    <link rel="stylesheet" href="/css/ebtable.css">
+    <link rel="stylesheet" href="../../vendor/jQueryUI-1.12.0/jquery-ui.css">
+    <link rel="stylesheet" href="../../css/ebtable.css">
     <style>
       * {font-family:Arial; font-size: 12px;}
       body { width: 1000px; }
     </style>
 
-    <script src="/vendor/underscore-1.8.3/underscore-1.8.3.js"></script>
-    <script src="/vendor/jQuery-1.11.3/jquery-1.11.3.min.js"></script>
-    <script src="/vendor/jQueryUI-1.12.0/jquery-ui.js"></script>
-    <script src="/javascript/ebtable/mx.js"></script>
-    <script src="/javascript/ebtable/ebtable.js"></script>
+    <script src="../../vendor/underscore-1.8.3/underscore.js"></script>
+    <script src="../../vendor/jQuery-1.11.3/jquery.js"></script>
+    <script src="../../vendor/jQueryUI-1.12.0/jquery-ui.js"></script>
+    <script src="../../javascript/ebtable/mx.js"></script>
+    <script src="../../javascript/ebtable/ebtable.js"></script>
     <script>
       'use strict';
       var basketTestdata = [
@@ -85,13 +85,13 @@
             return data;
 
           var isOpen = grid ? grid.groupIsOpen(groupid) : false;
-          var imgsrc = '/images/details_' + (isOpen ? 'opened' : 'closed') + '.png';
+          var imgsrc = '../../images/details_' + (isOpen ? 'opened' : 'closed') + '.png';
           var link = '<img src="' + imgsrc + '" onclick="grid.toggleGroupIsOpen(\'' + groupid + '\')" /><b>&nbsp;' + data + '</b>';
           return row[idx.gtyp] === 'GA' ? link : data;
         },
         flags: function (data) {
           return _.reduce(flagsdef, function (acc, o) {
-            return acc + ((data & o.id) ? _.template("<img src='/images/<\%=img%>' title='<\%=title%>' height='10px'/>")({img: o.img, title: o.alt}) : '');
+            return acc + ((data & o.id) ? _.template("<img src='../../images/<\%=img%>' title='<\%=title%>' height='10px'/>")({img: o.img, title: o.alt}) : '');
           }, '');
         }
       };
@@ -100,7 +100,7 @@
         'Anpassen': 'Spalten verwalten'
       }
 
-      var gridopts = {
+      const gridopts = {
         sortmaster: [{col: idx.gid}, {col: idx.gtyp}], //[{col:1,sortorder:'asc',sortformat:'date-de'},{col:2,sortorder:'desc'}]
         sortcolname: 'Datum',
         columns: [
@@ -131,7 +131,7 @@
         groupdefs: {grouplabel: 0, groupcnt: 1, groupid: 2, groupsortstring: 3, groupname: 4, grouphead: 'GA', groupelem: 'GB'},
         reloadData: function () {
           var ss = $.fn.ebtable.loadSessionState();
-          gridopts = $.extend(true, {}, gridopts, ss.myopts);
+          const gridopts = $.extend(true, {}, gridopts, ss.myopts);
           grid = $('#grid').ebtable(gridopts, basketTestdata);
         },
         lang: 'en',
@@ -142,7 +142,7 @@
         $('#saveGridStatus').on('click', grid.saveSessionState)
         $('#loadGridStatus').on('click', function () {
           var ss = $.extend($.fn.ebtable.loadSessionState());
-          gridopts = $.extend(true, {}, gridopts, ss ? ss.myopts : {});
+          const gridopts = $.extend(true, {}, gridopts, ss ? ss.myopts : {});
           grid = $('#grid').ebtable(gridopts, basketTestdata).setFilterValues(ss.filters);
         })
       });

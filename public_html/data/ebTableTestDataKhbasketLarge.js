@@ -1,4 +1,4 @@
-var basketTestdataKH = [
+const basketTestdataKH = [
   ["W", 1, - 1, 50000008773, 256, "50000000000015", null, false, false, false, 0, 2, 235, "Kästner, Erika, 03.04.1962", "06.03.2017", null, "In Bearbeitung", null, "Berufsgenossenschaftliche", null, null, null, "AOK Düsseldorf, Kasernenstr.", null, null, null, 20, "KH-Gutachten", "270", null, null, null, null, null, true, false, null, null, null],
   ["W", 1, - 1, 50000008744, 524288, "50000000000015", null, true, false, false, 20, 2, null, "Personimpdoc_a, Max, 15.01.1969", "01.03.2017", null, "Zur Sachbearbeitung", null, "Leistungserbringer", null, null, null, "Testkrankenkasse", "13.01.2017", "13.01.2017", "KH DRG", 10, "Sachgutachten", "210", "01", null, - 4, "28.01.2017", null, false, false, null, null, null],
   ["W", 1, - 1, 50000008740, 524288, "50000000000015", null, true, false, false, 4, 0, null, "Persverskhtest_2, Martha, 25.01.1968", "23.02.2017", null, "Zur Sachbearbeitung", null, "Leistungserbringer", null, null, null, "Testkrankenkasse", "13.01.2017", "13.01.2017", null, 10, "KH-Gutachten", "250", null, null, null, null, null, false, false, null, null, null],

@@ -1,4 +1,4 @@
-var result1 = {
+const result1 = {
   "hasMoreElements": false,
   "listSize": 100,
   "list": [
@@ -25,7 +25,7 @@ var result1 = {
   "message-type": null
 };
 
-var result2 = {
+const result2 = {
   "hasMoreElements": false,
   "listSize": 100,
   "list": [

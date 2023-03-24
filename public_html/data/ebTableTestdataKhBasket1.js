@@ -1,4 +1,4 @@
-var basketTestdataKH = [
+const basketTestdataKH = [
 ["C", 1, 8999, 50000007824, null, "50000000000015", "BGL", false, false, null, 512, 0, - 254, "BGL MM", "11.05.2016", "BGL MM", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, false, false],
 ["W", 1, 8999, 50000007824, 4194304, "50000000000015", null, true, true, false, 512, 0, - 254, "Aimer, Aurelia, 17.05.1969", "11.05.2016", "BGL MM", "Begehung terminiert", null, "Klinikum der Universität Manchen Campus Großhadern", null, null, null, "AOK Bamberg / Poedel 1", null, null, null, null, null, "210", null, "Mario Mustermann", null, null, "Unbestimmt", true, false],
 ["C", 1, 8445, 50000006575, null, "50000000000015", "BGL", false, false, null, 40, 2, 63, "BGL 20150310 20150309172719", "06.02.2015", "BGL 20150310 20150309172719", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, false, false],
