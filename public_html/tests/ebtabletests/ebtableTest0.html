@@ -7,11 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"/>
     <link rel="stylesheet" href="../../vendor/jQueryUI-1.12.0/jquery-ui.css">
     <link rel="stylesheet" href="../../css/ebtable.css">
-    <style>
-      * {font-family:Arial;color: black;font-size: 12px;      }
-      body { width: 1000px; background: #8699A4; margin: 10px 10px 10px 10px; }
-      .ui-icon { transform: scale(1.2); margin: 1px; padding: 1px;}
-    </style>
+    <link rel="stylesheet" href="../../css/ebtableTest.css">
 
     <script src="../../vendor/underscore-1.8.3/underscore.js"></script>
     <script src="../../vendor/jQuery-1.11.3/jquery.js"></script>
@@ -20,7 +16,7 @@
     <script src="../../javascript/ebtable/mx.js"></script>
     <script>
       'use strict';
-      var basketTestdata = [
+      const basketTestdata = [
         ['Wolperdinger', '31.08.1915', 'Herder, Johann Gottfried', 5],
         ['Yeti        ', '31.08.2016', 'Lichtenberg, Georg Christoph ', 31],
         ['Esel        ', '05.08.2011', 'Liebig, Ellen,', 1],
@@ -45,7 +41,7 @@
 
       //#######################################################################
 
-      var opts = {
+      const opts = {
         debug: true,
         bodyWidth: '700px',
         flags: {
@@ -68,7 +64,7 @@
         grid = $('#grid').ebtable(opts, basketTestdata);
         $('#saveGridStatus').on('click', grid.saveSessionState)
         $('#loadGridStatus').on('click', function () {
-          var mixopts = _.extend({}, opts, $.fn.ebtable.loadSessionState());
+          const mixopts = _.extend({}, opts, $.fn.ebtable.loadSessionState());
           grid = $('#grid').ebtable(mixopts, basketTestdata).setFilterValues(mixopts.filters);
         })
       });

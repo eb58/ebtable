@@ -18,7 +18,7 @@
         top.DialogID = "cancellation-list";
         top.refreshMenu && top.refreshMenu(2);
 
-        var cancellationResponses = [
+        const cancellationResponses = [
             [50, "10", "Gutachtenerstellung zu weit fortgeschritten"],
             [51, "20", "Begehung im Krankenhaus bereits erfolgt"],
             [52, "30", "Auftrag bereits abgeschlossen/zurückgegeben"],
@@ -26,18 +26,18 @@
             [54, "50", "Sonstiges"]
         ];
 
-        var grid;
+        let grid;
 
-        var dlgReject = function (selwids) { //  Dialog "Stornoanforderung zurückweisen"
+        const dlgReject = function (selwids) { //  Dialog "Stornoanforderung zurückweisen"
             $('#dlgReject').remove();
-            var t = '<div id="dlgReject">\n\
+            const t = '<div id="dlgReject">\n\
                   <div id="reasons"></div>\n\
                 </div>';
-            var dlg = $(t);
-            var reasons;
-            var dlgopts = {
+            const dlg = $(t);
+            let reasons;
+            const dlgopts = {
                 open: function () {
-                    var ropts = {
+                    const ropts = {
                         columns: [
                             {name: "id", invisible: true},
                             {name: "Code"},
@@ -56,12 +56,12 @@
                 closeText: 'Schlie\u00dfen',
                 buttons: {
                     "OK": function () {
-                        var selRows = reasons.getSelectedRows();
+                        const selRows = reasons.getSelectedRows();
                         if (selRows.length === 0) {
                             $.alert("Meldung", "Kein Grund ausgew\u00e4hlt");
                             return;
                         }
-                        var code = selRows[0][0];
+                        const code = selRows[0][0];
                         $.getJSON("cancellation-list.do?action=rejectCancellation&workorderIds=" + selwids + "&reasonId=" + code, function (data) {
                             if (data.error) {
                                 $.alert("Fehler", data.error);
@@ -80,8 +80,8 @@
         };
 
         function initTable(data) {
-            var reorderData = function (data) {
-                var colorder = [0, 2, 3, 4, 9, 12, 11, 13, 10, 15, 14, 1, 7, 8, 5];
+            const reorderData = function (data) {
+                const colorder = [0, 2, 3, 4, 9, 12, 11, 13, 10, 15, 14, 1, 7, 8, 5];
                 return data.map(function (row) {
                     row[4] = row[4] === 1 ? 'offen' : 'abgelehnt';
                     return row.map(function (col, c) {
@@ -93,7 +93,7 @@
         }
 
         function searchOnServer() {
-            var filters = grid ? grid.getFilterValues() : {};
+            const filters = grid ? grid.getFilterValues() : {};
 
 //          $.getJSON("cancellation-list.do?action=filter&filterStornostatus=1", function (data) {
 //            grid = initTable(data);
@@ -102,12 +102,10 @@
             grid = initTable(result2);
         }
 
-        var renderer = {
-            renderInsurand: function (data, row) {
-                return '<a title="' + row[0] + '" href="../../ISmed/showOrder.do;jsessionid=<%=session.getId()%>?src=cancellationList&workorderid=' + row[0] + '&mode=showTracingOrder")">' + data + '</a>';
-            }
+        const  renderer = {
+            renderInsurand: (data, row) => '<a title="' + row[0] + '" href="../../ISmed/showOrder.do;jsessionid=<%=session.getId()%>?src=cancellationList&workorderid=' + row[0] + '&mode=showTracingOrder")">' + data + '</a>'
         };
-        var opts = {
+        const opts = {
             debug: true,
             flags: {
                 colsResizable: true,
@@ -142,12 +140,12 @@
         };
 
         function getFilter() {
-            var filterMap = {};
+            const filterMap = {};
             $('#grid thead th input[type=text],#grid thead th select').each(function (idx, elem) {
-                var val = $.trim($(elem).val());
+                const val = $.trim($(elem).val());
                 if (val !== '') {
                     coldef = _.findWhere(opts.columns, {name: elem.id});
-                    var dbname = coldef.dbname || coldef.name;
+                    const dbname = coldef.dbname || coldef.name;
                     filterMap[dbname] = $(elem).val();
                 }
             });
@@ -158,7 +156,7 @@
         }
 
         function getSelectedWorkorderIds(grid) {
-            var ids = [];
+            const ids = [];
             grid.iterateSelectedValues(function (x) {
                 ids.push(x[0]);
             });

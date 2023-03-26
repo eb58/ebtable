@@ -36,7 +36,7 @@
             ['  ', 1, -1, 'Einhorn     ', '04.11.2017', 'Goethe, Johann Wolfgang', 63],
             ['  ', 1, -1, 'Lindwurm    ', '31.12.2018', 'Schiller, Friedrich', 255]
         ];
-        for (var i = 0; i < basketTestdata.length; i++) {
+        for (let i = 0; i < basketTestdata.length; i++) {
             basketTestdata[i].splice(3, 0, 'XXX');
         }
 
@@ -155,7 +155,7 @@
             $('#saveGridStatus').on('click', grid.saveSessionState)
             $('#loadGridStatus').on('click', function () {
                 const ss = $.extend($.fn.ebtable.loadSessionState());
-                const gridOpts = $.extend(true, {}, gridopts, ss ? ss.myopts : {});
+                const gridOpts = $.extend(true, {}, gridOpts, ss ? ss.myopts : {});
                 grid = $('#grid').ebtable(gridOpts, basketTestdata).setFilterValues(ss.filters);
             })
         });

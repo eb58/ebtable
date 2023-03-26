@@ -1,18 +1,17 @@
 /* global _ */
 
 function clearLocalStorage() {
-  _.keys(localStorage).forEach(function (o, idx) {
-    console.log(o, idx);
-    o.indexOf('unittest') > 0 && delete localStorage[o];
-  })
+    Object.keys(localStorage).forEach(function (o, idx) {
+        console.log(o, idx);
+        o.indexOf('unittest') > 0 && delete localStorage[o];
+    })
 }
-function getCol(gridname, n) {
-  return $('#' + gridname + ' table tbody td:nth-child(' + n + ')').toArray().reduce(function (acc, o) {
-    acc.push($(o).text().trim());
-    return acc;
-  }, [])
-}
+
+const getCol = (gridname, n) => $('#' + gridname + ' table tbody td:nth-child(' + n + ')')
+    .toArray()
+    .reduce((acc, o) =>[...acc, $(o).text().trim()], [])
+
 function reinit(gridname, opts, data) {
-  clearLocalStorage();
-  $('#' + gridname).ebtable(opts, data);
+    clearLocalStorage();
+    $('#' + gridname).ebtable(opts, data);
 }

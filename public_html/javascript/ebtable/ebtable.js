@@ -1,3 +1,4 @@
+const range = (n) => [...Array(n).keys()]
 const dlgConfig = function (opts) {
     const dlgTemplate = _.template('\
         <div id="<%=gridid%>configDlg">\n\
@@ -407,10 +408,10 @@ const dlgConfig = function (opts) {
             },
             bodyHeight: Math.max(200, $(window).height() - 180),
             bodyWidth: '', //Math.max(700, $(window).width() - 40),
-            rowsPerPageSelectValues: [10, 25, 50, 100],
-            rowsPerPage: 10,
+            rowsPerPageSelectValues: [5, 10, 25, 50, 100],
+            rowsPerPage: 5,
             pageCur: 0,
-            colorder: _.range(opts.columns.length), // [0,1,2,... ]
+            colorder: range(opts.columns.length), // [0,1,2,... ]
             selectionCol: false, // or true or
             // {
             //   singleSelection: true,                                 // default: false
