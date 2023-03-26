@@ -8,11 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"/>
     <link rel="stylesheet" href="../../vendor/jQueryUI-1.12.0/jquery-ui.css">
     <link rel="stylesheet" href="../../css/ebtable.css">
-    <style>
-      * {font-family:Arial; color: black; font-size: 10px;}
-      body { width: 1000px; background: #8699A4; margin: 10px 10px 10px 10px; }
-
-    </style>
+    <link rel="stylesheet" href="../../css/ebtableTest.css">
 
     <script src="../../vendor/underscore-1.8.3/underscore.js"></script>
     <script src="../../vendor/jQuery-1.11.3/jquery.js"></script>
@@ -23,7 +19,7 @@
     <script>
       'use strict';
 
-      const flagsdef = [
+      const flagsDef = [
         {key: '!', id: 1, img: 'important.gif', alt: 'Eilauftrag'},
         {key: '*', id: 2, img: 'blackstar.gif', alt: 'Spezialfall'},
         {key: 'P', id: 4, img: 'problem.gif', alt: 'Problemfall'},
@@ -36,18 +32,18 @@
         {key: 'U', id: 512, img: 'mimaUnbearbeitet.gif', alt: 'Vorgang nicht zugeordnet'},
         {key: 'B', id: 1024, img: 'mimaBearbeitet.gif', alt: 'Vorgang bearbeitet'}
       ];
-      var flags = _.pluck(flagsdef, 'key').join(''); // '!*PFGKSC'
+      var flags = _.pluck(flagsDef, 'key').join(''); // '!*PFGKSC'
 
       var flagutils = {
         fromBitNumber: function (bits) { // 5 (101)  -->  '!P' # 7 (111) -> '!*p' # 8 (1000) -> F
           return _.reduce(Number(bits).toString(2).split('').reverse(), function (acc, o, i) {
-            return acc += (o === '1' && flags[i] ? flags[i] : '');
+            return acc + (o === '1' && flags[i] ? flags[i] : '');
           }, '');
         },
         toBitNumber: function (str) { // '!P' -> 5 (101), '!PG' -> 21
           return _.reduce(str.toUpperCase().split(''), function (acc, c) {
-            var x = _.findWhere(flagsdef, {key: c});
-            return acc += x ? x.id : 0;
+            var x = _.findWhere(flagsDef, {key: c});
+            return acc + x ? x.id : 0;
           }, 0);
         }
       };
@@ -61,13 +57,13 @@
       var downflagutils = {
         fromBitNumber: function (bits) { // 3 (11) -> 'FD'
           return _.reduce(Number(bits).toString(2).split('').reverse(), function (acc, o, i) {
-            return acc += (o === '1' && downflags[i] ? downflags[i] : '');
+            return acc + (o === '1' && downflags[i] ? downflags[i] : '');
           }, '');
         },
         toBitNumber: function (str) { // 'FD' -> 3 (11), 'F' -> 1, 'D' -> 2
           return _.reduce(str.toUpperCase().split(''), function (acc, c) {
             var x = _.findWhere(downflagsdef, {key: c});
-            return acc += x ? x.id : 0;
+            return acc + x ? x.id : 0;
           }, 0);
         }
       };
@@ -182,7 +178,7 @@
           var mima_status_0 = '';
           if (row[0] === 'W' && (row[1] & 1792) === 0)  // mimastatus-Behandlung
             mima_status_0 = "<img src='../../images/empty_link.gif' alt='' id='mima_marker_" + row[4] + "' title='' height='0px'/>";
-          return _.reduce(flagsdef, function (acc, o) {
+          return _.reduce(flagsDef, function (acc, o) {
             var imgid = '';
             if (row[0] === 'W' && (o.id & 1792) === o.id)
               imgid = 'id="mima_marker_' + row[4] + '"';

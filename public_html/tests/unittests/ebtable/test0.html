@@ -8,11 +8,8 @@
     <link rel="stylesheet" href="../../../vendor/jQueryUI-1.12.0/jquery-ui.css">
     <link rel="stylesheet" href="../../../vendor/qunit/qunit.css">
     <link rel="stylesheet" href="../../../css/ebtable.css">
-    <style>
-      * {font-family:Arial;color: black;font-size: 12px;      }
-      body { width: 1000px; background: #8699A4; margin: 10px 10px 10px 10px; }
+    <link rel="stylesheet" href="../../../css/ebtableTest.css"/>
 
-    </style>
 
     <script src="../../../vendor/underscore-1.8.3/underscore.js"></script>
     <script src="../../../vendor/jQuery-1.11.3/jquery.js"></script>
@@ -23,14 +20,14 @@
     <script src="testHelpers.js"></script>
     <script>
       'use strict';
-      var data = [
+      const data = [
         ['Wolperdinger', '31.08.1915', 5],
         ['Yeti        ', '31.08.2016', 31]
       ];
 
       //#######################################################################
 
-      var opts = {
+      const opts = {
         flags: {
           clearFilterButton: false,
           colsResizable: false
@@ -45,7 +42,6 @@
         //lang:'en'
       };
 
-      var grid;
       $().ready(function () {
         QUnit.test('testset: easy ones', function (assert) {
           reinit('grid', opts, data);
