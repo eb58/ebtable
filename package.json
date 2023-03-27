@@ -1,5 +1,5 @@
 {
-  "name": "HTML5Application",
+  "name": "ebtable",
   "version": "1.0.0",
   "keywords": [
     "util",
@@ -10,5 +10,14 @@
   ],
   "author": "A403163",
   "contributors": [],
-  "dependencies": {}
+  "dependencies": {
+    "prettier": "^2.8.7"
+  },
+  "prettier": {
+    "singleQuote": true,
+    "bracketSpacing": true,
+    "printWidth": 180,
+    "trailingComma": "none",
+    "endOfLine": "auto"
+  }
 }
