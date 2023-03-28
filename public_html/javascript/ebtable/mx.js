@@ -16,7 +16,7 @@ const mx = (m, groupDef) => {
       rowMatch: (filters) => (row) =>
         (Array.isArray(filters) ? filters : [filters]).reduce((acc, f) => {
           const cellData = row[f.col].trim();
-          const matchFct = f.match || $.fn.ebtable.matcher['starts-with-matches'];
+          const matchFct = f.match || mx.matcher['starts-with-matches'];
           return acc && matchFct(cellData, f.searchtext, row, m);
         }, true),
       filterData: (filters) => m.filter(fcts.rowMatch(filters))
@@ -85,7 +85,7 @@ const mx = (m, groupDef) => {
         return (r1, r2) => {
           for (let i = 0; i < colDefs.length; i++) {
             const cdef = colDefs[i];
-            const fmt = cdef.sortformat ? $.fn.ebtable.sortformats[cdef.sortformat] : undefined;
+            const fmt = cdef.sortformat ? mx.sortformats[cdef.sortformat] : undefined;
             const x = prepareItem(r1, cdef.col, fmt, groups, cdef.sortorder);
             const y = prepareItem(r2, cdef.col, fmt, groups, cdef.sortorder);
             let ret = 0;
@@ -136,11 +136,58 @@ const mx = (m, groupDef) => {
   //#####################################################################
 
   const apis = { ...basicApi, ...sorting, ...filtering, ...grouping, ...paging };
-  const res = Object.keys(apis).reduce((acc, k) => ((acc[k] = apis[k]), acc), m);
+  Object.keys(apis).forEach( k => m[k] = apis[k]);
 
   if (groupDef) {
-    res.initGroups(groupDef);
-    console.log('after initGroups', res);
+    m.initGroups(groupDef);
+    console.log('after initGroups', m);
   }
-  return res;
+  return m;
+};
+
+// ##########  matcher ############
+
+mx.matcher = (() => {
+  const getFormattedDate= (date) => {
+    const d = ('0' + date.getDate()).slice(-2);
+    const m = ('0' + (date.getMonth() + 1)).slice(-2);
+    const y = date.getFullYear();
+    const hs = ('0' + date.getHours()).slice(-2);
+    const ms = ('0' + date.getMinutes()).slice(-2);
+    const ss = ('0' + date.getSeconds()).slice(-2);
+    return d + '.' + m + '.' + y + ' ' + hs + ':' + ms + ':' + ss;
+  }
+  return {
+    matches: (cellData, searchTxt) => cellData.match(new RegExp('.*' + searchTxt, 'i')),
+    contains: (cellData, searchTxt) => cellData.toLowerCase().includes(searchTxt.toLowerCase()),
+    'starts-with': (cellData, searchTxt) => cellData.toLowerCase().startsWith(searchTxt.toLowerCase()),
+    'starts-with-matches': (cellData, searchTxt) => cellData.match(new RegExp('^' + searchTxt.replace(/\*/g, '.*'), 'i')),
+    'matches-date': (cellData, searchTxt) => getFormattedDate(new Date(parseInt(cellData))).startWith(searchTxt),
+    'matches-date-time': (cellData, searchTxt) => getFormattedDate(new Date(parseInt(cellData))).startWith(searchTxt),
+    'matches-date-time-sec': (cellData, searchTxt) => getFormattedDate(new Date(parseInt(cellData))).startWith(searchTxt)
+  };
+})();
+
+// ##########  sortformats ############
+
+mx.sortformats = {
+  'date-de': function (a) {
+    // '01.01.2013' -->   '20130101'
+    const d = a.match(/^(\d{2})\.(\d{2})\.(\d{4})$/);
+    return d ? d[3] + d[2] + d[1] : '';
+  },
+  'datetime-de': function (a) {
+    // '01.01.2013 12:36'  -->  '201301011236'
+    const d = a.match(/^(\d{2})\.(\d{2})\.(\d{4}) (\d{2}):(\d{2})$/);
+    return d ? d[3] + d[2] + d[1] + d[4] + d[5] : '';
+  },
+  'datetime-sec-de': function (a) {
+    // '01.01.2013 12:36:59'  -->  '20130101123659'
+    const d = a.match(/^(\d{2})\.(\d{2})\.(\d{4}) (\d{2}):(\d{2}):(\d{2})$/);
+    return d ? d[3] + d[2] + d[1] + d[4] + d[5] + d[6] : '';
+  },
+  scientific: function (a) {
+    // '1e+3'  -->  '1000'
+    return parseFloat(a);
+  }
 };
