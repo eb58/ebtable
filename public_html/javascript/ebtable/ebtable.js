@@ -50,18 +50,15 @@ const dlgConfig = (opts) => {
       getStateAsJSON: function () {
         const stateGeneral = {
           rowsPerPage: myOpts.rowsPerPage,
-          colorderByName: myOpts.colorder.map(function (idx) {
-            return myOpts.columns[idx].name;
-          }),
-          invisibleColnames: myOpts.columns.reduce(function (acc, o) {
-            if (o.invisible && !o.technical) acc.push(o.name);
-            return acc;
-          }, [])
+          colorderByName: myOpts.colorder.map((idx) => myOpts.columns[idx].name),
+          invisibleColnames: myOpts.columns.reduce((acc, o) => (o.invisible && !o.technical ? [...acc, o.name] : acc), [])
         };
-        const stateWidth = {
-          colwidths: util.getColWidths()
-        };
-        const state = _.extend({}, stateGeneral, myOpts.flags.colsResizable ? stateWidth : {});
+        const stateWidth = myOpts.flags.colsResizable
+          ? {
+              colwidths: util.getColWidths()
+            }
+          : {};
+        const state = { ...stateGeneral, ...stateWidth };
         return JSON.stringify(state);
       },
       saveState: function saveState() {
@@ -83,13 +80,13 @@ const dlgConfig = (opts) => {
             myOpts.colorder.push(n);
           }
         });
-        myOpts.columns.forEach(function (coldef, idx) {
-          if (!_.contains(state.colorderByName, coldef.name)) myOpts.colorder.push(idx);
+        myOpts.columns.forEach((coldef, idx) => {
+          if (!state.colorderByName.find((name) => name === coldef.name)) myOpts.colorder.push(idx);
         });
         if (myOpts.flags.colsResizable) {
           myOpts.bodyWidth = state.bodyWidth;
           state.colwidths &&
-            _.isArray(state.colwidths) &&
+            Array.isArray(state.colwidths) &&
             state.colwidths.forEach(function (col) {
               const coldef = util.colDefFromName(col.name);
               if (coldef) {
@@ -384,18 +381,23 @@ const dlgConfig = (opts) => {
         return this;
       },
       filterData: () => {
-        const filters = _.extend(_.isArray(myOpts.predefinedFilters) ? [] : {}, myOpts.predefinedFilters);
-        $(selGridId + 'thead th input[type=text],' + selGridId + 'thead th select').each((idx, o) => {
-          const val = $(o).val();
-          if (val && val.trim()) {
-            const colid = $(o).attr('id');
-            const colname = util.colNameFromId(colid);
-            const col = util.colIdxFromName(colname);
-            const ren = util.getRender(colname);
-            const mat = util.getMatch(colname);
-            filters.push({ col: col, searchtext: val.trim(), render: ren, match: mat });
-          }
-        });
+        const filters = $(selGridId + 'thead th input[type=text],' + selGridId + 'thead th select')
+          .toArray()
+          .reduce(
+            (acc, o) => {
+              const val = $(o).val();
+              if (val && val.trim()) {
+                const colid = $(o).attr('id');
+                const colname = util.colNameFromId(colid);
+                const col = util.colIdxFromName(colname);
+                const ren = util.getRender(colname);
+                const mat = util.getMatch(colname);
+                acc.push({ col: col, searchtext: val.trim(), render: ren, match: mat });
+              }
+              return acc;
+            },
+            [...myOpts.predefinedFilters]
+          );
         tblData = mx(origData.filterGroups(myOpts.groupdefs, origData.groupsdata));
         tblData = mx(tblData.filterData(filters));
         pageCurMax = Math.floor(Math.max(0, tblData.length - 1) / myOpts.rowsPerPage);
@@ -440,7 +442,7 @@ const dlgConfig = (opts) => {
       const startRow = Math.min(myOpts.rowsPerPage * pageCur + 1, tblData.length);
       const endRow = Math.min(startRow + myOpts.rowsPerPage - 1, tblData.length);
       const filtered = origData.length === tblData.length ? '' : _.template(util.translate('(<%=len%> Eintr\u00e4ge insgesamt)'))({ len: origData.length });
-      const cntSelected = !cntSel || !myOpts.selectionCol || myOpts.selectionCol.singleSelection ? '' : _.template(util.translate('(<%=len%> ausgew\u00e4hlt)'))({ len: cntSel });
+      const cntSelected = !cntSel || !myOpts.selectionCol || myOpts.selectionCol.singleSelection ? '' : _.template(util.translate('(<%=len%> ausgewählt)'))({ len: cntSel });
       const template = _.template(util.translate('<%=start%> bis <%=end%> von <%=count%> Zeilen <%=filtered%> <%=cntSelected%>'));
       return template({
         start: startRow,
@@ -769,7 +771,8 @@ const dlgConfig = (opts) => {
       groupdefs: {}, // { grouplabel: 0, groupcnt: 1, groupid: 2, groupsortstring: 3, groupname: 4, grouphead: 'GA', groupelem: 'GB' },
       openGroups: [],
       hasMoreResults: hasMoreResults,
-      clickOnRowHandler: (rowData, row) => { // just for documentation
+      clickOnRowHandler: (rowData, row) => {
+        // just for documentation
         util.log('clickOnRowHandler', rowData, row);
       },
       lang: 'de',
@@ -872,8 +875,9 @@ const dlgConfig = (opts) => {
   $.fn.ebtable.lang = {
     de: {},
     en: {
+      '(<%=len%> ausgewählt)': '(<%=len%> selected)',
       '(<%=len%> Eintr\u00e4ge insgesamt)': '(<%=len%> entries)',
-      '<%=start%> bis <%=end%> von <%=count%> Zeilen <%= filtered %>': '<%=start%> to <%=end%> of <%=count%> shown entries <%= filtered %>',
+      '<%=start%> bis <%=end%> von <%=count%> Zeilen <%=filtered%> <%=cntSelected%>': '<%=start%> to <%=end%> of <%=count%> shown entries <%= filtered %> <%=cntSelected%>',
       'Spalten verwalten': 'Configure',
       'Alle Filter entfernen': 'Remove all filters',
       OK: 'OK',
