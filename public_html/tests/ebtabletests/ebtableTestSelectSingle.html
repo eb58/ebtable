@@ -1,58 +1,60 @@
 <!DOCTYPE html>
 <html lang="de">
-<head>
+  <head>
     <title>Beispiel</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"/>
-    <link rel="stylesheet" href="../../vendor/jQueryUI-1.12.0/jquery-ui.css">
-    <link rel="stylesheet" href="../../css/ebtable.css">
-    <link rel="stylesheet" href="../../css/ebtableTest.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/base/jquery-ui.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/eggplant/jquery-ui.min.css" />
+    <link rel="stylesheet" href="../../css/ebtable.css" />
+    <link rel="stylesheet" href="../../css/ebtableTest.css" />
 
     <script src="../../vendor/underscore-1.8.3/underscore.js"></script>
     <script src="../../vendor/jQuery-1.11.3/jquery.js"></script>
-    <script src="../../vendor/jQueryUI-1.12.0/jquery-ui.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
+
     <script src="../../javascript/ebtable/mx.js"></script>
     <script src="../../javascript/ebtable/ebtable.js"></script>
     <script>
-        'use strict';
-        var basketTestdata = [
-            ['Wolperdinger', '31.08.1915', 'Herder, Johann Gottfried', 5],
-            ['Yeti        ', '31.08.2016', 'Lichtenberg, Georg Christoph ', 31],
-            ['Esel        ', '05.08.2011', 'Liebig, Ellen,', 1],
-            ['Affe        ', '10.06.2013', 'Heine, Heinrich', 2],
-            ['Maus        ', '15.09.2014', 'Manne, Antonia', 4],
-            ['Hase        ', '15.09.2014', 'Liebig, Gustav', 8],
-            ['Hund        ', '31.08.2015', 'Mann, Heinrich Gustav Friedhelm', 16],
-            ['Fliege      ', '31.08.2009', 'Mann, Thomas', 0],
-            ['Biene       ', '31.08.2001', 'Lessing, Gottfried', 7],
-            ['Hummel      ', '01.08.1759', 'Schiller, Friedrich', 0],
-            ['Wespe       ', '31.06.1900', 'Storm, Theodor', 0],
-            ['Karpfen     ', '31.08.2009', 'Mann, Thomas', 0],
-            ['Forelle     ', '31.08.2001', 'Lessing, Gottfried', 7],
-            ['Einhorn     ', '04.11.2017', 'Goethe, Johann Wolfgang', 63],
-            ['Lindwurm    ', '31.12.2018', 'Schiller, Friedrich', 255]
-        ];
+      'use strict';
+      var basketTestdata = [
+        ['Wolperdinger', '31.08.1915', 'Herder, Johann Gottfried', 5],
+        ['Yeti        ', '31.08.2016', 'Lichtenberg, Georg Christoph ', 31],
+        ['Esel        ', '05.08.2011', 'Liebig, Ellen,', 1],
+        ['Affe        ', '10.06.2013', 'Heine, Heinrich', 2],
+        ['Maus        ', '15.09.2014', 'Manne, Antonia', 4],
+        ['Hase        ', '15.09.2014', 'Liebig, Gustav', 8],
+        ['Hund        ', '31.08.2015', 'Mann, Heinrich Gustav Friedhelm', 16],
+        ['Fliege      ', '31.08.2009', 'Mann, Thomas', 0],
+        ['Biene       ', '31.08.2001', 'Lessing, Gottfried', 7],
+        ['Hummel      ', '01.08.1759', 'Schiller, Friedrich', 0],
+        ['Wespe       ', '31.06.1900', 'Storm, Theodor', 0],
+        ['Karpfen     ', '31.08.2009', 'Mann, Thomas', 0],
+        ['Forelle     ', '31.08.2001', 'Lessing, Gottfried', 7],
+        ['Einhorn     ', '04.11.2017', 'Goethe, Johann Wolfgang', 63],
+        ['Lindwurm    ', '31.12.2018', 'Schiller, Friedrich', 255]
+      ];
 
-        //#######################################################################
+      //#######################################################################
 
-        const opts = {
-            debug: true,
-            columns: [
-                {name: "Tierart", match: 'contains'},
-                {name: "Datum", sortformat: 'date-de', match: 'matches-date-time', css: 'text-align: center'},
-                {name: "Name"},
-                {name: "Flag"}
-            ],
-            //sortcolname: 'Tierart',
-            selectionCol: {singleSelection: true},
-        };
-        $().ready(function () {
-            $('#grid').ebtable(opts, basketTestdata);
-        });
+      const opts = {
+        debug: true,
+        columns: [
+          { name: 'Tierart', match: 'contains' },
+          { name: 'Datum', sortformat: 'date-de', match: 'matches-date-time', css: 'text-align: center' },
+          { name: 'Name' },
+          { name: 'Flag' }
+        ],
+        //sortcolname: 'Tierart',
+        selectionCol: { singleSelection: true }
+      };
+      $().ready(function () {
+        $('#grid').ebtable(opts, basketTestdata);
+      });
     </script>
-</head>
-<body>
-<div id="grid"></div>
-</body>
+  </head>
+  <body>
+    <div id="grid"></div>
+  </body>
 </html>

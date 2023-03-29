@@ -103,9 +103,9 @@ const dlgConfig = (opts) => {
       }
     };
 
-    const sessionStateUtil = (function () {
+    const sessionStateUtil = (() => {
       // saving/loading state
-      const saveSessionState = function () {
+      const saveSessionState = () => {
         const openGroups = getOpenGroups();
         sessionStorage[sessionStorageKey] = JSON.stringify({
           pageCur: self.getPageCur(),
@@ -125,9 +125,9 @@ const dlgConfig = (opts) => {
       log: (...args) => opts.debug && console.log(args),
       translate: (str) => $.fn.ebtable.lang[myOpts.lang || 'de'][str] || str,
       colIdxFromName: (colname) => myOpts.columns.findIndex((o) => o.name === colname),
-      colDefFromName: (colname) => _.findWhere(myOpts.columns, { name: colname }),
+      colDefFromName: (colname) => myOpts.columns.find((c) => c.name === colname),
       colIdFromName: (colname) => util.colDefFromName(colname).id,
-      colNameFromId: (colid) => (_.findWhere(myOpts.columns, { id: colid }) || {}).name,
+      colNameFromId: (colid) => (myOpts.columns.find((c) => c.id === colid) || {}).name,
       colIsInvisible: (colname) => util.colDefFromName(colname).invisible,
       colIsTechnical: (colname) => util.colDefFromName(colname).technical,
       getRender: (colname) => util.colDefFromName(colname).render,
@@ -321,11 +321,11 @@ const dlgConfig = (opts) => {
       getSortState: () => {
         const colidx = util.colIdxFromName(myOpts.sortcolname);
         const coldef = myOpts.columns[colidx];
-        const coldefs = $.extend([], coldef.sortmaster || myOpts.sortmaster);
-        if (_(_(coldef.sortmaster).pluck('col')).indexOf(colidx) < 0) {
-          coldefs.push({ col: colidx, sortorder: coldef.sortorder });
+        const sortDefs = $.extend([], coldef.sortmaster || myOpts.sortmaster);
+        if (!coldef.sortmaster || coldef.sortmaster.map((x) => x.col).indexOf(colidx) < 0) {
+          sortDefs.push({ col: colidx, sortorder: coldef.sortorder });
         }
-        return coldefs;
+        return sortDefs;
       },
       sortToggle: () => {
         const sortToggleS = { desc: 'asc', asc: 'desc', 'desc-fix': 'desc-fix', 'asc-fix': 'asc-fix' };
@@ -352,13 +352,13 @@ const dlgConfig = (opts) => {
           sortingFcts.showSortingIndicators();
           const colidx = util.colIdxFromName(myOpts.sortcolname);
           const coldef = myOpts.columns[colidx];
-          const coldefs = $.extend([], coldef.sortmaster || myOpts.sortmaster);
-          if (_(_(coldef.sortmaster).pluck('col')).indexOf(colidx) < 0) {
-            coldefs.push({ col: colidx, sortformat: coldef.sortformat, sortorder: coldef.sortorder });
+          const sortDefs = $.extend([], coldef.sortmaster || myOpts.sortmaster);
+          if (!coldef.sortmaster || coldef.sortmaster.map((x) => x.col).indexOf(colidx) < 0) {
+            sortDefs.push({ col: colidx, sortformat: coldef.sortformat, sortorder: coldef.sortorder });
           }
-          coldefs.forEach((o) => (o.sortorder = myOpts.columns[o.col].sortorder || myOpts.sortdirection || 'desc'));
-          tblData = tblData.sort(tblData.rowCmpCols(coldefs, origData.groupsdata));
-          util.log('sorting', myOpts.sortcolname, JSON.stringify(coldefs));
+          sortDefs.forEach((o) => (o.sortorder = myOpts.columns[o.col].sortorder || 'desc'));
+          tblData = tblData.sort(tblData.rowCmpCols(sortDefs, origData.groupsdata));
+          util.log('sorting', myOpts.sortcolname, JSON.stringify(sortDefs));
         }
       }
     };
@@ -434,7 +434,7 @@ const dlgConfig = (opts) => {
 
     const pageBrowseCtrl = () => `<button class="firstBtn"><span class="ui-icon ui-icon-seek-first"/></button>\
               <button class="backBtn"><span  class="ui-icon ui-icon-seek-prev" /></button>\
-              <button class="nextBtn"><span  class="ui-icon ui-icon-seek-next" /></button>\
+        <button class="nextBtn"><span  class="ui-icon ui-icon-seek-next" /></button>\
               <button class="lastBtn"><span  class="ui-icon ui-icon-seek-end"  /></button>`;
 
     const ctrlInfo = () => {
@@ -529,7 +529,7 @@ const dlgConfig = (opts) => {
           const coldef = myOpts.columns[colorder[c]];
           if (!coldef.invisible) {
             const xx = tblData[r][colorder[c]];
-            const v = _.isNumber(xx) ? xx : xx || '';
+            const v = typeof xx === 'number' ? xx : xx || '';
             const val = coldef.render ? coldef.render(v, row, r, origData) : v;
             const style = coldef.css ? ' style="' + coldef.css + '"' : '';
             res += '<td ' + cls + style + '>' + val + '</td>';
@@ -743,7 +743,7 @@ const dlgConfig = (opts) => {
         withsorting: true,
         clearFilterButton: false,
         arrangeColumnsButton: true,
-        colsResizable: false,
+        colsResizable: true,
         jqueryuiTooltips: true,
         ctrls: true
       },
@@ -811,17 +811,7 @@ const dlgConfig = (opts) => {
 
     myOpts.flags.jqueryuiTooltips && this.tooltip();
 
-    const getOpenGroups = () =>
-      _.reduce(
-        origData.groupsdata,
-        (acc, val, key) => {
-          if (val.isOpen) {
-            acc.push(parseInt(key));
-          }
-          return acc;
-        },
-        []
-      );
+    const getOpenGroups = () => origData.groupsdata.reduce((acc, grp, key) => (grp.isOpen ? [...acc, parseInt(key)] : acc), []);
 
     // ##########  Exports ############
     this.util = util;
@@ -841,7 +831,7 @@ const dlgConfig = (opts) => {
         pageCur = Math.min(pageCur, pageCurMax);
         redraw(pageCur);
       },
-      groupIsOpen: (groupid) => _.property('isOpen')(origData.groupsdata[groupid]),
+      groupIsOpen: (groupid) => origData.groupsdata[groupid].isOpen,
       setSortColname: (colname) => (myOpts.sortcolname = colname),
       getSortColname: () => myOpts.sortcolname,
       getPageCur: () => pageCur,
@@ -878,7 +868,7 @@ const dlgConfig = (opts) => {
       '(<%=len%> ausgewählt)': '(<%=len%> selected)',
       '(<%=len%> Eintr\u00e4ge insgesamt)': '(<%=len%> entries)',
       '<%=start%> bis <%=end%> von <%=count%> Zeilen <%=filtered%> <%=cntSelected%>': '<%=start%> to <%=end%> of <%=count%> shown entries <%= filtered %> <%=cntSelected%>',
-      'Spalten verwalten': 'Configure',
+      'Spalten verwalten': 'Configure Columns',
       'Alle Filter entfernen': 'Remove all filters',
       OK: 'OK',
       Abbrechen: 'Cancel'

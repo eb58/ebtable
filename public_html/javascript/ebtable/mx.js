@@ -3,7 +3,6 @@ const mx = (m, groupDef) => {
   // groupDef see below
   const range = (n) => [...Array(n).keys()];
   const basicApi = {
-    zero: () => m.fill(0),
     row: (n) => m[n],
     col: (n) => m.map((r) => r[n]),
     rows: (p) => m.filter((r, idx) => (!Array.isArray(p) ? p(m[r]) : p.indexOf(idx) >= 0)) // p = predicate-function or arr  ~ [1,4,5]
@@ -136,11 +135,10 @@ const mx = (m, groupDef) => {
   //#####################################################################
 
   const apis = { ...basicApi, ...sorting, ...filtering, ...grouping, ...paging };
-  Object.keys(apis).forEach( k => m[k] = apis[k]);
+  Object.keys(apis).forEach((k) => (m[k] = apis[k]));
 
   if (groupDef) {
     m.initGroups(groupDef);
-    console.log('after initGroups', m);
   }
   return m;
 };
@@ -148,7 +146,7 @@ const mx = (m, groupDef) => {
 // ##########  matcher ############
 
 mx.matcher = (() => {
-  const getFormattedDate= (date) => {
+  const getFormattedDate = (date) => {
     const d = ('0' + date.getDate()).slice(-2);
     const m = ('0' + (date.getMonth() + 1)).slice(-2);
     const y = date.getFullYear();
@@ -156,7 +154,7 @@ mx.matcher = (() => {
     const ms = ('0' + date.getMinutes()).slice(-2);
     const ss = ('0' + date.getSeconds()).slice(-2);
     return d + '.' + m + '.' + y + ' ' + hs + ':' + ms + ':' + ss;
-  }
+  };
   return {
     matches: (cellData, searchTxt) => cellData.match(new RegExp('.*' + searchTxt, 'i')),
     contains: (cellData, searchTxt) => cellData.toLowerCase().includes(searchTxt.toLowerCase()),

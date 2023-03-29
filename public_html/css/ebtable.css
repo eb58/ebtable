@@ -1,8 +1,8 @@
 .ebtable .ctrl     { height: 30px;  margin: 5px 0 0 0;}
 .ebtable .ctrl div { margin: 4px 1px;}
 
-.ebtable .ctrl .ui-button                      { padding-top: 1px;  padding-bottom: 3px; height: 22px;}
-.ebtable .ctrl .ui-icon                        { padding:0;   margin:0; color: white }
+.ebtable .ctrl .ui-button                      { padding-top: 1px;  padding-bottom: 1px; height: 22px;}
+.ebtable .ctrl .ui-icon                        { padding:0; margin:0; color: white }
 .ebtable .ctrl .ui-selectmenu-button           { height: 15px;}
 .ebtable .ctrl .ui-selectmenu-button.ui-button { padding-top: 3px;  padding-bottom: 3px;  width: 50px;}
 
@@ -13,7 +13,7 @@
 .ebtable #data, .ebtable #head{ background-color:#eaeaea;}
 
 .ebtable #data th{
-  background: linear-gradient( #3f51b5,#3f51b5);
+  background:  #3f51b5;
   color: white;
   padding: 6px 0 6px 0;
   overflow: hidden;
@@ -24,8 +24,8 @@
 .ebtable #data th div i { margin:0 0 0 4px; padding:0; width:11px; color:white; }
 .ebtable #data th input[type=text], .ebtable #data th select {  width: 95%;  box-sizing: border-box;}
 
-.ebtable #data tr:nth-child(even) {  background-color: #eceff1;}
-.ebtable #data tr:nth-child(odd) {  background-color: #fff;}
+.ebtable #data tr:nth-child(even) { background-color: #eceff1;}
+.ebtable #data tr:nth-child(odd ) { background-color: #ffffff;}
 
 .ebtable #data td            { background: white;  padding: 2px 1px 2px 1px;}
 .ebtable #data td.group      { background-color: #c7c7da;}
