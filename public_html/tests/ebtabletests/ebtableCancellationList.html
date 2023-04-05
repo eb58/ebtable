@@ -29,13 +29,12 @@
 
       let grid;
 
+      //  Dialog "Stornoanforderung zurückweisen"
       const dlgReject = function (selwids) {
-        //  Dialog "Stornoanforderung zurückweisen"
         $('#dlgReject').remove();
-        const t =
-          '<div id="dlgReject">\n\
-                  <div id="reasons"></div>\n\
-                </div>';
+        const t = `<div id="dlgReject">
+                <div id="reasons"></div>              
+        </div>`;
         const dlg = $(t);
         let reasons;
         const dlgopts = {
@@ -94,22 +93,11 @@
       }
 
       function searchOnServer() {
-        //          $.getJSON("cancellation-list.do?action=filter&filterStornostatus=1", function (data) {
-        //            grid = initTable(data);
-        //            //????$("#accept,#reject").button(grid.rows().data().length > 0 ? 'enable' : 'disable');
-        //          });
         grid = initTable(result2);
       }
 
       const renderer = {
-        renderInsurand: (data, row) =>
-          '<a title="' +
-          row[0] +
-          '" href="../../ISmed/showOrder.do;jsessionid=<%=session.getId()%>?src=cancellationList&workorderid=' +
-          row[0] +
-          '&mode=showTracingOrder")>' +
-          data +
-          '</a>'
+        renderInsurand: (data, row) => '<a title=' + row[0] + '</a>'
       };
       const opts = {
         debug: true,
@@ -146,7 +134,7 @@
         $('#grid thead th input[type=text],#grid thead th select').each(function (idx, elem) {
           const val = $.trim($(elem).val());
           if (val !== '') {
-            coldef = _.findWhere(opts.columns, { name: elem.id });
+            const coldef = _.findWhere(opts.columns, { name: elem.id });
             const dbname = coldef.dbname || coldef.name;
             filterMap[dbname] = $(elem).val();
           }
@@ -196,7 +184,7 @@
         $('#reject')
           .button()
           .click(function () {
-            selwids = getSelectedWorkorderIds(grid).join(',');
+            const selwids = getSelectedWorkorderIds(grid).join(',');
             if (selwids.length === 0) {
               $.alert('Meldung', 'Kein Eintrag ausgew\u00e4hlt.');
               return;

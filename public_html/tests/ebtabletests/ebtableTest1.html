@@ -15,33 +15,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
     <script src="../../javascript/ebtable/mx.js"></script>
     <script src="../../javascript/ebtable/ebtable.js"></script>
+    <script src="../../data/divTableData.js"></script>
     <script>
-      'use strict';
-      const basketTestdata = [
-        ['  ', 1, -1, 'Wolperdinger', '31.08.1915', 'Herder, Johann Gottfried', 5],
-        ['  ', 1, -1, 'Yeti        ', '31.08.2016', 'Lichtenberg, Georg Christoph ', 31],
-        ['GA', 5, 10, 'Säugetiere  ', '', '', 0],
-        ['GB', 1, 10, 'Esel        ', '05.08.2011', 'Liebig, Ellen,', 1],
-        ['GB', 1, 10, 'Affe        ', '10.06.2013', 'Heine, Heinrich', 2],
-        ['GB', 1, 10, 'Maus        ', '15.09.2014', 'Manne, Antonia', 4],
-        ['GB', 1, 10, 'Hase        ', '15.09.2014', 'Liebig, Gustav', 8],
-        ['GB', 1, 10, 'Hund        ', '31.08.2015', 'Mann, Heinrich Gustav Friedhelm', 16],
-        ['GA', 4, 20, 'Insekten    ', '', '', 0],
-        ['GB', 1, 20, 'Fliege      ', '31.08.2009', 'Mann, Thomas', 0],
-        ['GB', 1, 20, 'Biene       ', '31.08.2001', 'Lessing, Gottfried', 7],
-        ['GB', 1, 20, 'Hummel      ', '01.08.1759', 'Schiller, Friedrich', 0],
-        ['GB', 1, 20, 'Wespe       ', '31.06.1900', 'Storm, Theodor', 0],
-        ['GA', 2, 30, 'Fische      ', '', '', 0],
-        ['GB', 1, 30, 'Karpfen     ', '31.08.2009', 'Mann, Thomas', 0],
-        ['GB', 1, 30, 'Forelle     ', '31.08.2001', 'Lessing, Gottfried', 7],
-        ['  ', 1, -1, 'Einhorn     ', '04.11.2017', 'Goethe, Johann Wolfgang', 63],
-        ['  ', 1, -1, 'Lindwurm    ', '31.12.2018', 'Schiller, Friedrich', 255]
-      ];
-      for (let i = 0; i < basketTestdata.length; i++) {
-        basketTestdata[i].splice(3, 0, 'XXX');
-      }
-
-      //#######################################################################
+      const data = basketGroupedTestdata.map((a) => [...a.slice(0, 3), 'XXX', ...a.slice(3)]);
 
       const flagUtils = {
         flagsDef: [
@@ -54,10 +30,10 @@
           { key: 'S', id: 64, img: 'sperre.gif', alt: 'Sperre' },
           { key: 'C', id: 128, img: 'storniert.gif', alt: 'Stornierung angefordert' }
         ],
-        flags: _.pluck(this.flagsDef, 'key').join(''), // -> '!*PFGKSC'
+        flags: _.pluck(flagsDef, 'key').join(''), // -> '!*PFGKSC'
         fromBitNumber: (bits) =>
           Number(bits)
-            .toString(2) // 5 (101)  -->  '!P' # 7 (111) -> '!*p' # 8 (1000) -> F
+            .toString(2) // 5 (101) --> '!P' # 7 (111) -> '!*p' # 8 (1000) -> F
             .split('')
             .reverse()
             .reduce((acc, o, i) => (acc + o === '1' && flagUtils.flags[i] ? flagutilsflags[i] : ''), ''),
@@ -97,7 +73,7 @@
               return (
                 acc +
                 (data & o.id
-                  ? _.template("<img src='../../images/<\%=img%>' title='<\%=title%>' height='10px'/>")({
+                  ? _.template("<img src='../../images/<\%=img%>' title='<\%=title%>' height='10px' />")({
                       img: o.img,
                       title: o.alt
                     })
@@ -114,7 +90,8 @@
       };
 
       const gridOpts = {
-        sortmaster: [{ col: idx.gid }, { col: idx.gtyp }], //[{col:1,sortorder:'asc',sortformat:'date-de'},{col:2,sortorder:'desc'}]
+        sortmaster: [{ col: idx.gid }, { col: idx.gtyp }],
+        //[{col:1,sortorder:'asc',sortformat:'date-de'},{col:2,sortorder:'desc'}]
         sortcolname: 'Datum',
         columns: [
           { name: 'Grouping', invisible: true, technical: true, sortorder: 'asc-fix' },
@@ -135,9 +112,9 @@
         rowsPerPageSelectValues: [5, 10, 25, 50, 100],
         bodyHeight: 500,
         selectionCol: {
-          //{render: function (rowNr, row, origData) { console.log('onSelection', rowNr, row, origData);    }},
+          //{render: function (rowNr, row, origData) { console.log('onSelection', rowNr, row, origData); }},
           xonSelection: function (rowNr, row) {
-            if (row[0] !== '  ') {
+            if (row[0] !== ' ') {
               row.selected = false;
               $('#check' + rowNr)
                 .prop('checked', false)
@@ -158,18 +135,18 @@
         reloadData: function () {
           const ss = $.fn.ebtable.loadSessionState();
           const myOpts = $.extend(true, {}, gridOpts, ss.myopts);
-          grid = $('#grid').ebtable(myOpts, basketTestdata);
+          grid = $('#grid').ebtable(myOpts, data);
         },
         lang: 'en'
       };
       var grid;
       $().ready(function () {
-        grid = $('#grid').ebtable(gridOpts, basketTestdata);
+        grid = $('#grid').ebtable(gridOpts, data);
         $('#saveGridStatus').on('click', grid.saveSessionState);
         $('#loadGridStatus').on('click', function () {
           const ss = $.extend($.fn.ebtable.loadSessionState());
           const myOpts = $.extend(true, {}, gridOpts, ss ? ss.myopts : {});
-          grid = $('#grid').ebtable(myOpts, basketTestdata).setFilterValues(ss.filters);
+          grid = $('#grid').ebtable(myOpts, data).setFilterValues(ss.filters);
         });
       });
     </script>

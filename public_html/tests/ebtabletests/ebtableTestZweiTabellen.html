@@ -1,51 +1,52 @@
 <!DOCTYPE html>
-<html lang="de">
-  <head>
-    <title>Auftragsinfo</title>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/base/jquery-ui.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/eggplant/jquery-ui.min.css" />
-    <link rel="stylesheet" href="../../css/ebtable.css" />
-    <link rel="stylesheet" href="../../css/ebtableTest.css" />
+<html lang='de'>
+<head>
+  <title>Auftragsinfo</title>
+  <meta charset='UTF-8' />
+  <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css' />
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/base/jquery-ui.min.css' />
+  <link rel='stylesheet'
+        href='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/eggplant/jquery-ui.min.css' />
+  <link rel='stylesheet' href='../../css/ebtable.css' />
+  <link rel='stylesheet' href='../../css/ebtableTest.css' />
 
-    <script src="../../vendor/underscore-1.8.3/underscore.js"></script>
-    <script src="../../vendor/jQuery-1.11.3/jquery.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
+  <script src='../../vendor/underscore-1.8.3/underscore.js'></script>
+  <script src='../../vendor/jQuery-1.11.3/jquery.js'></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js'></script>
 
-    <script src="../../javascript/ebtable/mx.js"></script>
-    <script src="../../javascript/ebtable/ebtable.js"></script>
-    <script src="../../data/infoData.js"></script>
-    <script>
-      const tblData1 = adata.workorderComments.map(function (o) {
-        return [o.creationDate, o.authorName, o.addComment];
-      });
-      const tblData2 = tblData1.slice(0);
+  <script src='../../javascript/ebtable/mx.js'></script>
+  <script src='../../javascript/ebtable/ebtable.js'></script>
+  <script src='../../data/infoData.js'></script>
+  <script>
+    const tblData1 = adata.workorderComments.map(function(o) {
+      return [o.creationDate, o.authorName, o.addComment];
+    });
+    const tblData2 = tblData1.slice(0);
 
-      $(document).ready(function () {
-        const opts1 = {
-          columns: [{ name: 'Datum' }, { name: 'Verfasser' }, { name: 'Kommentar' }],
-          bodyHeight: 300,
-          rowsPerPage: 10,
-          selectionCol: true
-          //flags: {filter: false, config: false, }
-        };
-        const opts2 = {
-          columns: [{ name: 'Datum2' }, { name: 'Verfasser2' }, { name: 'Kommentar2' }],
-          bodyHeight: 300,
-          rowsPerPage: 10,
-          selectionCol: false
-          //flags: {filter: false, config: false, }
-        };
-        $('#grid1').ebtable(opts1, tblData1);
-        $('#grid2').ebtable(opts2, tblData2);
-      });
-    </script>
-  </head>
-  <body>
-    <div id="grid1"></div>
-    <br />
-    <div id="grid2"></div>
-  </body>
+    $(document).ready(function() {
+      const opts1 = {
+        columns: [{ name: 'Datum' }, { name: 'Verfasser' }, { name: 'Kommentar' }],
+        bodyHeight: 300,
+        rowsPerPage: 10,
+        selectionCol: true
+        //flags: {filter: false, config: false, }
+      };
+      const opts2 = {
+        columns: [{ name: 'Datum2' }, { name: 'Verfasser2' }, { name: 'Kommentar2' }],
+        bodyHeight: 300,
+        rowsPerPage: 10,
+        selectionCol: false
+        //flags: {filter: false, config: false, }
+      };
+      $('#grid1').ebtable(opts1, tblData1);
+      $('#grid2').ebtable(opts2, tblData2);
+    });
+  </script>
+</head>
+<body>
+<div id='grid1'></div>
+<br />
+<div id='grid2'></div>
+</body>
 </html>

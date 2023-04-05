@@ -194,5 +194,5 @@ const basketTestdata = [
   ['', '', '', 'Aschiller, El`friede, 05.06.1952', '09.06.2011 20:51:14', '', 'Frage 251', 'KH-Gutachten', 'Zwei Sekretin', '09.06.2011', '99'],
   ['', '', '', 'Strittmatter, Erwin, 15.08.1943', '07.06.2011 18:15:42', '', 'Krankenhausbehandlung mit Abrechnung nach dem Krankenhausentgeltgesetz', 'KH-Gutachten', 'Zwei Sekretin', '07.06.2011', '02,05,99'],
   ['', '', '', 'Henkel, Gerlinde, 04.06.1945', '07.06.2011 14:08:42', '', 'DRG ordnungsgemäße Abrechnung', 'KH-Gutachten', 'Daniel Schempf', '07.06.2011', '01,02,03,05,99'],
-  ['', '', '', 'Feh, Sepp, 01.01.1978', '20.07.2011 12:54:35', 'MeinTest', 'Notwendigkeit und Dauer der stationären Krankenhausbehandlung (§112 Abs.2 Nr.2 SGB V)', 'KH-Gutachten', 'BZ 1 - Disponent', '20.07.2011', '02,99'],
+  ['', '', '', 'Feh, Sepp, 01.01.1978', '20.07.2011 12:54:35', 'MeinTest', 'Notwendigkeit und Dauer der stationären Krankenhausbehandlung (§112 Abs.2 Nr.2 SGB V)', 'KH-Gutachten', 'BZ 1 - Disponent', '20.07.2011', '02,99']
 ];

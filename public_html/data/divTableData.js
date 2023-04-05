@@ -1,0 +1,43 @@
+const basketTestdata = [
+  ['Wolperdinger', '31.08.1915', 'Herder, Johann Gottfried', 5],
+  ['Yeti        ', '31.08.2016', 'Lichtenberg, Georg Christoph ', 31],
+  ['Esel        ', '05.08.2011', 'Liebig, Ellen,', 1],
+  ['Affe        ', '10.06.2013', 'Heine, Heinrich', 2],
+  ['Maus        ', '15.09.2014', 'Manne, Antonia', 4],
+  ['Hase        ', '15.09.2014', 'Liebig, Gustav', 8],
+  ['Hund        ', '31.08.2015', 'Mann, Heinrich Gustav Friedhelm Egon Friedrich August', 16],
+  ['Fliege      ', '31.08.2009', 'Mann, Thomas', 0],
+  ['Biene       ', '31.08.2001', 'Lessing, Gottfried', 7],
+  ['Hummel      ', '01.08.1759', 'Schiller, Friedrich', 0],
+  ['Wespe       ', '31.06.1900', 'Storm, Theodor', 0],
+  ['Karpfen     ', '31.08.2009', 'Mann, Thomas', 0],
+  ['Forelle     ', '31.08.2001', 'Lessing, Gottfried', 7],
+  ['Einhorn     ', '04.11.2017', 'Goethe, Johann Wolfgang', 63],
+  ['Einhorn     ', '04.11.2017', 'Göthe2, Johann Wolfgang', 63],
+  ['Einhorn     ', '04.11.2017', 'Gothe1, Johann Wolfgang', 63],
+  ['Einhorn     ', '04.11.2017', 'Gothe3, Johann Wolfgang', 63],
+  ['Einhorn     ', '04.11.2017', 'Gathe, Johann Wolfgang', 63],
+  ['Einhorn     ', '04.11.2017', 'Guthe, Johann Wolfgang', 63],
+  ['Lindwurm    ', '31.12.2018', 'Schiller, Friedrich', 255]
+];
+
+const basketGroupedTestdata = [
+  ['  ', 1, -1, 'Wolperdinger', '31.08.1915', 'Herder, Johann Gottfried', 5],
+  ['  ', 1, -1, 'Yeti        ', '31.08.2016', 'Lichtenberg, Georg Christoph ', 31],
+  ['GA', 5, 10, 'Säugetiere  ', '', '', 0],
+  ['GB', 1, 10, 'Esel        ', '05.08.2011', 'Liebig, Ellen,', 1],
+  ['GB', 1, 10, 'Affe        ', '10.06.2013', 'Heine, Heinrich', 2],
+  ['GB', 1, 10, 'Maus        ', '15.09.2014', 'Manne, Antonia', 4],
+  ['GB', 1, 10, 'Hase        ', '15.09.2014', 'Liebig, Gustav', 8],
+  ['GB', 1, 10, 'Hund        ', '31.08.2015', 'Mann, Heinrich Gustav Friedhelm', 16],
+  ['GA', 4, 20, 'Insekten    ', '', '', 0],
+  ['GB', 1, 20, 'Fliege      ', '31.08.2009', 'Mann, Thomas', 0],
+  ['GB', 1, 20, 'Biene       ', '31.08.2001', 'Lessing, Gottfried', 7],
+  ['GB', 1, 20, 'Hummel      ', '01.08.1759', 'Schiller, Friedrich', 0],
+  ['GB', 1, 20, 'Wespe       ', '31.06.1900', 'Storm, Theodor', 0],
+  ['GA', 2, 30, 'Fische      ', '', '', 0],
+  ['GB', 1, 30, 'Karpfen     ', '31.08.2009', 'Mann, Thomas', 0],
+  ['GB', 1, 30, 'Forelle     ', '31.08.2001', 'Lessing, Gottfried', 7],
+  ['  ', 1, -1, 'Einhorn     ', '04.11.2017', 'Goethe, Johann Wolfgang', 63],
+  ['  ', 1, -1, 'Lindwurm    ', '31.12.2018', 'Schiller, Friedrich', 255]
+];

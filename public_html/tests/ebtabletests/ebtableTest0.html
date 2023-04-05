@@ -6,13 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" />
     <link rel="stylesheet" href="../../vendor/jQueryUI-1.12.0/jquery-ui.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/eggplant/jquery-ui.min.css"
-      integrity="sha512-NN6ZiXvlwS9J1XnOAZpHWg6X9y7vwDqYy8E9pLjE6vHR+1cwdb8HGkLhkV3HHXn11FQ/TfSwx/qFv8d7ur0r8Q=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/eggplant/jquery-ui.min.css" />
     <link rel="stylesheet" href="../../css/ebtable.css" />
     <link rel="stylesheet" href="../../css/ebtableTest.css" />
 
@@ -21,33 +15,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
     <script src="../../javascript/ebtable/ebtable.js"></script>
     <script src="../../javascript/ebtable/mx.js"></script>
+    <script src="../../data/divTableData.js"></script>
     <script>
-      'use strict';
-      const basketTestdata = [
-        ['Wolperdinger', '31.08.1915', 'Herder, Johann Gottfried', 5],
-        ['Yeti        ', '31.08.2016', 'Lichtenberg, Georg Christoph ', 31],
-        ['Esel        ', '05.08.2011', 'Liebig, Ellen,', 1],
-        ['Affe        ', '10.06.2013', 'Heine, Heinrich', 2],
-        ['Maus        ', '15.09.2014', 'Manne, Antonia', 4],
-        ['Hase        ', '15.09.2014', 'Liebig, Gustav', 8],
-        ['Hund        ', '31.08.2015', 'Mann, Heinrich Gustav Friedhelm Egon Friedrich August', 16],
-        ['Fliege      ', '31.08.2009', 'Mann, Thomas', 0],
-        ['Biene       ', '31.08.2001', 'Lessing, Gottfried', 7],
-        ['Hummel      ', '01.08.1759', 'Schiller, Friedrich', 0],
-        ['Wespe       ', '31.06.1900', 'Storm, Theodor', 0],
-        ['Karpfen     ', '31.08.2009', 'Mann, Thomas', 0],
-        ['Forelle     ', '31.08.2001', 'Lessing, Gottfried', 7],
-        ['Einhorn     ', '04.11.2017', 'Goethe, Johann Wolfgang', 63],
-        ['Einhorn     ', '04.11.2017', 'Göthe2, Johann Wolfgang', 63],
-        ['Einhorn     ', '04.11.2017', 'Gothe1, Johann Wolfgang', 63],
-        ['Einhorn     ', '04.11.2017', 'Gothe3, Johann Wolfgang', 63],
-        ['Einhorn     ', '04.11.2017', 'Gathe, Johann Wolfgang', 63],
-        ['Einhorn     ', '04.11.2017', 'Guthe, Johann Wolfgang', 63],
-        ['Lindwurm    ', '31.12.2018', 'Schiller, Friedrich', 255]
-      ];
-
-      //#######################################################################
-
       const opts = {
         debug: true,
         bodyWidth: '700px',
@@ -55,7 +24,12 @@
           clearFilter: true
         },
         columns: [
-          { name: 'Tierart', match: 'contains', sortorder: 'desc', valuelist: ['', 'Einhorn', 'Karpfen', 'Forelle'] },
+          {
+            name: 'Tierart',
+            match: 'contains',
+            sortorder: 'desc',
+            valuelist: ['', 'Einhorn', 'Karpfen', 'Forelle']
+          },
           { name: 'Datum', sortformat: 'date-de', width: '150px', css: 'text-align: center' },
           { name: 'Name' },
           { name: 'Flag' }
@@ -65,13 +39,12 @@
         pageCur: 0
         //lang:'en'
       };
-      var grid;
       $().ready(() => {
-        grid = $('#grid').ebtable(opts, basketTestdata);
+        $('#grid').ebtable(opts, basketTestdata);
         $('#saveGridStatus').on('click', grid.saveSessionState);
         $('#loadGridStatus').on('click', () => {
           const mixOpts = _.extend({}, opts, $.fn.ebtable.loadSessionState());
-          grid = $('#grid').ebtable(mixOpts, basketTestdata).setFilterValues(mixOpts.filters);
+          $('#grid').ebtable(mixOpts, basketTestdata).setFilterValues(mixOpts.filters);
         });
       });
     </script>
