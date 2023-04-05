@@ -1,13 +1,12 @@
 const range = (n) => [...Array(n).keys()];
 const dlgConfig = (opts) => {
   const dlgTemplate = _.template(
-    '\
-        <div id="<%=gridId%>configDlg">\n\
-          <ol id="<%=gridId%>selectable" class="ebtableSelectable"> \n\
-            <%= listOfColumnNames %> \n\
-          </ol>\n\
-        </div>'
-  )({ listOfColumnNames: opts.listOfColumnNames, gridId: opts.gridId });
+    `<div id="<%=gridId%>configDlg">\n
+          <ol id="<%=gridId%>selectable" class="ebtableSelectable"> \n
+            <%= listOfColumnNames %> \n
+          </ol>\n
+        </div>`
+  )(opts);
 
   const dlgOpts = {
     open: () => {
@@ -37,7 +36,6 @@ const dlgConfig = (opts) => {
 };
 
 (function ($) {
-  'use strict';
   const docTitle = $(document).prop('title').replace(/ /g, '');
   const sessionStorageKey = 'ebtable-' + docTitle + '-v1.0';
   let suppressSorting = false;
@@ -128,15 +126,12 @@ const dlgConfig = (opts) => {
       colDefFromName: (colname) => myOpts.columns.find((c) => c.name === colname),
       colIdFromName: (colname) => util.colDefFromName(colname).id,
       colNameFromId: (colid) => (myOpts.columns.find((c) => c.id === colid) || {}).name,
-      colIsInvisible: (colname) => util.colDefFromName(colname).invisible,
-      colIsTechnical: (colname) => util.colDefFromName(colname).technical,
       getRender: (colname) => util.colDefFromName(colname).render,
       getMatch: (colname) => {
         const matcher = util.colDefFromName(colname).match;
         return matcher ? (typeof matcher === 'string' ? mx.matcher[matcher] : matcher) : mx.matcher['starts-with-matches'];
       },
-      getVisibleCols: () => myOpts.columns.filter((o) => !o.invisible),
-      checkConfig: function checkConfig(myopts, origData) {
+      checkConfig: (myopts, origData) => {
         myopts.columns.forEach((coldef) => {
           // set reasonable defaults for coldefs
           coldef.technical = coldef.technical || false;
@@ -470,15 +465,14 @@ const dlgConfig = (opts) => {
           });
           const thwidth = coldef.width ? 'width:' + coldef.width + ';' : '';
           const thstyle = coldef.css || coldef.width ? ' style="' + thwidth + ' ' + (coldef.css ? coldef.css : '') + '"' : '';
-          const hdrTemplate =
-            '\
-              <th id="<%=colid%>"<%=thstyle%> title="<%=tooltip%>" >\n\
-                <div style="display:inline-flex">\n\
-                  <%=colname%>\n\
-                  <i class="fa fa-arrow-up"></i>\n\
-                </div>\n\
-                <div<%=filtersvisible%>><%=fld%></div>\n\
-              </th>';
+          const hdrTemplate = `
+              <th id="<%=colid%>"<%=thstyle%> title="<%=tooltip%>" >
+                <div style="display:inline-flex">
+                  <%=colname%>
+                  <i class="fa fa-arrow-up"></i>
+                </div>
+                <div<%=filtersvisible%>><%=fld%></div>
+              </th>`;
           // &#8209; = non breakable hyphen : &#0160; = non breakable space
           res += _.template(hdrTemplate)({
             colname: coldef.name.replace(/-/g, '&#8209;').replace(/ /g, '&#0160;'),
@@ -542,27 +536,26 @@ const dlgConfig = (opts) => {
 
     const initGrid = (a) => {
       const tableTemplate = _.template(
-        "\
-          <div class='ebtable'>\n\
-            <div class='ctrl' <%=ctrlStyle%>>\n\
-              <div id='ctrlLength' style='float: left;'><%= selectLen  %></div>\n\
-              <div id='ctrlConfig'         style='float: left;'><%= configButton %></div>\n\
-              <div id='ctrlClearFilter'    style='float: left;'><%= clearFilterButton %></div>\n\
-              <div id='ctrlArrangeColumns' style='float: left;'><%= arrangeColumnsButton %></div>\n\
-              <div id='ctrlPage1'  style='float: right;'><%= browseBtns %></div>\n\
-            </div>\n\
-            <div id='data' style='overflow-y:auto;overflow-x:auto; max-height:<%= bodyHeight %>px; width:100%'>\n\
-              <table <%= tblClass %>>\n\
-                <thead><tr><%= head %></tr></thead>\n\
-                <tbody><%= data %></tbody>\n\
-              </table>\n\
-            </div>\n\
-            <div class='ctrl' <%=ctrlStyle%>>\n\
-              <div id='ctrlInfo'    style='float: left;' class='ui-widget-content'><%= info %></div>\n\
-              <div id='ctrlAddInfo' style='float: left;' class='ui-widget-content'><%= addInfo %></div>\n\
-              <div id='ctrlPage2'   style='float: right;' ><%= browseBtns %></div>\n\
-            </div>\n\
-          </div>"
+        `<div class='ebtable'>
+            <div class='ctrl' <%=ctrlStyle%>>
+              <div id='ctrlLength' style='float: left;'><%= selectLen  %></div>
+              <div id='ctrlConfig'         style='float: left;'><%= configButton %></div>
+              <div id='ctrlClearFilter'    style='float: left;'><%= clearFilterButton %></div>
+              <div id='ctrlArrangeColumns' style='float: left;'><%= arrangeColumnsButton %></div>
+              <div id='ctrlPage1'  style='float: right;'><%= browseBtns %></div>
+            </div>
+            <div id='data' style='overflow-y:auto;overflow-x:auto; max-height:<%= bodyHeight %>px; width:100%'>
+              <table <%= tblClass %>>
+                <thead><tr><%= head %></tr></thead>
+                <tbody><%= data %></tbody>
+              </table>
+            </div>
+            <div class='ctrl' <%=ctrlStyle%>
+              <div id='ctrlInfo'    style='float: left;' class='ui-widget-content'><%= info %></div>
+              <div id='ctrlAddInfo' style='float: left;' class='ui-widget-content'><%= addInfo %></div>
+              <div id='ctrlPage2'   style='float: right;' ><%= browseBtns %></div>
+            </div>
+          </div>`
       );
       a.html(
         tableTemplate({
@@ -866,7 +859,7 @@ const dlgConfig = (opts) => {
     de: {},
     en: {
       '(<%=len%> ausgewählt)': '(<%=len%> selected)',
-      '(<%=len%> Eintr\u00e4ge insgesamt)': '(<%=len%> entries)',
+      '(<%=len%> Einträge insgesamt)': '(<%=len%> entries)',
       '<%=start%> bis <%=end%> von <%=count%> Zeilen <%=filtered%> <%=cntSelected%>': '<%=start%> to <%=end%> of <%=count%> shown entries <%= filtered %> <%=cntSelected%>',
       'Spalten verwalten': 'Configure Columns',
       'Alle Filter entfernen': 'Remove all filters',
