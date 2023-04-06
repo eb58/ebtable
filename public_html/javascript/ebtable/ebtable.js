@@ -436,8 +436,8 @@ const dlgConfig = (opts) => {
       const cntSel = selectionFcts.getSelectedRows().length;
       const startRow = Math.min(myOpts.rowsPerPage * pageCur + 1, tblData.length);
       const endRow = Math.min(startRow + myOpts.rowsPerPage - 1, tblData.length);
-      const filtered = origData.length === tblData.length ? '' : _.template(util.translate('(<%=len%> Eintr\u00e4ge insgesamt)'))({ len: origData.length });
-      const cntSelected = !cntSel || !myOpts.selectionCol || myOpts.selectionCol.singleSelection ? '' : _.template(util.translate('(<%=len%> ausgewählt)'))({ len: cntSel });
+      const filtered = origData.length === tblData.length ? '' : _.template(util.translate('(<%=len%> Eintr\u00e4ge)'))({ len: origData.length });
+      const cntSelected = !cntSel || !myOpts.selectionCol || myOpts.selectionCol.singleSelection ? '' : _.template(util.translate('(<%=len%> ausgew\u00e4hlt)'))({ len: cntSel });
       const template = _.template(util.translate('<%=start%> bis <%=end%> von <%=count%> Zeilen <%=filtered%> <%=cntSelected%>'));
       return template({
         start: startRow,
@@ -859,8 +859,8 @@ const dlgConfig = (opts) => {
   $.fn.ebtable.lang = {
     de: {},
     en: {
-      '(<%=len%> ausgewählt)': '(<%=len%> selected)',
-      '(<%=len%> Einträge insgesamt)': '(<%=len%> entries)',
+      '(<%=len%> ausgew\u00e4hlt)': '(<%=len%> selected)',
+      '(<%=len%> Eintr\u00e4ge)': '(<%=len%> entries)',
       '<%=start%> bis <%=end%> von <%=count%> Zeilen <%=filtered%> <%=cntSelected%>': '<%=start%> to <%=end%> of <%=count%> shown entries <%= filtered %> <%=cntSelected%>',
       'Spalten verwalten': 'Configure Columns',
       'Alle Filter entfernen': 'Remove all filters',
