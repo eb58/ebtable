@@ -11,11 +11,7 @@ const mx = (m, groupDef) => {
   const filtering = (() => {
     const rowMatch = (filters) => (row) =>
       // filters [{col, searchText, renderer}, ...]
-      (Array.isArray(filters) ? filters : [filters]).some((f) => {
-        const cellData = row[f.col].trim();
-        const matchFct = f.match || mx.matcher['starts-with-matches'];
-        return matchFct(cellData, f.searchtext, row, m);
-      });
+      (Array.isArray(filters) ? filters : [filters]).every((f) => (f.match || mx.matcher['starts-with-matches'])(row[f.col].trim(), f.searchtext, row, m));
     return {
       filterData: (filters) => m.filter(rowMatch(filters))
     };
@@ -24,15 +20,15 @@ const mx = (m, groupDef) => {
   //####################################  grouping #######################
   const grouping = (() => {
     // // groupDefs  ~ {grouplabel: 0, groupcnt: 1, groupid: 2, groupsortstring: 3, groupname: 4, grouphead: 'GA', groupelem: 'GB'}
+    const normalizeGroupId = (id) => (id <= 0 ? 0 : id);
     const fcts = {
-      normalizeGroupId: (id) => (id <= 0 ? 0 : id),
       isGroupingHeader: (row, groupDefs) => row[groupDefs.grouplabel] === groupDefs.grouphead,
       initGroups: (groupDefs) => {
         if (!groupDefs.groupid) return;
         const groupsData = m.groupsData || {};
         for (let r = 0; r < m.length; r++) {
           const row = m[r];
-          const groupId = fcts.normalizeGroupId(row[groupDefs.groupid]);
+          const groupId = normalizeGroupId(row[groupDefs.groupid]);
           row.isGroupHeader = row[groupDefs.grouplabel] === groupDefs.grouphead;
           row.isGroupElement = groupId && !row.isGroupHeader;
           if (groupId && !groupsData[groupId]) {
@@ -44,7 +40,7 @@ const mx = (m, groupDef) => {
         }
         for (let r = 0; r < m.length; r++) {
           const row = m[r];
-          const groupId = fcts.normalizeGroupId(row[groupDefs.groupid]);
+          const groupId = normalizeGroupId(row[groupDefs.groupid]);
           row[groupDefs.groupsortstring] = groupId ? groupsData[groupId].groupname + ' ' + groupId : row[groupDefs.groupname];
         }
         m.groupsdata = groupsData;
@@ -52,7 +48,7 @@ const mx = (m, groupDef) => {
       },
       filterGroups: (groupDefs, groupsdata) => {
         const filteredData = m.filter((row) => {
-          const groupId = fcts.normalizeGroupId(row[groupDefs.groupid]);
+          const groupId = normalizeGroupId(row[groupDefs.groupid]);
           return !groupId || fcts.isGroupingHeader(row, groupDefs) || groupsdata[groupId].isOpen;
         });
         filteredData.groupsdata = m.groupsdata;
