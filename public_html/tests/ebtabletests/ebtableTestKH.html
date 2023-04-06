@@ -20,7 +20,7 @@
     <script src="../../javascript/ebtable/ebtable.js"></script>
     <script src="../../data/ebTableTestdataKhBasket1.js"></script>
     <script>
-      'use strict';
+      let grid;
 
       const flagsDef = [
         { key: '!', id: 1, img: 'important.gif', alt: 'Eilauftrag' },
@@ -320,8 +320,6 @@
         //ismedLog('Grouping', groupsdata);
         data.groupsdata = groupsdata;
       }
-
-      let grid;
 
       const gridOpts = {
         columns: [

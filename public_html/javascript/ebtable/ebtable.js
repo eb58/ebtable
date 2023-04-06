@@ -3,7 +3,7 @@ const dlgConfig = (opts) => {
   const dlgTemplate = _.template(
     `<div id="<%=gridId%>configDlg" class='configDlg'>
         <ol id="<%=gridId%>selectable" class="ebtableSelectable">
-          <%= listOfColumnNames %>
+          <%=listOfColumnNames%>
         </ol>
     </div>`
   )(opts);
@@ -19,7 +19,7 @@ const dlgConfig = (opts) => {
             .toggleClass('visible');
         });
     },
-    title: 'Spalten ausblenden und sortieren',
+    title: opts.title,
     position: { my: 'left top', at: 'left bottom', of: opts.anchor },
     width: '250px',
     modal: true,
@@ -368,13 +368,12 @@ const dlgConfig = (opts) => {
         return filter;
       },
       setFilterValues: (filter, n = 0) => {
-        if (Object.keys(filter).length === 0) return this;
+        if (Object.keys(filter).length === 0) return;
         $(selGridId + 'thead th input[type=text],' + selGridId + 'thead th select').each((idx, o) => $(o).val(filter[o.id]));
         filteringFcts.filterData();
         pageCurMax = Math.floor(Math.max(0, tblData.length - 1) / myOpts.rowsPerPage);
         pageCur = n;
         redraw(pageCur);
-        return this;
       },
       filterData: () => {
         const filters = $(selGridId + 'thead th input[type=text],' + selGridId + 'thead th select')
@@ -657,6 +656,7 @@ const dlgConfig = (opts) => {
             gridId,
             okString: util.translate('OK'),
             cancelString: util.translate('Abbrechen'),
+            title: util.translate('Spalten ausblenden und sortieren'),
             anchor: '#' + gridId + ' #configButton',
             callBack: function () {
               $('#' + gridId + 'configDlg li.visible').each((idx, o) => {
@@ -803,13 +803,13 @@ const dlgConfig = (opts) => {
     initGrid(this);
     initActions();
 
-    myOpts.flags.jqueryuiTooltips && this.tooltip();
+    myOpts.flags.jqueryuiTooltips && self.tooltip();
 
     const getOpenGroups = () => Object.keys(origData.groupsdata || []).reduce((acc, key) => (origData.groupsdata[key].isOpen ? [...acc, parseInt(key)] : acc), []);
 
     // ##########  Exports ############
-    this.util = util;
-    $.extend(this, {
+    self.util = util;
+    $.extend(self, {
       getFilterValues: filteringFcts.getFilterValues,
       setFilterValues: filteringFcts.setFilterValues,
       iterateSelectedValues: selectionFcts.iterateSelectedValues,
@@ -864,6 +864,7 @@ const dlgConfig = (opts) => {
       '<%=start%> bis <%=end%> von <%=count%> Zeilen <%=filtered%> <%=cntSelected%>': '<%=start%> to <%=end%> of <%=count%> shown entries <%= filtered %> <%=cntSelected%>',
       'Spalten verwalten': 'Configure Columns',
       'Alle Filter entfernen': 'Remove all filters',
+      'Spalten ausblenden und sortieren': 'Sort and hide columns',
       OK: 'OK',
       Abbrechen: 'Cancel'
     }

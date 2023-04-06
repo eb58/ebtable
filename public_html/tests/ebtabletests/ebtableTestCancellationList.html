@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Stornobearbeitung</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/start/jquery-ui.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/start/theme.min.css" />
+    <link rel="stylesheet" href="../../css/ebtable.css" />
+    <link rel="stylesheet" href="../../css/ebtableTest.css" />
+
+    <script src="../../vendor/underscore-1.8.3/underscore.min.js"></script>
+    <script src="../../vendor/jQuery-1.11.3/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
+    <script src="../../javascript/ebtable/mx.js"></script>
+    <script src="../../javascript/ebtable/ebtable.js"></script>
+    <script src="../../data/cancellationListData.js"></script>
+    <script>
+      const cancellationResponses = [
+        [50, '10', 'Gutachtenerstellung zu weit fortgeschritten'],
+        [51, '20', 'Begehung im Krankenhaus bereits erfolgt'],
+        [52, '30', 'Auftrag bereits abgeschlossen/zurückgegeben'],
+        [53, '40', 'Stornierung von der Krankenkasse zurückgezogen'],
+        [54, '50', 'Sonstiges']
+      ];
+
+      let grid;
+
+      //  Dialog "Stornoanforderung zurückweisen"
+      const dlgReject = function (selwids) {
+        $('#dlgReject').remove();
+        const t = `<div id="dlgReject">
+                <div id="reasons"></div>              
+        </div>`;
+        const dlg = $(t);
+        let reasons;
+        const dlgopts = {
+          open: function () {
+            const ropts = {
+              columns: [{ name: 'id', invisible: true }, { name: 'Code' }, { name: 'Grund' }],
+              selectionCol: { singleSelection: true },
+              flags: { filter: false, pagelenctrl: false, config: false, withsorting: false }
+            };
+            reasons = $('#reasons').ebtable(ropts, cancellationResponses);
+            $('#reasons div.ctrl').hide();
+          },
+          title: 'Ausgew\u00e4hlte Stornoanforderungen zur\u00fcckweisen',
+          modal: true,
+          height: 250,
+          width: 550,
+          closeText: 'Schlie\u00dfen',
+          buttons: {
+            OK: function () {
+              const selRows = reasons.getSelectedRows();
+              if (selRows.length === 0) {
+                $.alert('Meldung', 'Kein Grund ausgew\u00e4hlt');
+                return;
+              }
+              const code = selRows[0][0];
+              $.getJSON('cancellation-list.do?action=rejectCancellation&workorderIds=' + selwids + '&reasonId=' + code, function (data) {
+                if (data.error) {
+                  $.alert('Fehler', data.error);
+                } else {
+                  applyFilters();
+                }
+              });
+              $(this).dialog('close');
+            },
+            Abbrechen: function () {
+              $(this).dialog('close');
+            }
+          }
+        };
+        dlg.dialog(dlgopts);
+      };
+
+      function initTable(data) {
+        const reorderData = function (data) {
+          const colorder = [0, 2, 3, 4, 9, 12, 11, 13, 10, 15, 14, 1, 7, 8, 5];
+          return data.map(function (row) {
+            row[4] = row[4] === 1 ? 'offen' : 'abgelehnt';
+            return row
+              .map(function (col, c) {
+                return row[colorder[c]];
+              })
+              .slice(0, -1);
+          });
+        };
+        return $('#grid').ebtable(opts, reorderData(data.list));
+      }
+
+      function searchOnServer() {
+        grid = initTable(result2);
+      }
+
+      const renderer = {
+        renderInsurand: (data, row) => '<a title=' + row[0] + '</a>'
+      };
+      const opts = {
+        debug: true,
+        columns: [
+          { name: 'Workorderid', invisible: true, technical: true },
+          { name: 'Frist' },
+          { name: 'Stornoalter' },
+          { name: 'Stornostatus', width: '120px', valuelist: ['', 'offen', 'abgelehnt'] },
+          { name: 'Auftragsstatus' },
+          { name: 'AKZ' },
+          { name: 'Versicherter', render: renderer.renderInsurand },
+          { name: 'Krankenhausname' },
+          { name: 'Auftragspaket' },
+          { name: 'Aktueller Bearbeiter', dbname: 'Bearbeiter' },
+          { name: 'Beratungsstelle' },
+          { name: 'Produkt' },
+          { name: 'Stornobearbeiter' },
+          { name: 'Ablehnungsgrund', dbname: 'Stornogrund' },
+          { name: 'Stornoerl\u00e4uterung', dbname: 'Stornoerlaeuterung' }
+        ],
+        bodyHeight: 600,
+        selectionCol: true,
+        sortcolname: 'Auftragsstatus',
+        reloadData: function () {
+          grid = initTable(result2);
+        },
+        addInfo: function () {
+          return '';
+        }
+      };
+
+      function getFilter() {
+        const filterMap = {};
+        $('#grid thead th input[type=text],#grid thead th select').each(function (idx, elem) {
+          const val = $.trim($(elem).val());
+          if (val !== '') {
+            const coldef = _.findWhere(opts.columns, { name: elem.id });
+            const dbname = coldef.dbname || coldef.name;
+            filterMap[dbname] = $(elem).val();
+          }
+        });
+        console.log(filterMap);
+        return Object.keys(filterMap).reduce(function (acc, key) {
+          return acc + '&filter' + key + '=' + filterMap[key];
+        }, '');
+      }
+
+      function getSelectedWorkorderIds(grid) {
+        const ids = [];
+        grid.iterateSelectedValues(function (x) {
+          ids.push(x[0]);
+        });
+        return ids;
+      }
+
+      function applyFilters() {
+        $.getJSON('cancellation-list.do?action=filter' + getFilter(), function (data) {
+          initTable(data);
+          $('#accept,#reject').button(grid.getSelectedRows().length > 0 && $('#Stornostatus').val() === 'offen' ? 'enable' : 'disable'); // ??
+        });
+      }
+
+      $(document).ready(function () {
+        searchOnServer();
+
+        $('#accept')
+          .button()
+          .click(function () {
+            if (getSelectedWorkorderIds(grid).length === 0) {
+              $.alert('Meldung', 'Kein Eintrag ausgew\u00e4hlt.');
+              return;
+            }
+            $.confirm('Annehmen', 'Wirklich annehmen?', function () {
+              $.getJSON('cancellation-list.do?action=acceptCancellation&workorderIds=' + getSelectedWorkorderIds(grid), function (data) {
+                if (data.res < 0) {
+                  $.alert('Fehler', data.errors);
+                  return;
+                }
+                applyFilters();
+              });
+            });
+          });
+
+        $('#reject')
+          .button()
+          .click(function () {
+            const selwids = getSelectedWorkorderIds(grid).join(',');
+            if (selwids.length === 0) {
+              $.alert('Meldung', 'Kein Eintrag ausgew\u00e4hlt.');
+              return;
+            }
+            dlgReject(selwids);
+          });
+      });
+    </script>
+  </head>
+  <body>
+    <h2>Stornotabelle</h2>
+    <div id="grid"></div>
+
+    <button id="accept">Annehmen</button>
+    <button id="reject">Ablehnen</button>
+  </body>
+</html>

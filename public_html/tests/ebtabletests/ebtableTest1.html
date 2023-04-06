@@ -17,6 +17,7 @@
     <script src="../../javascript/ebtable/ebtable.js"></script>
     <script src="../../data/divTableData.js"></script>
     <script>
+      let grid;
       const data = basketGroupedTestdata.map((a) => [...a.slice(0, 3), 'XXX', ...a.slice(3)]);
 
       const flagsDef = [
@@ -90,6 +91,7 @@
       };
 
       const gridOpts = {
+        lang: 'en',
         sortmaster: [{ col: idx.gid }, { col: idx.gtyp }],
         //[{col:1,sortorder:'asc',sortformat:'date-de'},{col:2,sortorder:'desc'}]
         sortcolname: 'Datum',
@@ -101,13 +103,7 @@
           { name: 'Tierart', render: renderer.tierart, sortmaster: [{ col: idx.gss }, { col: idx.gtyp }] },
           { name: 'Datum', sortformat: 'date-de' },
           { name: 'Name/Über' },
-          {
-            name: 'Flag',
-            render: renderer.renderFlags,
-            sortformat: 'flags',
-            match: matcher.flags,
-            tooltip: 'Mögliche Werte:!*pfgksc'
-          }
+          { name: 'Flag', render: renderer.renderFlags, sortformat: 'flags', match: matcher.flags, tooltip: 'Mögliche Werte:!*pfgksc' }
         ],
         rowsPerPageSelectValues: [5, 10, 25, 50, 100],
         bodyHeight: 500,
@@ -132,20 +128,19 @@
           grouphead: 'GA',
           groupelem: 'GB'
         },
-        reloadData: function () {
+        reloadData: () => {
           const ss = $.fn.ebtable.loadSessionState();
           const myOpts = $.extend(true, {}, gridOpts, ss.myopts);
-          $('#grid').ebtable(myOpts, data);
-        },
-        lang: 'en'
+          grid = $('#grid').ebtable(myOpts, data);
+        }
       };
       $().ready(function () {
-        $('#grid').ebtable(gridOpts, data);
+        grid = $('#grid').ebtable(gridOpts, data);
         $('#saveGridStatus').on('click', grid.saveSessionState());
         $('#loadGridStatus').on('click', function () {
           const ss = $.extend($.fn.ebtable.loadSessionState());
           const myOpts = $.extend(true, {}, gridOpts, ss ? ss.myopts : {});
-          $('#grid').ebtable(myOpts, data).setFilterValues(ss.filters);
+          grid = $('#grid').ebtable(myOpts, data).setFilterValues(ss.filters);
         });
       });
     </script>
