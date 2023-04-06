@@ -1,6 +1,5 @@
 //  2-dimensional array -- m(atri)x
 const mx = (m, groupDef) => {
-  // groupDef see below
   const range = (n) => [...Array(n).keys()];
   const basicApi = {
     row: (n) => m[n],
@@ -10,18 +9,15 @@ const mx = (m, groupDef) => {
 
   //####################################  filtering #######################
   const filtering = (() => {
-    const fcts = {
+    const rowMatch = (filters) => (row) =>
       // filters [{col, searchText, renderer}, ...]
-      rowMatch: (filters) => (row) =>
-        (Array.isArray(filters) ? filters : [filters]).reduce((acc, f) => {
-          const cellData = row[f.col].trim();
-          const matchFct = f.match || mx.matcher['starts-with-matches'];
-          return acc && matchFct(cellData, f.searchtext, row, m);
-        }, true),
-      filterData: (filters) => m.filter(fcts.rowMatch(filters))
-    };
+      (Array.isArray(filters) ? filters : [filters]).some((f) => {
+        const cellData = row[f.col].trim();
+        const matchFct = f.match || mx.matcher['starts-with-matches'];
+        return matchFct(cellData, f.searchtext, row, m);
+      });
     return {
-      filterData: fcts.filterData
+      filterData: (filters) => m.filter(rowMatch(filters))
     };
   })();
 
@@ -33,11 +29,10 @@ const mx = (m, groupDef) => {
       isGroupingHeader: (row, groupDefs) => row[groupDefs.grouplabel] === groupDefs.grouphead,
       initGroups: (groupDefs) => {
         if (!groupDefs.groupid) return;
-        let row, groupId;
         const groupsData = m.groupsData || {};
         for (let r = 0; r < m.length; r++) {
-          row = m[r];
-          groupId = fcts.normalizeGroupId(row[groupDefs.groupid]);
+          const row = m[r];
+          const groupId = fcts.normalizeGroupId(row[groupDefs.groupid]);
           row.isGroupHeader = row[groupDefs.grouplabel] === groupDefs.grouphead;
           row.isGroupElement = groupId && !row.isGroupHeader;
           if (groupId && !groupsData[groupId]) {
@@ -48,8 +43,8 @@ const mx = (m, groupDef) => {
           }
         }
         for (let r = 0; r < m.length; r++) {
-          row = m[r];
-          groupId = fcts.normalizeGroupId(row[groupDefs.groupid]);
+          const row = m[r];
+          const groupId = fcts.normalizeGroupId(row[groupDefs.groupid]);
           row[groupDefs.groupsortstring] = groupId ? groupsData[groupId].groupname + ' ' + groupId : row[groupDefs.groupname];
         }
         m.groupsdata = groupsData;
@@ -156,36 +151,31 @@ mx.matcher = (() => {
     return d + '.' + m + '.' + y + ' ' + hs + ':' + ms + ':' + ss;
   };
   return {
-    matches: (cellData, searchTxt) => cellData.match(new RegExp('.*' + searchTxt, 'i')),
-    contains: (cellData, searchTxt) => cellData.toLowerCase().includes(searchTxt.toLowerCase()),
-    'starts-with': (cellData, searchTxt) => cellData.toLowerCase().startsWith(searchTxt.toLowerCase()),
-    'starts-with-matches': (cellData, searchTxt) => cellData.match(new RegExp('^' + searchTxt.replace(/\*/g, '.*'), 'i')),
-    'matches-date': (cellData, searchTxt) => getFormattedDate(new Date(parseInt(cellData))).startWith(searchTxt),
-    'matches-date-time': (cellData, searchTxt) => getFormattedDate(new Date(parseInt(cellData))).startWith(searchTxt),
-    'matches-date-time-sec': (cellData, searchTxt) => getFormattedDate(new Date(parseInt(cellData))).startWith(searchTxt)
+    matches: (str, searchTxt) => str.match(new RegExp('.*' + searchTxt, 'i')),
+    contains: (str, searchTxt) => str.toLowerCase().includes(searchTxt.toLowerCase()),
+    'starts-with': (str, searchTxt) => str.toLowerCase().startsWith(searchTxt.toLowerCase()),
+    'starts-with-matches': (str, searchTxt) => str.match(new RegExp('^' + searchTxt.replace(/\*/g, '.*'), 'i')),
+    'matches-date': (str, searchTxt) => getFormattedDate(new Date(parseInt(str))).startsWith(searchTxt)
   };
 })();
 
 // ##########  sortformats ############
 
 mx.sortformats = {
-  'date-de': function (a) {
+  'date-de': (a) => {
     // '01.01.2013' -->   '20130101'
     const d = a.match(/^(\d{2})\.(\d{2})\.(\d{4})$/);
     return d ? d[3] + d[2] + d[1] : '';
   },
-  'datetime-de': function (a) {
+  'datetime-de': (a) => {
     // '01.01.2013 12:36'  -->  '201301011236'
     const d = a.match(/^(\d{2})\.(\d{2})\.(\d{4}) (\d{2}):(\d{2})$/);
     return d ? d[3] + d[2] + d[1] + d[4] + d[5] : '';
   },
-  'datetime-sec-de': function (a) {
+  'datetime-sec-de': (a) => {
     // '01.01.2013 12:36:59'  -->  '20130101123659'
     const d = a.match(/^(\d{2})\.(\d{2})\.(\d{4}) (\d{2}):(\d{2}):(\d{2})$/);
     return d ? d[3] + d[2] + d[1] + d[4] + d[5] + d[6] : '';
   },
-  scientific: function (a) {
-    // '1e+3'  -->  '1000'
-    return parseFloat(a);
-  }
+  scientific: (a) => parseFloat(a) // '1e+3'  -->  '1000'
 };
