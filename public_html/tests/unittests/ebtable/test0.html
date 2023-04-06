@@ -5,9 +5,8 @@
   <meta charset='UTF-8' />
   <meta name='viewport' content='width=device-width, initial-scale=1.0' />
   <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css' />
-  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/base/jquery-ui.min.css' />
-  <link rel='stylesheet'
-        href='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/eggplant/jquery-ui.min.css' />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/start/jquery-ui.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/start/theme.min.css" />
   <link rel='stylesheet' href='../../../vendor/qunit/qunit.css' />
   <link rel='stylesheet' href='../../../css/ebtable.css' />
   <link rel='stylesheet' href='../../../css/ebtableTest.css' />
@@ -61,8 +60,8 @@
       });
       QUnit.test('testset: sorting1', function(assert) {
         reinit('grid', opts, data);
-        var tierartHead = $('th#Tierart');
-        var datumHead = $('th#Datum');
+        const tierartHead = $('th#Tierart');
+        const datumHead = $('th#Datum');
         assert.deepEqual(getCol('grid', 2), ['Wolperdinger', 'Yeti']);
         tierartHead.click();
         assert.deepEqual(getCol('grid', 2), ['Yeti', 'Wolperdinger']);
@@ -74,7 +73,7 @@
         assert.deepEqual(getCol('grid', 3), ['31.08.1915', '31.08.2016']);
       });
       QUnit.test('testset: sorting2', function(assert) {
-        var xopts = $.extend(true, {}, opts); // deep copy
+        const xopts = $.extend(true, {}, opts); // deep copy
 
         xopts.sortcolname = 'Flag';
         xopts.columns[2].sortorder = 'asc';
@@ -95,7 +94,7 @@
 
       QUnit.test('testset: filtering', function(assert) {
         reinit('grid', opts, data);
-        var tierartInput = $('#Tierart input');
+        const tierartInput = $('#Tierart input');
         tierartInput.val('Yeti').trigger($.Event('keyup', { keyCode: 13 }));
         assert.deepEqual(getCol('grid', 2), ['Yeti'], 'filtering for Yeti ok');
         tierartInput.val('y').trigger($.Event('keyup', { keyCode: 13 }));

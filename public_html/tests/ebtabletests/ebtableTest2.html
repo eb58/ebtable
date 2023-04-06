@@ -1,50 +1,49 @@
 <!DOCTYPE html>
-<html lang='de'>
-<head>
-  <title>Beispiel 2</title>
-  <meta charset='UTF-8' />
-  <meta name='viewport' content='width=device-width, initial-scale=1.0' />
-  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css' />
-  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/base/jquery-ui.min.css' />
-  <link rel='stylesheet'
-        href='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/eggplant/jquery-ui.min.css' />
-  <link rel='stylesheet' href='../../css/ebtable.css' />
-  <link rel='stylesheet' href='../../css/ebtableTest.css' />
+<html lang="de">
+  <head>
+    <title>Beispiel 2</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/start/jquery-ui.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/start/theme.min.css" />
+    <link rel="stylesheet" href="../../css/ebtable.css" />
+    <link rel="stylesheet" href="../../css/ebtableTest.css" />
 
-  <script src='../../vendor/underscore-1.8.3/underscore.js'></script>
-  <script src='../../vendor/jQuery-1.11.3/jquery.js'></script>
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js'></script>
+    <script src="../../vendor/underscore-1.8.3/underscore.js"></script>
+    <script src="../../vendor/jQuery-1.11.3/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
 
-  <script src='../../javascript/ebtable/mx.js'></script>
-  <script src='../../javascript/ebtable/ebtable.js'></script>
-  <script src='../../data/ebtabletestsData.js'></script>
-  <script>
-    const renderers = {
-      myRender: (data, row) => data + ' -- ' + row[0]
-    };
+    <script src="../../javascript/ebtable/mx.js"></script>
+    <script src="../../javascript/ebtable/ebtable.js"></script>
+    <script src="../../data/ebtabletestsData.js"></script>
+    <script>
+      const renderers = {
+        myRender: (data, row) => data + ' -- ' + row[0]
+      };
 
-    const opts = {
-      columns: [
-        { name: 'Paket', invisible: false },
-        { name: 'xx', invisible: false },
-        { name: 'Datum' },
-        { name: 'Name', render: renderers.myRender },
-        { name: 'Fälligkeit' },
-        { name: 'Auftragspaket' },
-        { name: 'Frage des AG' },
-        { name: 'Produkt' },
-        { name: 'Bearbeiter' },
-        { name: 'Eingang' },
-        { name: 'DTA Nummern' }
-      ],
-      selectionCol: true
-    };
-    $().ready(function() {
-      $('#grid').ebtable(opts, basketTestdata);
-    });
-  </script>
-</head>
-<body>
-<div id='grid'></div>
-</body>
+      const opts = {
+        columns: [
+          { name: 'Paket', invisible: false },
+          { name: 'xx', invisible: false },
+          { name: 'Datum' },
+          { name: 'Name', render: renderers.myRender },
+          { name: 'Fälligkeit' },
+          { name: 'Auftragspaket' },
+          { name: 'Frage des AG' },
+          { name: 'Produkt' },
+          { name: 'Bearbeiter' },
+          { name: 'Eingang' },
+          { name: 'DTA Nummern' }
+        ],
+        selectionCol: true
+      };
+      $().ready(function () {
+        $('#grid').ebtable(opts, basketTestdata);
+      });
+    </script>
+  </head>
+  <body>
+    <div id="grid"></div>
+  </body>
 </html>

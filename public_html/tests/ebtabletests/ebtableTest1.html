@@ -5,8 +5,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/base/jquery-ui.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/eggplant/jquery-ui.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/start/jquery-ui.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/start/theme.min.css" />
     <link rel="stylesheet" href="../../css/ebtable.css" />
     <link rel="stylesheet" href="../../css/ebtableTest.css" />
 
@@ -19,24 +19,25 @@
     <script>
       const data = basketGroupedTestdata.map((a) => [...a.slice(0, 3), 'XXX', ...a.slice(3)]);
 
+      const flagsDef = [
+        { key: '!', id: 1, img: 'important.gif', alt: 'Eilauftrag' },
+        { key: '*', id: 2, img: 'blackstar.gif', alt: 'Spezialfall' },
+        { key: 'P', id: 4, img: 'problem.gif', alt: 'Problemfall' },
+        { key: 'F', id: 8, img: 'caseConsolidation.gif', alt: 'Fallzusammenführung' },
+        { key: 'G', id: 16, img: 'isPrg.gif', alt: 'Prg' },
+        { key: 'K', id: 32, img: 'korrekturauftrag.gif', alt: 'Korrekturauftrag' },
+        { key: 'S', id: 64, img: 'sperre.gif', alt: 'Sperre' },
+        { key: 'C', id: 128, img: 'storniert.gif', alt: 'Stornierung angefordert' }
+      ];
+      const flags = flagsDef.map(f =>f.key).join(''); // '!*PFGKSC'
       const flagUtils = {
-        flagsDef: [
-          { key: '!', id: 1, img: 'important.gif', alt: 'Eilauftrag' },
-          { key: '*', id: 2, img: 'blackstar.gif', alt: 'Spezialfall' },
-          { key: 'P', id: 4, img: 'problem.gif', alt: 'Problemfall' },
-          { key: 'F', id: 8, img: 'caseConsolidation.gif', alt: 'Fallzusammenführung' },
-          { key: 'G', id: 16, img: 'isPrg.gif', alt: 'Prg' },
-          { key: 'K', id: 32, img: 'korrekturauftrag.gif', alt: 'Korrekturauftrag' },
-          { key: 'S', id: 64, img: 'sperre.gif', alt: 'Sperre' },
-          { key: 'C', id: 128, img: 'storniert.gif', alt: 'Stornierung angefordert' }
-        ],
-        flags: _.pluck(flagsDef, 'key').join(''), // -> '!*PFGKSC'
+
         fromBitNumber: (bits) =>
           Number(bits)
             .toString(2) // 5 (101) --> '!P' # 7 (111) -> '!*p' # 8 (1000) -> F
             .split('')
             .reverse()
-            .reduce((acc, o, i) => (acc + o === '1' && flagUtils.flags[i] ? flagutilsflags[i] : ''), ''),
+            .reduce((acc, o, i) => (acc + o === '1' && flags[i] ? flagutilsflags[i] : ''), ''),
         toBitNumber: (str) =>
           str
             .toUpperCase()

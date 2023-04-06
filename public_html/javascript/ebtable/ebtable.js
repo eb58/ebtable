@@ -804,7 +804,9 @@ const dlgConfig = (opts) => {
 
     myOpts.flags.jqueryuiTooltips && this.tooltip();
 
-    const getOpenGroups = () => origData.groupsdata.reduce((acc, grp, key) => (grp.isOpen ? [...acc, parseInt(key)] : acc), []);
+    const getOpenGroups = () => {
+      return Object.keys(origData.groupsdata).reduce((acc, key) => (origData.groupsdata[key].isOpen ? [...acc, parseInt(key)] : acc), []);
+    };
 
     // ##########  Exports ############
     this.util = util;
