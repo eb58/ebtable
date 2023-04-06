@@ -1,15 +1,11 @@
-.ebtable .ctrl     { height: 30px;  margin: 5px 0 0 0;}
-.ebtable .ctrl div { margin: 4px 1px;}
-
 .ebtable .ctrl .ui-button                      { padding-top: 1px;  padding-bottom: 1px; height: 22px;}
 .ebtable .ctrl .ui-icon                        { padding:0; margin:0; color: white }
 .ebtable .ctrl .ui-selectmenu-button           { height: 15px;}
-.ebtable .ctrl .ui-selectmenu-button.ui-button { padding-top: 3px;  padding-bottom: 3px;  width: 50px;}
+.ebtable .ctrl .ui-selectmenu-button.ui-button { padding-top: 3px;  padding-bottom: 3px;  width: 40px;}
 
 .ebtable #ctrlInfo, .ebtable #ctrlAddInfo{  padding: 3px;  margin: 1px;}
 
-
-.ebtable #data, .ebtable table{ width: 100%;}
+.ebtable #data, .ebtable table{ width: 100%; }
 .ebtable #data, .ebtable #head{ background-color:#eaeaea;}
 
 .ebtable #data th{
@@ -45,6 +41,6 @@
 .ebtable #data th .ui-resizable-e { cursor:col-resize; width:10px; height: 100%;}
 
 /* ConfigDlg */
-.ebtableSelectable { list-style-type: none; padding:0; width: 100%; }
-.ebtableSelectable li.visible  { margin: 3px 0 0 0;  padding: 3px; font-size: 10px; font-weight: bold; background-color:#c6c6b6; }
-.ebtableSelectable li.invisible{ margin: 3px 0 0 0;  padding: 3px; font-size: 10px; font-weight: bold; background-color:#f8f8ea; }
+.configDlg .ebtableSelectable { list-style-type: none; padding:0; width: 100%; }
+.configDlg .ebtableSelectable li.visible  { margin: 3px 0 0 0;  padding: 3px; font-size: 10px; font-weight: bold; color:#555555; }
+.configDlg .ebtableSelectable li.invisible{ margin: 3px 0 0 0;  padding: 3px; font-size: 10px; font-weight: lighter; color:#aaaaaa; }

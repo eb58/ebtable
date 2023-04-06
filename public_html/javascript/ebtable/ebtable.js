@@ -1,11 +1,11 @@
 const range = (n) => [...Array(n).keys()];
 const dlgConfig = (opts) => {
   const dlgTemplate = _.template(
-    `<div id="<%=gridId%>configDlg">\n
-          <ol id="<%=gridId%>selectable" class="ebtableSelectable"> \n
-            <%= listOfColumnNames %> \n
-          </ol>\n
-        </div>`
+    `<div id="<%=gridId%>configDlg" class='configDlg'>
+        <ol id="<%=gridId%>selectable" class="ebtableSelectable">
+          <%= listOfColumnNames %>
+        </ol>
+    </div>`
   )(opts);
 
   const dlgOpts = {
@@ -19,8 +19,9 @@ const dlgConfig = (opts) => {
             .toggleClass('visible');
         });
     },
+    title: 'Spalten ausblenden und sortieren',
     position: { my: 'left top', at: 'left bottom', of: opts.anchor },
-    width: 250,
+    width: '250px',
     modal: true,
     buttons: {}
   };
@@ -32,7 +33,7 @@ const dlgConfig = (opts) => {
     $(this).dialog('destroy');
   };
 
-  $(dlgTemplate).dialog(dlgOpts).parent().find('.ui-widget-header').hide();
+  $(dlgTemplate).dialog(dlgOpts);
 };
 
 (function ($) {
@@ -550,7 +551,7 @@ const dlgConfig = (opts) => {
                 <tbody><%= data %></tbody>
               </table>
             </div>
-            <div class='ctrl' <%=ctrlStyle%>
+            <div class='ctrl' <%=ctrlStyle%>>
               <div id='ctrlInfo'    style='float: left;' class='ui-widget-content'><%= info %></div>
               <div id='ctrlAddInfo' style='float: left;' class='ui-widget-content'><%= addInfo %></div>
               <div id='ctrlPage2'   style='float: right;' ><%= browseBtns %></div>
@@ -804,9 +805,7 @@ const dlgConfig = (opts) => {
 
     myOpts.flags.jqueryuiTooltips && this.tooltip();
 
-    const getOpenGroups = () => {
-      return Object.keys(origData.groupsdata).reduce((acc, key) => (origData.groupsdata[key].isOpen ? [...acc, parseInt(key)] : acc), []);
-    };
+    const getOpenGroups = () => Object.keys(origData.groupsdata || []).reduce((acc, key) => (origData.groupsdata[key].isOpen ? [...acc, parseInt(key)] : acc), []);
 
     // ##########  Exports ############
     this.util = util;

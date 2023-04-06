@@ -29,9 +29,8 @@
         { key: 'S', id: 64, img: 'sperre.gif', alt: 'Sperre' },
         { key: 'C', id: 128, img: 'storniert.gif', alt: 'Stornierung angefordert' }
       ];
-      const flags = flagsDef.map(f =>f.key).join(''); // '!*PFGKSC'
+      const flags = flagsDef.map((f) => f.key).join(''); // '!*PFGKSC'
       const flagUtils = {
-
         fromBitNumber: (bits) =>
           Number(bits)
             .toString(2) // 5 (101) --> '!P' # 7 (111) -> '!*p' # 8 (1000) -> F
@@ -136,18 +135,17 @@
         reloadData: function () {
           const ss = $.fn.ebtable.loadSessionState();
           const myOpts = $.extend(true, {}, gridOpts, ss.myopts);
-          grid = $('#grid').ebtable(myOpts, data);
+          $('#grid').ebtable(myOpts, data);
         },
         lang: 'en'
       };
-      var grid;
       $().ready(function () {
-        grid = $('#grid').ebtable(gridOpts, data);
-        $('#saveGridStatus').on('click', grid.saveSessionState);
+        $('#grid').ebtable(gridOpts, data);
+        $('#saveGridStatus').on('click', grid.saveSessionState());
         $('#loadGridStatus').on('click', function () {
           const ss = $.extend($.fn.ebtable.loadSessionState());
           const myOpts = $.extend(true, {}, gridOpts, ss ? ss.myopts : {});
-          grid = $('#grid').ebtable(myOpts, data).setFilterValues(ss.filters);
+          $('#grid').ebtable(myOpts, data).setFilterValues(ss.filters);
         });
       });
     </script>

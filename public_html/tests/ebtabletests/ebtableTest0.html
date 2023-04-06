@@ -26,20 +26,13 @@
           clearFilter: true
         },
         columns: [
-          {
-            name: 'Tierart',
-            match: 'contains',
-            sortorder: 'desc',
-            valuelist: ['', 'Einhorn', 'Karpfen', 'Forelle']
-          },
+          { name: 'Tierart', match: 'contains', sortorder: 'desc', valuelist: ['', 'Einhorn', 'Karpfen', 'Forelle'] },
           { name: 'Datum', sortformat: 'date-de', width: '150px', css: 'text-align: center' },
           { name: 'Name' },
           { name: 'Flag' }
         ],
         sortcolname: 'Name',
-        selectionCol: true,
-        pageCur: 0
-        //lang:'en'
+        selectionCol: true
       };
       $().ready(() => {
         $('#grid').ebtable(opts, basketTestdata);
@@ -53,7 +46,9 @@
   </head>
   <body>
     <div id="grid"></div>
-    <button id="saveGridStatus">SaveGridStatus</button>
-    <button id="loadGridStatus">LoadGridStatus</button>
+    <div>
+      <button id="saveGridStatus">SaveGridStatus</button>
+      <button id="loadGridStatus">LoadGridStatus</button>
+    </div>
   </body>
 </html>
