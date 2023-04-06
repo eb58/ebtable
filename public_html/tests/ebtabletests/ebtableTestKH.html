@@ -1,453 +1,453 @@
 <!DOCTYPE html>
-<html lang="de">
-  <head>
-    <title>Beispiel 4 Nur ein TEST</title>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<html lang='de'>
+<head>
+  <title>Beispiel 4 Nur ein TEST</title>
+  <meta charset='UTF-8' />
+  <meta name='viewport' content='width=device-width, initial-scale=1.0' />
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/start/jquery-ui.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/start/theme.min.css" />
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css' />
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/start/jquery-ui.min.css' />
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/start/theme.min.css' />
 
-    <link rel="stylesheet" href="../../css/ebtable.css" />
-    <link rel="stylesheet" href="../../css/ebtableTest.css" />
+  <link rel='stylesheet' href='../../css/ebtable.css' />
+  <link rel='stylesheet' href='../../css/ebtableTest.css' />
 
-    <script src="../../vendor/underscore-1.8.3/underscore.js"></script>
-    <script src="../../vendor/jQuery-1.11.3/jquery.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js'></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js'></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js'></script>
 
-    <script src="../../javascript/ebtable/mx.js"></script>
-    <script src="../../javascript/ebtable/ebtable.js"></script>
-    <script src="../../data/ebTableTestdataKhBasket1.js"></script>
-    <script>
-      let grid;
+  <script src='../../javascript/ebtable/mx.js'></script>
+  <script src='../../javascript/ebtable/ebtable.js'></script>
+  <script src='../../data/ebTableTestdataKhBasket1.js'></script>
+  <script>
+    let grid;
 
-      const flagsDef = [
-        { key: '!', id: 1, img: 'important.gif', alt: 'Eilauftrag' },
-        { key: '*', id: 2, img: 'blackstar.gif', alt: 'Spezialfall' },
-        { key: 'P', id: 4, img: 'problem.gif', alt: 'Problemfall' },
-        { key: 'F', id: 8, img: 'caseConsolidation.gif', alt: 'Fallzusammenführung' },
-        { key: 'G', id: 16, img: 'isPrg.gif', alt: 'Prg' },
-        { key: 'K', id: 32, img: 'korrekturauftrag.gif', alt: 'Korrekturauftrag' },
-        { key: 'S', id: 64, img: 'sperre.gif', alt: 'Sperre' },
-        { key: 'C', id: 128, img: 'storniert.gif', alt: 'Stornierung angefordert' },
-        { key: 'O', id: 256, img: 'mimaOhneDok.gif', alt: 'Vorgang ohne Unterlagen' },
-        { key: 'U', id: 512, img: 'mimaUnbearbeitet.gif', alt: 'Vorgang nicht zugeordnet' },
-        { key: 'B', id: 1024, img: 'mimaBearbeitet.gif', alt: 'Vorgang bearbeitet' }
-      ];
-      const flags = flagsDef.map((f) => f.key).join(''); // '!*PFGKSC'
+    const flagsDef = [
+      { key: '!', id: 1, img: 'important.gif', alt: 'Eilauftrag' },
+      { key: '*', id: 2, img: 'blackstar.gif', alt: 'Spezialfall' },
+      { key: 'P', id: 4, img: 'problem.gif', alt: 'Problemfall' },
+      { key: 'F', id: 8, img: 'caseConsolidation.gif', alt: 'Fallzusammenführung' },
+      { key: 'G', id: 16, img: 'isPrg.gif', alt: 'Prg' },
+      { key: 'K', id: 32, img: 'korrekturauftrag.gif', alt: 'Korrekturauftrag' },
+      { key: 'S', id: 64, img: 'sperre.gif', alt: 'Sperre' },
+      { key: 'C', id: 128, img: 'storniert.gif', alt: 'Stornierung angefordert' },
+      { key: 'O', id: 256, img: 'mimaOhneDok.gif', alt: 'Vorgang ohne Unterlagen' },
+      { key: 'U', id: 512, img: 'mimaUnbearbeitet.gif', alt: 'Vorgang nicht zugeordnet' },
+      { key: 'B', id: 1024, img: 'mimaBearbeitet.gif', alt: 'Vorgang bearbeitet' }
+    ];
+    const flags = flagsDef.map((f) => f.key).join(''); // '!*PFGKSC'
 
-      const flagutils = {
-        fromBitNumber: function (bits) {
-          // 5 (101)  -->  '!P' # 7 (111) -> '!*p' # 8 (1000) -> F
-          return _.reduce(
-            Number(bits).toString(2).split('').reverse(),
-            function (acc, o, i) {
-              return acc + (o === '1' && flags[i] ? flags[i] : '');
-            },
-            ''
-          );
-        },
-        toBitNumber: function (str) {
-          // '!P' -> 5 (101), '!PG' -> 21
-          return _.reduce(
-            str.toUpperCase().split(''),
-            function (acc, c) {
-              var x = _.findWhere(flagsDef, { key: c });
-              return acc + x ? x.id : 0;
-            },
-            0
-          );
-        }
-      };
+    const flagutils = {
+      fromBitNumber: function(bits) {
+        // 5 (101)  -->  '!P' # 7 (111) -> '!*p' # 8 (1000) -> F
+        return _.reduce(
+          Number(bits).toString(2).split('').reverse(),
+          function(acc, o, i) {
+            return acc + (o === '1' && flags[i] ? flags[i] : '');
+          },
+          ''
+        );
+      },
+      toBitNumber: function(str) {
+        // '!P' -> 5 (101), '!PG' -> 21
+        return _.reduce(
+          str.toUpperCase().split(''),
+          function(acc, c) {
+            var x = _.findWhere(flagsDef, { key: c });
+            return acc + x ? x.id : 0;
+          },
+          0
+        );
+      }
+    };
 
-      const downflagsdef = [
-        { key: 'F', id: 1, img: 'releaseable.gif', alt: 'Freigabe möglich' },
-        { key: 'D', id: 2, img: 'downloadable.gif', alt: 'Download ins DMS möglich' }
-      ];
-      const downflags = downflagsdef.map((f) => f.key).join(''); // 'FD'
+    const downflagsdef = [
+      { key: 'F', id: 1, img: 'releaseable.gif', alt: 'Freigabe möglich' },
+      { key: 'D', id: 2, img: 'downloadable.gif', alt: 'Download ins DMS möglich' }
+    ];
+    const downflags = downflagsdef.map((f) => f.key).join(''); // 'FD'
 
-      const downflagutils = {
-        fromBitNumber: function (bits) {
-          // 3 (11) -> 'FD'
-          return _.reduce(
-            Number(bits).toString(2).split('').reverse(),
-            function (acc, o, i) {
-              return acc + (o === '1' && downflags[i] ? downflags[i] : '');
-            },
-            ''
-          );
-        },
-        toBitNumber: function (str) {
-          // 'FD' -> 3 (11), 'F' -> 1, 'D' -> 2
-          return _.reduce(
-            str.toUpperCase().split(''),
-            function (acc, c) {
-              var x = _.findWhere(downflagsdef, { key: c });
-              return acc + x ? x.id : 0;
-            },
-            0
-          );
-        }
-      };
+    const downflagutils = {
+      fromBitNumber: function(bits) {
+        // 3 (11) -> 'FD'
+        return _.reduce(
+          Number(bits).toString(2).split('').reverse(),
+          function(acc, o, i) {
+            return acc + (o === '1' && downflags[i] ? downflags[i] : '');
+          },
+          ''
+        );
+      },
+      toBitNumber: function(str) {
+        // 'FD' -> 3 (11), 'F' -> 1, 'D' -> 2
+        return _.reduce(
+          str.toUpperCase().split(''),
+          function(acc, c) {
+            var x = _.findWhere(downflagsdef, { key: c });
+            return acc + x ? x.id : 0;
+          },
+          0
+        );
+      }
+    };
 
-      $.extend($.fn.ebtable.sortformats, {
-        flags: (v, row, groups) => (row[idx.gid] < 0 ? flagutils.fromBitNumber(v) : flagutils.fromBitNumber(groups[row[idx.gid]].flg)),
-        downflags: (v, row, groups) => (row[idx.gid] < 0 ? downflagutils.fromBitNumber(v) : downflagutils.fromBitNumber(groups[row[idx.gid]].dwn)),
-        frist: (v, row, groups) => {
-          const gid = row[idx.gid];
-          return gid < 0 ? v : groups[gid].fristmin;
-        },
-        eingang: (v, row, groups) => {
-          const gid = row[idx.gid];
-          const eing = gid < 0 ? v : groups[gid].eingang;
-          const d = eing && eing.match(/^(\d{2})\.(\d{2})\.(\d{4})$/);
-          return d ? d[3] + d[2] + d[1] : '';
-        }
-      });
-      const matcher = {
-        paketname: (cellData, searchtxt, row, tbldata) => {
-          const rexp = new RegExp('^' + searchtxt.replace(/\*/g, '.*'), 'i');
-          const cid = row[idx.gid] > 0 ? row[idx.gid] : null; // chargeid
-          const cname = cid ? tbldata.groupsdata[cid].groupname : ''; // chargename
-          return cname.match(rexp);
-        },
-        auftrag: (cellData, searchtxt, row) => {
-          const rexp = new RegExp('^' + searchtxt.replace(/\*/g, '.*'), 'i');
-          if (row[idx.gtyp] === 'C') return cellData.match(rexp);
-          if (row[idx.gtyp] === 'W' && row[idx.gid] < 0) return cellData.match(rexp);
-          if (row[idx.gtyp] === 'W' && row[idx.gid] >= 0) return row[idx.gss].match(rexp);
-        },
-        flags: (cellData, searchtxt) => !(flagutils.toBitNumber(searchtxt) & ~cellData),
-        downflags: (cellData, searchtxt) => !(downflagutils.toBitNumber(searchtxt) & ~cellData),
-        dta: (cellData, searchtxt) => searchtxt.split(',').every((v) => cellData.contains(v)),
-        pruefanz: (cellData, searchtxt) => ((searchtxt === cellData) === 'true' ? 'j' : 'n'),
-        unterlag: (cellData, searchtxt) => ((searchtxt === cellData) === 'true' ? 'j' : 'n'),
-        besonderheit: (cellData, searchtxt) => searchtxt.split(',').every((v) => cellData.match(new RegExp(v.replace(/\*/g, '.*'), 'i'))),
-        date: (cellData, searchtxt) => cellData.contains(searchtxt)
-      };
+    $.extend($.fn.ebtable.sortformats, {
+      flags: (v, row, groups) => (row[idx.gid] < 0 ? flagutils.fromBitNumber(v) : flagutils.fromBitNumber(groups[row[idx.gid]].flg)),
+      downflags: (v, row, groups) => (row[idx.gid] < 0 ? downflagutils.fromBitNumber(v) : downflagutils.fromBitNumber(groups[row[idx.gid]].dwn)),
+      frist: (v, row, groups) => {
+        const gid = row[idx.gid];
+        return gid < 0 ? v : groups[gid].fristmin;
+      },
+      eingang: (v, row, groups) => {
+        const gid = row[idx.gid];
+        const eing = gid < 0 ? v : groups[gid].eingang;
+        const d = eing && eing.match(/^(\d{2})\.(\d{2})\.(\d{4})$/);
+        return d ? d[3] + d[2] + d[1] : '';
+      }
+    });
+    const matcher = {
+      paketname: (cellData, searchtxt, row, tbldata) => {
+        const rexp = new RegExp('^' + searchtxt.replace(/\*/g, '.*'), 'i');
+        const cid = row[idx.gid] > 0 ? row[idx.gid] : null; // chargeid
+        const cname = cid ? tbldata.groupsdata[cid].groupname : ''; // chargename
+        return cname.match(rexp);
+      },
+      auftrag: (cellData, searchtxt, row) => {
+        const rexp = new RegExp('^' + searchtxt.replace(/\*/g, '.*'), 'i');
+        if (row[idx.gtyp] === 'C') return cellData.match(rexp);
+        if (row[idx.gtyp] === 'W' && row[idx.gid] < 0) return cellData.match(rexp);
+        if (row[idx.gtyp] === 'W' && row[idx.gid] >= 0) return row[idx.gss].match(rexp);
+      },
+      flags: (cellData, searchtxt) => !(flagutils.toBitNumber(searchtxt) & ~cellData),
+      downflags: (cellData, searchtxt) => !(downflagutils.toBitNumber(searchtxt) & ~cellData),
+      dta: (cellData, searchtxt) => searchtxt.split(',').every((v) => cellData.contains(v)),
+      pruefanz: (cellData, searchtxt) => ((searchtxt === cellData) === 'true' ? 'j' : 'n'),
+      unterlag: (cellData, searchtxt) => ((searchtxt === cellData) === 'true' ? 'j' : 'n'),
+      besonderheit: (cellData, searchtxt) => searchtxt.split(',').every((v) => cellData.match(new RegExp(v.replace(/\*/g, '.*'), 'i'))),
+      date: (cellData, searchtxt) => cellData.contains(searchtxt)
+    };
 
-      const renderer = {
-        paketname: function (data, row, r, tbldata) {
-          const cid = row[idx.gid] > 0 ? row[idx.gid] : null; // chargeid
-          return cid ? tbldata.groupsdata[cid].groupname : '';
-          //return data.substring(0,30).replace(/ /g, '\u00a0') + data.substring(30); // a0 = &nbsp; -> prevent line wrap in table cell if data.length <30
-        },
-        auftrag: function (data, row, r, tbldata) {
-          const chargeId = row[idx.gid];
-          const pageCur = grid ? grid.getPageCur() : 0;
-          const name = data.substring(0, 30).replace(/ /g, '\u00a0') + data.substring(30); // a0 = &nbsp; -> prevent line wrap in table cell if data.length <30
+    const renderer = {
+      paketname: function(data, row, r, tbldata) {
+        const cid = row[idx.gid] > 0 ? row[idx.gid] : null; // chargeid
+        return cid ? tbldata.groupsdata[cid].groupname : '';
+        //return data.substring(0,30).replace(/ /g, '\u00a0') + data.substring(30); // a0 = &nbsp; -> prevent line wrap in table cell if data.length <30
+      },
+      auftrag: function(data, row, r, tbldata) {
+        const chargeId = row[idx.gid];
+        const pageCur = grid ? grid.getPageCur() : 0;
+        const name = data.substring(0, 30).replace(/ /g, '\u00a0') + data.substring(30); // a0 = &nbsp; -> prevent line wrap in table cell if data.length <30
 
-          if (row[0] === 'W') {
-            //  render workorder
-            const winfo = row[idx.winfo]
-              ? _.template(
-                  '<a href=# onclick="showAuftragInfo    (<\%=wid%>,\'<\%=data%>\')"><img src="../../images/info.gif"           border="0" height="12px" title="Details Auftrag"></a>&nbsp;'
-                )({
-                  wid: row[idx.wid],
-                  data: data.replace("'", "\\'")
-                })
-              : '';
-            const vinfo = row[idx.vinfo]
-              ? _.template(
-                  '<a href=# onclick="showInsurantComment(<\%=wid%>,\'<\%=data%>\')"><img src="../../images/insurantComment.gif" border="0" height="12px" title="Hinweise zum Versicherten"></a>&nbsp;'
-                )({
-                  wid: row[idx.wid],
-                  data: data.replace("'", "\\'")
-                })
-              : '';
-            const isdwn = row[idx.isdwn]
-              ? _.template('<img id="isDownloaded_<\%=wid%>" border="0" src="../../images/downloaded.gif" title="Es wurde ein Download ohne Upload ausgeführt">')({
-                  wid: row[idx.wid]
-                })
-              : '';
-            const t = _.template(
-              '<input type="hidden" id="name_<\%=wid%>" value="<\%=data%>"/>\n\
-                        <a onclick="showOrder(<\%=wid%>,<\%=pageCur%> )" title="<\%=wid%>"><\%=data%></a>\n\
-                        <\%=winfo%><\%=vinfo%><\%=isdwn%>'
-            );
-            return t({
-              winfo: winfo,
-              vinfo: vinfo,
+        if (row[0] === 'W') {
+          //  render workorder
+          const winfo = row[idx.winfo]
+            ? _.template(
+              '<a href=# onclick="showAuftragInfo    (<\%=wid%>,\'<\%=data%>\')"><img src="../../images/info.gif"           border="0" height="12px" title="Details Auftrag"></a>&nbsp;'
+            )({
               wid: row[idx.wid],
-              data: name,
-              sid: '${pageContext.session.id}',
-              isdwn: isdwn,
-              pageCur: pageCur
-            });
-          } else {
-            // render charge
-            const isOpen = tbldata.groupsdata[chargeId].isOpen;
-            const imgsrc = isOpen ? '../../images/details_opened.png' : '../../images/details_closed.png';
-            const auftrag = row[idx.gcnt] === 1 ? 'Auftrag' : 'Aufträge';
-            const chargeName = (function () {
-              const isPersonalBasket = '<%=sType%>' !== 'groupBasket';
-              const prefix = '<a onclick="doBGL(\'khbasket.do;jsessionid=${pageContext.session.id}?event_closeBasket=';
-              if (row[idx.cty] === 'BGL')
-                return prefix + 'createCharge&mode=editName&chargeid=' + chargeId + '\')" title="Begehungsliste (Name, Begehungsdatum) ändern">' + name + '</a>';
-              if (row[idx.cty] === 'ERF' && isPersonalBasket)
-                return prefix + 'createCharge&mode=continue&chargeid=' + chargeId + '\')" title="Mengenerfassung fortsetzen">' + name + '</a>';
-              if (row[idx.cty] === 'SFB' && isPersonalBasket)
-                return prefix + 'createSFBCharge&mode=continue&chargeid=' + chargeId + '\')" title="SFB-Mengenerfassung fortsetzen">' + name + '</a>';
-              return name;
-            })();
-
-            const tmpl =
-              '<img src="<\%=imgsrc%>" height="15px" onclick="grid.toggleGroupIsOpen(\'<\%=chargeId%>\')" /><b>&nbsp;<\%=chargeName%>&nbsp;</b>(<\%=cnt%>&nbsp;<\%=auftrag%>)';
-            const link = _.template(tmpl)({
-              imgsrc: imgsrc,
-              chargeId: chargeId,
-              chargeName: chargeName,
-              cnt: row[idx.gcnt],
-              auftrag: auftrag
-            });
-            return row[idx.gtyp] === 'C' ? link : name;
-          }
-        },
-        flags: function (data, row) {
-          let mima_status_0 = '';
-          if (row[0] === 'W' && (row[1] & 1792) === 0)
-            // mimastatus-Behandlung
-            mima_status_0 = "<img src='../../images/empty_link.gif' alt='' id='mima_marker_" + row[4] + "' title='' height='0px'/>";
-          return (
-            _.reduce(
-              flagsDef,
-              function (acc, o) {
-                let imgid = '';
-                if (row[0] === 'W' && (o.id & 1792) === o.id) imgid = 'id="mima_marker_' + row[4] + '"';
-                return (acc +=
-                  data & o.id
-                    ? _.template("<img src='../../images/<\%=img%>' alt='<\%=alt%>' <\%=id%> title='<\%=alt%>' height='10px'/>")({
-                        img: o.img,
-                        alt: o.alt,
-                        id: imgid
-                      })
-                    : '');
-              },
-              ''
-            ) + mima_status_0
+              data: data.replace('\'', '\\\'')
+            })
+            : '';
+          const vinfo = row[idx.vinfo]
+            ? _.template(
+              '<a href=# onclick="showInsurantComment(<\%=wid%>,\'<\%=data%>\')"><img src="../../images/insurantComment.gif" border="0" height="12px" title="Hinweise zum Versicherten"></a>&nbsp;'
+            )({
+              wid: row[idx.wid],
+              data: data.replace('\'', '\\\'')
+            })
+            : '';
+          const isdwn = row[idx.isdwn]
+            ? _.template('<img id="isDownloaded_<\%=wid%>" border="0" src="../../images/downloaded.gif" title="Es wurde ein Download ohne Upload ausgeführt">')({
+              wid: row[idx.wid]
+            })
+            : '';
+          const t = _.template(
+            '<input type="hidden" id="name_<\%=wid%>" value="<\%=data%>"/>\n\
+                      <a onclick="showOrder(<\%=wid%>,<\%=pageCur%> )" title="<\%=wid%>"><\%=data%></a>\n\
+                      <\%=winfo%><\%=vinfo%><\%=isdwn%>'
           );
-        },
-        downflags: function (data, row) {
-          return _.reduce(
-            downflagsdef,
-            function (acc, o) {
+          return t({
+            winfo: winfo,
+            vinfo: vinfo,
+            wid: row[idx.wid],
+            data: name,
+            sid: '${pageContext.session.id}',
+            isdwn: isdwn,
+            pageCur: pageCur
+          });
+        } else {
+          // render charge
+          const isOpen = tbldata.groupsdata[chargeId].isOpen;
+          const imgsrc = isOpen ? '../../images/details_opened.png' : '../../images/details_closed.png';
+          const auftrag = row[idx.gcnt] === 1 ? 'Auftrag' : 'Aufträge';
+          const chargeName = (function() {
+            const isPersonalBasket = '<%=sType%>' !== 'groupBasket';
+            const prefix = '<a onclick="doBGL(\'khbasket.do;jsessionid=${pageContext.session.id}?event_closeBasket=';
+            if (row[idx.cty] === 'BGL')
+              return prefix + 'createCharge&mode=editName&chargeid=' + chargeId + '\')" title="Begehungsliste (Name, Begehungsdatum) ändern">' + name + '</a>';
+            if (row[idx.cty] === 'ERF' && isPersonalBasket)
+              return prefix + 'createCharge&mode=continue&chargeid=' + chargeId + '\')" title="Mengenerfassung fortsetzen">' + name + '</a>';
+            if (row[idx.cty] === 'SFB' && isPersonalBasket)
+              return prefix + 'createSFBCharge&mode=continue&chargeid=' + chargeId + '\')" title="SFB-Mengenerfassung fortsetzen">' + name + '</a>';
+            return name;
+          })();
+
+          const tmpl =
+            '<img src="<\%=imgsrc%>" height="15px" onclick="grid.toggleGroupIsOpen(\'<\%=chargeId%>\')" /><b>&nbsp;<\%=chargeName%>&nbsp;</b>(<\%=cnt%>&nbsp;<\%=auftrag%>)';
+          const link = _.template(tmpl)({
+            imgsrc: imgsrc,
+            chargeId: chargeId,
+            chargeName: chargeName,
+            cnt: row[idx.gcnt],
+            auftrag: auftrag
+          });
+          return row[idx.gtyp] === 'C' ? link : name;
+        }
+      },
+      flags: function(data, row) {
+        let mima_status_0 = '';
+        if (row[0] === 'W' && (row[1] & 1792) === 0)
+          // mimastatus-Behandlung
+          mima_status_0 = '<img src=\'../../images/empty_link.gif\' alt=\'\' id=\'mima_marker_' + row[4] + '\' title=\'\' height=\'0px\'/>';
+        return (
+          _.reduce(
+            flagsDef,
+            function(acc, o) {
+              let imgid = '';
+              if (row[0] === 'W' && (o.id & 1792) === o.id) imgid = 'id="mima_marker_' + row[4] + '"';
               return (acc +=
                 data & o.id
-                  ? _.template("<img src='../../images/<\%=img%>' alt='<\%=alt%>' title='<\%=alt%>' height='10px'/>")({
-                      img: o.img,
-                      alt: o.alt
-                    })
+                  ? _.template('<img src=\'../../images/<\%=img%>\' alt=\'<\%=alt%>\' <\%=id%> title=\'<\%=alt%>\' height=\'10px\'/>')({
+                    img: o.img,
+                    alt: o.alt,
+                    id: imgid
+                  })
                   : '');
             },
             ''
-          );
-        },
-        frist: function (data, row) {
-          return data < 0 ? '<span style="white-space: nowrap;"><font color="red">' + data + '</font></span>' : data;
-        },
-        dta: function (data, row) {
-          return data.replace(/,/g, ', ');
-        },
-        pruefanz: function (data) {
-          return data ? _.template("&nbsp;<img src='../../images/releaseable.gif' alt='<\%=alt%>' title='<\%=alt%>' height='11px'/>")({ alt: 'Prüfanzeige versendet' }) : '';
-        },
-        unterlag: function (data) {
-          return data ? _.template("&nbsp;<img src='../../images/releaseable.gif' alt='<\%=alt%>' title='<\%=alt%>' height='11px'/>")({ alt: 'Unterlagen vollständig' }) : '';
-        }
-      };
-
-      const idx = {
-        gtyp: 0,
-        gcnt: 1,
-        gid: 2,
-        gss: 3,
-        wid: 4,
-        pid: 5,
-        per: 6,
-        cty: 7,
-        winfo: 8,
-        vinfo: 9,
-        isdwn: 10,
-        flg: 11,
-        dwn: 12,
-        frs: 13,
-        wnm: 14,
-        eingang: 15,
-        paketname: 16
-      };
-
-      function preprocessData(data) {
-        // 0                      1     2        3             4                  5         6          7        8      9      10                     11      12               13
-        // charge                 #  chargeid  xxx  workorderid     ProcessStatusId Performer chargeType (X)flags   down   frist                 status   kürzel   Auftrag/Charge
-        // ["C",                  3, 7971,        , 50000005209,                  ,         ,      'DIS',       4,    3,              "Zur Disposition",     '',            "AAAA", ... ]
-        // ["W",                  1, 7971,        , 50000005209,                  ,         ,      'BGL',       0,    1,           "Zur Sachbearbeitung",    '',            "Schwarz..", ...]
-        // ...
-        const groupsdata = {};
-        for (let r = 0; r < data.length; r++) {
-          const row = data[r];
-          row.splice(idx.gss, 0, ''); // create empty column for storing grouping info (gss)
-
-          const chargeId = row[idx.gid];
-          if (chargeId < 0) continue;
-          const wid = row[idx.wid];
-          const chargeName = row[idx.wnm];
-          if (row[idx.gtyp] === 'C') {
-            groupsdata[chargeId] = {
-              groupname: chargeName,
-              isOpen: false,
-              isSelected: false,
-              fristmin: row[idx.frs],
-              fristmax: row[idx.frs],
-              wids: [], // Liste der zur Gruppe gehörenden workorderids: [50000004850,50000005018,50000005204]
-              pids: [], // Liste ProcessStatusIds: [50000004850_524288,50000005018_524288,50000005204_1048576]
-              pers: [], // Liste preformers: 50000004850_50000000000015,50000005018_50000000000015,50000005204_50000000000015
-              spc: 0, //  Mindestens ein Auftrag in der Charge ist 'special'
-              flg: row[idx.flg],
-              dwn: row[idx.dwn],
-              eingang: row[idx.eingang]
-            };
-          } else if (row[idx.gtyp] === 'W' && chargeId >= 0 && groupsdata[chargeId]) {
-            const g = groupsdata[chargeId];
-            if (row[idx.frs] !== null && row[idx.frs] < g.fristmin) g.fristmin = row[idx.frs];
-            if (row[idx.frs] !== null && row[idx.frs] > g.fristmax) g.fristmax = row[idx.frs];
-            g.wids.push(wid);
-            g.pids.push(wid + '_' + row[idx.pid]);
-            g.pers.push(wid + '_' + row[idx.per]);
-            g.spc = g.spc || row[idx.flg] & 2;
-          }
-        }
-        //ismedLog('Grouping', groupsdata);
-        data.groupsdata = groupsdata;
+          ) + mima_status_0
+        );
+      },
+      downflags: function(data, row) {
+        return _.reduce(
+          downflagsdef,
+          function(acc, o) {
+            return (acc +=
+              data & o.id
+                ? _.template('<img src=\'../../images/<\%=img%>\' alt=\'<\%=alt%>\' title=\'<\%=alt%>\' height=\'10px\'/>')({
+                  img: o.img,
+                  alt: o.alt
+                })
+                : '');
+          },
+          ''
+        );
+      },
+      frist: function(data, row) {
+        return data < 0 ? '<span style="white-space: nowrap;"><font color="red">' + data + '</font></span>' : data;
+      },
+      dta: function(data, row) {
+        return data.replace(/,/g, ', ');
+      },
+      pruefanz: function(data) {
+        return data ? _.template('&nbsp;<img src=\'../../images/releaseable.gif\' alt=\'<\%=alt%>\' title=\'<\%=alt%>\' height=\'11px\'/>')({ alt: 'Prüfanzeige versendet' }) : '';
+      },
+      unterlag: function(data) {
+        return data ? _.template('&nbsp;<img src=\'../../images/releaseable.gif\' alt=\'<\%=alt%>\' title=\'<\%=alt%>\' height=\'11px\'/>')({ alt: 'Unterlagen vollständig' }) : '';
       }
+    };
 
-      const gridOpts = {
-        columns: [
-          { dbcol: 'entryType', name: 'Grouping', invisible: true, technical: true, sortorder: 'asc-fix' },
-          { dbcol: 'entryCount', name: 'GroupCnt', invisible: true, technical: true },
-          { dbcol: 'chargeid', name: 'GroupIds', invisible: true, technical: true },
-          { dbcol: '', name: 'GroupSort', invisible: true, technical: true },
-          { dbcol: 'workorderid', name: 'WorkorderId', invisible: true, technical: true },
-          { dbcol: 'processStatusId', name: 'StatusId', invisible: true, technical: true },
-          { dbcol: 'performer', name: 'Performer', invisible: true, technical: true },
-          { dbcol: 'chargeType', name: 'ChargeType', invisible: true, technical: true },
-          { dbcol: 'hasWorkorderComments', name: 'hasWorkorderComments', invisible: true, technical: true },
-          { dbcol: 'hasInsurantComments', name: 'hasInsurantComments', invisible: true, technical: true },
-          { dbcol: 'isDownloaded', name: 'isDownloaded', invisible: true, technical: true },
-          {
-            dbcol: 'flags',
-            name: '  1  ',
-            mandatory: true,
-            render: renderer.flags,
-            match: matcher.flags,
-            sortmaster: [{ col: idx.flg }, { col: idx.gid }, { col: idx.gtyp }],
-            tooltip:
-              'Spezialfall (*), Eilauftrag (!), Problemauftrag (P), Fallzusammenführung (F), Fristfall (G), Korrektusstatus (K), Sperre (S), Storno angefordert (C), Vorgang ohne Unterlagen - M gelb (O), Vorgang unbearbeitet - M rot (U), Vorgang bearbeitet - M grün (B)'
-          },
-          {
-            dbcol: 'flagDownloadable',
-            name: '  2  ',
-            mandatory: true,
-            render: renderer.downflags,
-            match: matcher.downflags,
-            sortmaster: [{ col: idx.dwn, sortformat: 'downflags' }, { col: idx.gid }, { col: idx.gtyp }],
-            tooltip: 'Freigabe möglich (F), Download möglich (D)'
-          },
-          {
-            dbcol: 'countdown',
-            name: 'Frist',
-            mandatory: true,
-            render: renderer.frist,
-            sortmaster: [
-              {
-                col: idx.frs,
-                sortformat: 'frist'
-              },
-              { col: idx.gid },
-              { col: idx.gtyp },
-              { col: idx.frs },
-              { col: idx.frs }
-            ]
-          },
-          {
-            dbcol: 'workordername',
-            name: 'Name/Auftrag',
-            mandatory: true,
-            render: renderer.auftrag,
-            match: matcher.auftrag,
-            sortmaster: [{ col: idx.gss }, { col: idx.gtyp }]
-          },
-          {
-            dbcol: 'registrationdate',
-            name: 'Eingang',
-            match: matcher.date,
-            sortmaster: [{ col: idx.eingang, sortformat: 'eingang' }, { col: idx.gid }, { col: idx.gtyp }]
-          },
-          { dbcol: 'chargeName', name: 'Paketname' },
-          { dbcol: 'processStatusText', name: 'Status' },
-          { dbcol: 'ordercode', name: 'Kürzel' },
-          { dbcol: 'krankenhausname', name: 'Krankenhausname' },
-          { dbcol: 'departmentName', name: 'Fachabteilung' },
-          { dbcol: 'specialism', name: 'Fachlichkeit' },
-          { dbcol: 'specialFeatures', name: 'Besonderheit', match: matcher.besonderheit },
-          { dbcol: 'krankenkasse', name: 'Krankenkasse' },
-          { dbcol: 'aufnahmedatum', name: 'Aufnahme', match: matcher.date, sortformat: 'date-de' },
-          { dbcol: 'entlassdatum', name: 'Entlassung', match: matcher.date, sortformat: 'date-de' },
-          { dbcol: 'khDrg', name: 'DRG' },
-          { dbcol: 'expertisetypenumber', name: 'GArt' },
-          { dbcol: 'productdisplayname', name: 'Produkt' },
-          { dbcol: 'reasonnumber', name: 'FAG' },
-          { dbcol: 'dtaNummern', name: 'DTA-Fragen', render: renderer.dta, match: matcher.dta },
-          { dbcol: 'vga', name: 'Vorg.VGA' },
-          { dbcol: 'khDeadline', name: 'KH-Frist', render: renderer.frist },
-          { dbcol: 'invoiceReceiptDate', name: 'Rechnung', match: matcher.date, sortformat: 'date-de' },
-          { dbcol: 'auftragsart', name: 'Auftragsart' },
-          {
-            dbcol: 'pruefVersendet',
-            name: 'Prüfanz.',
-            match: matcher.pruefanz,
-            render: renderer.pruefanz,
-            tooltip: 'Filtern mit j,n'
-          },
-          {
-            dbcol: 'pruefVollstaendig',
-            name: 'Unterlag.',
-            match: matcher.unterlag,
-            render: renderer.unterlag,
-            tooltip: 'Filtern mit j,n'
-          }
-          //          {dbcol:"sfbLocationName",       name:"SFB-Standort"},
-          //          {dbcol:"sfbLocationZipcode",    name:"SFB-PLZ"},
-          //          {dbcol:"sfbLocationCity",       name:"SFB-Ort"}
-        ],
-        selectionCol: true,
-        sortcolname: 'Frist',
-        sortmaster: [{ col: idx.gid }, { col: idx.gtyp }], //[{col:1, sortorder:'asc', sortformat:'date-de'},{col:2, sortorder:'desc'}]
-        groupdefs: {
-          grouplabel: 0,
-          groupcnt: 1,
-          groupid: 2,
-          groupsortstring: 3,
-          groupname: idx.wnm,
-          grouphead: 'C',
-          groupelem: 'W'
+    const idx = {
+      gtyp: 0,
+      gcnt: 1,
+      gid: 2,
+      gss: 3,
+      wid: 4,
+      pid: 5,
+      per: 6,
+      cty: 7,
+      winfo: 8,
+      vinfo: 9,
+      isdwn: 10,
+      flg: 11,
+      dwn: 12,
+      frs: 13,
+      wnm: 14,
+      eingang: 15,
+      paketname: 16
+    };
+
+    function preprocessData(data) {
+      // 0                      1     2        3             4                  5         6          7        8      9      10                     11      12               13
+      // charge                 #  chargeid  xxx  workorderid     ProcessStatusId Performer chargeType (X)flags   down   frist                 status   kürzel   Auftrag/Charge
+      // ["C",                  3, 7971,        , 50000005209,                  ,         ,      'DIS',       4,    3,              "Zur Disposition",     '',            "AAAA", ... ]
+      // ["W",                  1, 7971,        , 50000005209,                  ,         ,      'BGL',       0,    1,           "Zur Sachbearbeitung",    '',            "Schwarz..", ...]
+      // ...
+      const groupsdata = {};
+      for (let r = 0; r < data.length; r++) {
+        const row = data[r];
+        row.splice(idx.gss, 0, ''); // create empty column for storing grouping info (gss)
+
+        const chargeId = row[idx.gid];
+        if (chargeId < 0) continue;
+        const wid = row[idx.wid];
+        const chargeName = row[idx.wnm];
+        if (row[idx.gtyp] === 'C') {
+          groupsdata[chargeId] = {
+            groupname: chargeName,
+            isOpen: false,
+            isSelected: false,
+            fristmin: row[idx.frs],
+            fristmax: row[idx.frs],
+            wids: [], // Liste der zur Gruppe gehörenden workorderids: [50000004850,50000005018,50000005204]
+            pids: [], // Liste ProcessStatusIds: [50000004850_524288,50000005018_524288,50000005204_1048576]
+            pers: [], // Liste preformers: 50000004850_50000000000015,50000005018_50000000000015,50000005204_50000000000015
+            spc: 0, //  Mindestens ein Auftrag in der Charge ist 'special'
+            flg: row[idx.flg],
+            dwn: row[idx.dwn],
+            eingang: row[idx.eingang]
+          };
+        } else if (row[idx.gtyp] === 'W' && chargeId >= 0 && groupsdata[chargeId]) {
+          const g = groupsdata[chargeId];
+          if (row[idx.frs] !== null && row[idx.frs] < g.fristmin) g.fristmin = row[idx.frs];
+          if (row[idx.frs] !== null && row[idx.frs] > g.fristmax) g.fristmax = row[idx.frs];
+          g.wids.push(wid);
+          g.pids.push(wid + '_' + row[idx.pid]);
+          g.pers.push(wid + '_' + row[idx.per]);
+          g.spc = g.spc || row[idx.flg] & 2;
         }
-      };
+      }
+      //ismedLog('Grouping', groupsdata);
+      data.groupsdata = groupsdata;
+    }
 
-      $().ready(function () {
-        preprocessData(basketTestdataKH);
-        grid = $('#grid').ebtable(gridOpts, basketTestdataKH);
-        $('#saveGridStatus').on('click', grid.saveSessionState);
-        $('#loadGridStatus').on('click', function () {
-          const mixopts = _.extend({}, gridOpts, $.fn.ebtable.loadSessionState());
-          grid = $('#grid').ebtable(mixopts, basketTestdataKH).setFilterValues(mixopts.filters);
-        });
+    const gridOpts = {
+      columns: [
+        { dbcol: 'entryType', name: 'Grouping', invisible: true, technical: true, sortorder: 'asc-fix' },
+        { dbcol: 'entryCount', name: 'GroupCnt', invisible: true, technical: true },
+        { dbcol: 'chargeid', name: 'GroupIds', invisible: true, technical: true },
+        { dbcol: '', name: 'GroupSort', invisible: true, technical: true },
+        { dbcol: 'workorderid', name: 'WorkorderId', invisible: true, technical: true },
+        { dbcol: 'processStatusId', name: 'StatusId', invisible: true, technical: true },
+        { dbcol: 'performer', name: 'Performer', invisible: true, technical: true },
+        { dbcol: 'chargeType', name: 'ChargeType', invisible: true, technical: true },
+        { dbcol: 'hasWorkorderComments', name: 'hasWorkorderComments', invisible: true, technical: true },
+        { dbcol: 'hasInsurantComments', name: 'hasInsurantComments', invisible: true, technical: true },
+        { dbcol: 'isDownloaded', name: 'isDownloaded', invisible: true, technical: true },
+        {
+          dbcol: 'flags',
+          name: '  1  ',
+          mandatory: true,
+          render: renderer.flags,
+          match: matcher.flags,
+          sortmaster: [{ col: idx.flg }, { col: idx.gid }, { col: idx.gtyp }],
+          tooltip:
+            'Spezialfall (*), Eilauftrag (!), Problemauftrag (P), Fallzusammenführung (F), Fristfall (G), Korrektusstatus (K), Sperre (S), Storno angefordert (C), Vorgang ohne Unterlagen - M gelb (O), Vorgang unbearbeitet - M rot (U), Vorgang bearbeitet - M grün (B)'
+        },
+        {
+          dbcol: 'flagDownloadable',
+          name: '  2  ',
+          mandatory: true,
+          render: renderer.downflags,
+          match: matcher.downflags,
+          sortmaster: [{ col: idx.dwn, sortformat: 'downflags' }, { col: idx.gid }, { col: idx.gtyp }],
+          tooltip: 'Freigabe möglich (F), Download möglich (D)'
+        },
+        {
+          dbcol: 'countdown',
+          name: 'Frist',
+          mandatory: true,
+          render: renderer.frist,
+          sortmaster: [
+            {
+              col: idx.frs,
+              sortformat: 'frist'
+            },
+            { col: idx.gid },
+            { col: idx.gtyp },
+            { col: idx.frs },
+            { col: idx.frs }
+          ]
+        },
+        {
+          dbcol: 'workordername',
+          name: 'Name/Auftrag',
+          mandatory: true,
+          render: renderer.auftrag,
+          match: matcher.auftrag,
+          sortmaster: [{ col: idx.gss }, { col: idx.gtyp }]
+        },
+        {
+          dbcol: 'registrationdate',
+          name: 'Eingang',
+          match: matcher.date,
+          sortmaster: [{ col: idx.eingang, sortformat: 'eingang' }, { col: idx.gid }, { col: idx.gtyp }]
+        },
+        { dbcol: 'chargeName', name: 'Paketname' },
+        { dbcol: 'processStatusText', name: 'Status' },
+        { dbcol: 'ordercode', name: 'Kürzel' },
+        { dbcol: 'krankenhausname', name: 'Krankenhausname' },
+        { dbcol: 'departmentName', name: 'Fachabteilung' },
+        { dbcol: 'specialism', name: 'Fachlichkeit' },
+        { dbcol: 'specialFeatures', name: 'Besonderheit', match: matcher.besonderheit },
+        { dbcol: 'krankenkasse', name: 'Krankenkasse' },
+        { dbcol: 'aufnahmedatum', name: 'Aufnahme', match: matcher.date, sortformat: 'date-de' },
+        { dbcol: 'entlassdatum', name: 'Entlassung', match: matcher.date, sortformat: 'date-de' },
+        { dbcol: 'khDrg', name: 'DRG' },
+        { dbcol: 'expertisetypenumber', name: 'GArt' },
+        { dbcol: 'productdisplayname', name: 'Produkt' },
+        { dbcol: 'reasonnumber', name: 'FAG' },
+        { dbcol: 'dtaNummern', name: 'DTA-Fragen', render: renderer.dta, match: matcher.dta },
+        { dbcol: 'vga', name: 'Vorg.VGA' },
+        { dbcol: 'khDeadline', name: 'KH-Frist', render: renderer.frist },
+        { dbcol: 'invoiceReceiptDate', name: 'Rechnung', match: matcher.date, sortformat: 'date-de' },
+        { dbcol: 'auftragsart', name: 'Auftragsart' },
+        {
+          dbcol: 'pruefVersendet',
+          name: 'Prüfanz.',
+          match: matcher.pruefanz,
+          render: renderer.pruefanz,
+          tooltip: 'Filtern mit j,n'
+        },
+        {
+          dbcol: 'pruefVollstaendig',
+          name: 'Unterlag.',
+          match: matcher.unterlag,
+          render: renderer.unterlag,
+          tooltip: 'Filtern mit j,n'
+        }
+        //          {dbcol:"sfbLocationName",       name:"SFB-Standort"},
+        //          {dbcol:"sfbLocationZipcode",    name:"SFB-PLZ"},
+        //          {dbcol:"sfbLocationCity",       name:"SFB-Ort"}
+      ],
+      selectionCol: true,
+      sortcolname: 'Frist',
+      sortmaster: [{ col: idx.gid }, { col: idx.gtyp }], //[{col:1, sortorder:'asc', sortformat:'date-de'},{col:2, sortorder:'desc'}]
+      groupdefs: {
+        grouplabel: 0,
+        groupcnt: 1,
+        groupid: 2,
+        groupsortstring: 3,
+        groupname: idx.wnm,
+        grouphead: 'C',
+        groupelem: 'W'
+      }
+    };
+
+    $().ready(function() {
+      preprocessData(basketTestdataKH);
+      grid = $('#grid').ebtable(gridOpts, basketTestdataKH);
+      $('#saveGridStatus').on('click', grid.saveSessionState);
+      $('#loadGridStatus').on('click', function() {
+        const mixopts = _.extend({}, gridOpts, $.fn.ebtable.loadSessionState());
+        grid = $('#grid').ebtable(mixopts, basketTestdataKH).setFilterValues(mixopts.filters);
       });
-    </script>
-  </head>
-  <body>
-    <div id="grid"></div>
-    <button id="saveGridStatus">SaveGridStatus</button>
-    <button id="loadGridStatus">LoadGridStatus</button>
-  </body>
+    });
+  </script>
+</head>
+<body>
+<div id='grid'></div>
+<button id='saveGridStatus'>SaveGridStatus</button>
+<button id='loadGridStatus'>LoadGridStatus</button>
+</body>
 </html>

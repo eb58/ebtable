@@ -1,104 +1,104 @@
 <!DOCTYPE html>
-<html lang="de">
-  <head>
-    <title>unittest1</title>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/start/jquery-ui.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/start/theme.min.css" />
-    <link rel="stylesheet" href="../../../vendor/qunit/qunit.css" />
-    <link rel="stylesheet" href="../../../css/ebtable.css" />
-    <link rel="stylesheet" href="../../../css/ebtableTest.css" />
+<html lang='de'>
+<head>
+  <title>unittest1</title>
+  <meta charset='UTF-8' />
+  <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css' />
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/start/jquery-ui.min.css' />
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/start/theme.min.css' />
+  <link rel='stylesheet' href='../../../vendor/qunit/qunit.css' />
+  <link rel='stylesheet' href='../../../css/ebtable.css' />
+  <link rel='stylesheet' href='../../../css/ebtableTest.css' />
 
-    <script src="../../../vendor/underscore-1.8.3/underscore.js"></script>
-    <script src="../../../vendor/jQuery-1.11.3/jquery.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
-    <script src="../../../vendor/qunit/qunit.js"></script>
-    <script src="../../../javascript/ebtable/ebtable.js"></script>
-    <script src="../../../javascript/ebtable/mx.js"></script>
-    <script src="./testHelpers.js"></script>
-    <script>
-      const data = [
-        ['Wolperdinger', '31.08.1915', 'Herder, Johann Gottfried', 5],
-        ['Yeti        ', '31.08.2016', 'Lichtenberg, Georg Christoph ', 31],
-        ['Esel        ', '05.08.2011', 'Liebig, Ellen,', 1],
-        ['Affe        ', '10.06.2013', 'Heine, Heinrich', 2],
-        ['Maus        ', '15.09.2014', 'Manne, Antonia', 4],
-        ['Hase        ', '15.09.2014', 'Liebig, Gustav', 8],
-        ['Hund        ', '31.08.2015', 'Mann, Heinrich Gustav Friedhelm Egon Friedrich August', 16],
-        ['Fliege      ', '31.08.2009', 'Mann, Thomas', 0],
-        ['Biene       ', '31.08.2001', 'Lessing, Gottfried', 7],
-        ['Hummel      ', '01.08.1759', 'Schiller, Friedrich', 0],
-        ['Wespe       ', '31.06.1900', 'Storm, Theodor', 0],
-        ['Karpfen     ', '31.08.2009', 'Mann, Thomas', 0],
-        ['Forelle     ', '31.08.2001', 'Lessing, Gottfried', 7],
-        ['Einhorn     ', '04.11.2017', 'Goethe, Johann Wolfgang', 63],
-        ['Lindwurm    ', '31.12.2018', 'Schiller, Friedrich', 255]
-      ];
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js'></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js'></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js'></script>
+  <script src='../../../vendor/qunit/qunit.js'></script>
+  <script src='../../../javascript/ebtable/ebtable.js'></script>
+  <script src='../../../javascript/ebtable/mx.js'></script>
+  <script src='./testHelpers.js'></script>
+  <script>
+    const data = [
+      ['Wolperdinger', '31.08.1915', 'Herder, Johann Gottfried', 5],
+      ['Yeti        ', '31.08.2016', 'Lichtenberg, Georg Christoph ', 31],
+      ['Esel        ', '05.08.2011', 'Liebig, Ellen,', 1],
+      ['Affe        ', '10.06.2013', 'Heine, Heinrich', 2],
+      ['Maus        ', '15.09.2014', 'Manne, Antonia', 4],
+      ['Hase        ', '15.09.2014', 'Liebig, Gustav', 8],
+      ['Hund        ', '31.08.2015', 'Mann, Heinrich Gustav Friedhelm Egon Friedrich August', 16],
+      ['Fliege      ', '31.08.2009', 'Mann, Thomas', 0],
+      ['Biene       ', '31.08.2001', 'Lessing, Gottfried', 7],
+      ['Hummel      ', '01.08.1759', 'Schiller, Friedrich', 0],
+      ['Wespe       ', '31.06.1900', 'Storm, Theodor', 0],
+      ['Karpfen     ', '31.08.2009', 'Mann, Thomas', 0],
+      ['Forelle     ', '31.08.2001', 'Lessing, Gottfried', 7],
+      ['Einhorn     ', '04.11.2017', 'Goethe, Johann Wolfgang', 63],
+      ['Lindwurm    ', '31.12.2018', 'Schiller, Friedrich', 255]
+    ];
 
-      //#######################################################################
+    //#######################################################################
 
-      const opts = {
-        flags: {
-          clearFilterButton: true,
-          colsResizable: true
-        },
-        columns: [
-          { name: 'Tierart', match: 'contains', sortorder: 'desc' },
-          { name: 'Datum', sortformat: 'date-de', css: 'text-align: center' },
-          { name: 'Name' },
-          { name: 'Flag' }
-        ],
-        sortcolname: 'Tierart',
-        selectionCol: { singleSelection: true },
-        rowsPerPage: 10
-      };
+    const opts = {
+      flags: {
+        clearFilterButton: true,
+        colsResizable: true
+      },
+      columns: [
+        { name: 'Tierart', match: 'contains', sortorder: 'desc' },
+        { name: 'Datum', sortformat: 'date-de', css: 'text-align: center' },
+        { name: 'Name' },
+        { name: 'Flag' }
+      ],
+      sortcolname: 'Tierart',
+      selectionCol: { singleSelection: true },
+      rowsPerPage: 10
+    };
 
-      $().ready(function () {
-        QUnit.test('testset: easy ones', function (assert) {
-          reinit('grid', opts, data);
-          assert.ok(true, 'qunit works');
-          assert.ok($('#grid table').length === 1, 'table exists');
-          assert.ok($('#grid select#lenctrl').length === 1, 'length control exists');
-          assert.ok($('#grid button#configButton').length === 1, 'config button exists');
-          assert.ok($('#grid button#clearFilterButton').length === 1, 'clearAllFilter button exists');
-          assert.ok($('#grid table th').length === 5, 'header has correct length');
-          assert.ok($('#grid table th input[type=text]').length === 4, 'filter fields exist');
-          assert.ok($('#grid table th input[checkbox]').length === 0, 'no select all checkbox');
-        });
-        QUnit.test('testset: paging', function (assert) {
-          reinit('grid', opts, data);
-          assert.equal(getCol('grid', 2).length, 10, 'page works');
-          $('.nextBtn').click();
-          assert.equal(getCol('grid', 2).length, 5, 'next page works');
-          $('.backBtn').click();
-          assert.equal(getCol('grid', 2).length, 10, 'back page works');
-        });
-        QUnit.test('testset: sorting', function (assert) {
-          reinit('grid', opts, data);
-          const tierartHead = $('th#Tierart');
-          tierartHead.click();
-          assert.deepEqual(getCol('grid', 2), ['Affe', 'Biene', 'Einhorn', 'Esel', 'Fliege', 'Forelle', 'Hase', 'Hummel', 'Hund', 'Karpfen']);
-          tierartHead.click();
-          assert.deepEqual(getCol('grid', 2), ['Yeti', 'Wolperdinger', 'Wespe', 'Maus', 'Lindwurm', 'Karpfen', 'Hund', 'Hummel', 'Hase', 'Forelle']);
-        });
-        QUnit.test('testset: filtering', function (assert) {
-          reinit('grid', opts, data);
-          const tierartInput = $('#Tierart input');
-          tierartInput.val('Yeti').trigger($.Event('keyup', { keyCode: 13 }));
-          assert.deepEqual(getCol('grid', 2), ['Yeti'], 'filtering for Yeti ok');
-          tierartInput.val('y').trigger($.Event('keyup', { keyCode: 13 }));
-          assert.deepEqual(getCol('grid', 2), ['Yeti'], 'filtering for y ok');
-          tierartInput.val('e').trigger($.Event('keyup', { keyCode: 13 }));
-          assert.deepEqual(getCol('grid', 2), ['Yeti', 'Wolperdinger', 'Wespe', 'Karpfen', 'Hummel', 'Hase', 'Forelle', 'Fliege', 'Esel', 'Einhorn']);
-        });
+    $().ready(function() {
+      QUnit.test('testset: easy ones', function(assert) {
+        reinit('grid', opts, data);
+        assert.ok(true, 'qunit works');
+        assert.ok($('#grid table').length === 1, 'table exists');
+        assert.ok($('#grid select#lenctrl').length === 1, 'length control exists');
+        assert.ok($('#grid button#configButton').length === 1, 'config button exists');
+        assert.ok($('#grid button#clearFilterButton').length === 1, 'clearAllFilter button exists');
+        assert.ok($('#grid table th').length === 5, 'header has correct length');
+        assert.ok($('#grid table th input[type=text]').length === 4, 'filter fields exist');
+        assert.ok($('#grid table th input[checkbox]').length === 0, 'no select all checkbox');
       });
-    </script>
-  </head>
-  <body>
-    <div id="grid"></div>
-    <div id="qunit"></div>
-    <div id="qunit-fixture"></div>
-  </body>
+      QUnit.test('testset: paging', function(assert) {
+        reinit('grid', opts, data);
+        assert.equal(getCol('grid', 2).length, 10, 'page works');
+        $('.nextBtn').click();
+        assert.equal(getCol('grid', 2).length, 5, 'next page works');
+        $('.backBtn').click();
+        assert.equal(getCol('grid', 2).length, 10, 'back page works');
+      });
+      QUnit.test('testset: sorting', function(assert) {
+        reinit('grid', opts, data);
+        const tierartHead = $('th#Tierart');
+        tierartHead.click();
+        assert.deepEqual(getCol('grid', 2), ['Affe', 'Biene', 'Einhorn', 'Esel', 'Fliege', 'Forelle', 'Hase', 'Hummel', 'Hund', 'Karpfen']);
+        tierartHead.click();
+        assert.deepEqual(getCol('grid', 2), ['Yeti', 'Wolperdinger', 'Wespe', 'Maus', 'Lindwurm', 'Karpfen', 'Hund', 'Hummel', 'Hase', 'Forelle']);
+      });
+      QUnit.test('testset: filtering', function(assert) {
+        reinit('grid', opts, data);
+        const tierartInput = $('#Tierart input');
+        tierartInput.val('Yeti').trigger($.Event('keyup', { keyCode: 13 }));
+        assert.deepEqual(getCol('grid', 2), ['Yeti'], 'filtering for Yeti ok');
+        tierartInput.val('y').trigger($.Event('keyup', { keyCode: 13 }));
+        assert.deepEqual(getCol('grid', 2), ['Yeti'], 'filtering for y ok');
+        tierartInput.val('e').trigger($.Event('keyup', { keyCode: 13 }));
+        assert.deepEqual(getCol('grid', 2), ['Yeti', 'Wolperdinger', 'Wespe', 'Karpfen', 'Hummel', 'Hase', 'Forelle', 'Fliege', 'Esel', 'Einhorn']);
+      });
+    });
+  </script>
+</head>
+<body>
+<div id='grid'></div>
+<div id='qunit'></div>
+<div id='qunit-fixture'></div>
+</body>
 </html>

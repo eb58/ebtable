@@ -427,10 +427,10 @@ const dlgConfig = (opts) => {
       return '<select id="lenctrl">\n' + options + '</select>\n';
     };
 
-    const pageBrowseCtrl = () => `<button class="firstBtn"><span class="ui-icon ui-icon-seek-first"/></button>\
-              <button class="backBtn"><span  class="ui-icon ui-icon-seek-prev" /></button>\
-        <button class="nextBtn"><span  class="ui-icon ui-icon-seek-next" /></button>\
-              <button class="lastBtn"><span  class="ui-icon ui-icon-seek-end"  /></button>`;
+    const pageBrowseCtrl = () => `<button class='firstBtn'><span class='ui-icon ui-icon-seek-first'/></button>\
+              <button class='backBtn'><span  class='ui-icon ui-icon-seek-prev' /></button>\
+        <button class='nextBtn'><span  class='ui-icon ui-icon-seek-next' /></button>\
+              <button class='lastBtn'><span  class='ui-icon ui-icon-seek-end'  /></button>`;
 
     const ctrlInfo = () => {
       const cntSel = selectionFcts.getSelectedRows().length;
