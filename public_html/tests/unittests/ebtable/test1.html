@@ -7,14 +7,16 @@
   <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css' />
   <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/start/jquery-ui.min.css' />
   <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/start/theme.min.css' />
-  <link rel='stylesheet' href='../../../vendor/qunit/qunit.css' />
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/qunit/1.12.0/qunit.min.css' />
+
   <link rel='stylesheet' href='../../../css/ebtable.css' />
   <link rel='stylesheet' href='../../../css/ebtableTest.css' />
 
   <script src='https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js'></script>
   <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js'></script>
   <script src='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js'></script>
-  <script src='../../../vendor/qunit/qunit.js'></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/qunit/1.12.0/qunit.min.js'></script>
+
   <script src='../../../javascript/ebtable/ebtable.js'></script>
   <script src='../../../javascript/ebtable/mx.js'></script>
   <script src='./testHelpers.js'></script>
@@ -56,7 +58,7 @@
     };
 
     $().ready(function() {
-      QUnit.test('testset: easy ones', function(assert) {
+      QUnit.test('testset: easy ones', (assert) => {
         reinit('grid', opts, data);
         assert.ok(true, 'qunit works');
         assert.ok($('#grid table').length === 1, 'table exists');
@@ -67,7 +69,7 @@
         assert.ok($('#grid table th input[type=text]').length === 4, 'filter fields exist');
         assert.ok($('#grid table th input[checkbox]').length === 0, 'no select all checkbox');
       });
-      QUnit.test('testset: paging', function(assert) {
+      QUnit.test('testset: paging', (assert) => {
         reinit('grid', opts, data);
         assert.equal(getCol('grid', 2).length, 10, 'page works');
         $('.nextBtn').click();
@@ -75,7 +77,7 @@
         $('.backBtn').click();
         assert.equal(getCol('grid', 2).length, 10, 'back page works');
       });
-      QUnit.test('testset: sorting', function(assert) {
+      QUnit.test('testset: sorting', (assert) => {
         reinit('grid', opts, data);
         const tierartHead = $('th#Tierart');
         tierartHead.click();
@@ -83,7 +85,7 @@
         tierartHead.click();
         assert.deepEqual(getCol('grid', 2), ['Yeti', 'Wolperdinger', 'Wespe', 'Maus', 'Lindwurm', 'Karpfen', 'Hund', 'Hummel', 'Hase', 'Forelle']);
       });
-      QUnit.test('testset: filtering', function(assert) {
+      QUnit.test('testset: filtering', (assert) => {
         reinit('grid', opts, data);
         const tierartInput = $('#Tierart input');
         tierartInput.val('Yeti').trigger($.Event('keyup', { keyCode: 13 }));
