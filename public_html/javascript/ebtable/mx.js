@@ -21,8 +21,8 @@ const mx = (m, groupDef) => {
   const grouping = (() => {
     // // groupDefs  ~ {grouplabel: 0, groupcnt: 1, groupid: 2, groupsortstring: 3, groupname: 4, grouphead: 'GA', groupelem: 'GB'}
     const normalizeGroupId = (id) => (id <= 0 ? 0 : id);
-    const fcts = {
-      isGroupingHeader: (row, groupDefs) => row[groupDefs.grouplabel] === groupDefs.grouphead,
+    const isGroupingHeader = (row, groupDefs) => row[groupDefs.grouplabel] === groupDefs.grouphead;
+    return {
       initGroups: (groupDefs) => {
         if (!groupDefs.groupid) return;
         const groupsData = m.groupsData || {};
@@ -49,33 +49,26 @@ const mx = (m, groupDef) => {
       filterGroups: (groupDefs, groupsdata) => {
         const filteredData = m.filter((row) => {
           const groupId = normalizeGroupId(row[groupDefs.groupid]);
-          return !groupId || fcts.isGroupingHeader(row, groupDefs) || groupsdata[groupId].isOpen;
+          return !groupId || isGroupingHeader(row, groupDefs) || groupsdata[groupId].isOpen;
         });
         filteredData.groupsdata = m.groupsdata;
         return filteredData;
       },
       getGroupRows: (groupDefs, groupid) => m.filter((row) => row[groupDefs.groupid] === groupid)
     };
-    return {
-      initGroups: fcts.initGroups,
-      filterGroups: fcts.filterGroups,
-      getGroupRows: fcts.getGroupRows
-    };
   })();
   //####################################  sorting #######################
   const sorting = (() => {
-    const fcts = {
+    const id = (x) => x;
+    const toLower = (o) => (typeof o === 'string' ? o.toLowerCase() : o);
+    const prepareItem = (row, col, fmt, groups, sortorder) => toLower(fmt(row[col] || '', row, groups, sortorder));
+    return {
       rowCmpCols: (colDefs, groups) => {
-        const toLower = (o) => (typeof o === 'string' ? o.toLowerCase() : o);
-        const prepareItem = (row, col, fmt, groups, sortorder) => {
-          const v = row[col] || '';
-          return toLower(fmt ? fmt(v, row, groups, sortorder) : v);
-        };
         colDefs = Array.isArray(colDefs) ? colDefs : [colDefs]; // [ {col:1,sortorder:asc,sortformat:fmtfct1},{col:3, sortorder:desc, sortformat:fmtfct2},... ]
         return (r1, r2) => {
           for (let i = 0; i < colDefs.length; i++) {
             const cdef = colDefs[i];
-            const fmt = cdef.sortformat ? mx.sortformats[cdef.sortformat] : undefined;
+            const fmt = mx.sortformats[cdef.sortformat] || id;
             const x = prepareItem(r1, cdef.col, fmt, groups, cdef.sortorder);
             const y = prepareItem(r2, cdef.col, fmt, groups, cdef.sortorder);
             let ret = 0;
@@ -92,9 +85,6 @@ const mx = (m, groupDef) => {
           return 0;
         };
       }
-    };
-    return {
-      rowCmpCols: fcts.rowCmpCols
     };
   })();
   //####################################  paging #######################
