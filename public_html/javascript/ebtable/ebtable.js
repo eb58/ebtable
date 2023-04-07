@@ -72,16 +72,9 @@ const dlgConfig = (opts) => {
           return;
         }
         myOpts.rowsPerPage = state.rowsPerPage;
-        myOpts.colorder = [];
-        state.colorderByName.forEach(function (colname) {
-          const n = util.colIdxFromName(colname);
-          if (n >= 0) {
-            myOpts.colorder.push(n);
-          }
-        });
-        myOpts.columns.forEach((coldef, idx) => {
-          if (!state.colorderByName.find((name) => name === coldef.name)) myOpts.colorder.push(idx);
-        });
+        const x1 = state.colorderByName.map((n) => util.colIdxFromName(n)).filter((n) => n >= 0);
+        const x2 = myOpts.columns.map((_, idx) => idx);
+        myOpts.colorder = Array.from(new Set([...x1, ...x2]));
         if (myOpts.flags.colsResizable) {
           myOpts.bodyWidth = state.bodyWidth;
           state.colwidths &&
@@ -415,8 +408,8 @@ const dlgConfig = (opts) => {
         : '';
     const arrangeColumnsButton = () =>
       myOpts.flags.arrangeColumnsButton
-        ? '<button id="arrangeColumnsButton"><span class="ui-icon ui-icon-arrow-2-e-w" title="' + util.translate('Spaltenbreite automatisch abpassen') + '"></button>'
-        : '';
+      ? '<button id="arrangeColumnsButton"><span class="ui-icon ui-icon-arrow-2-e-w" title="' + util.translate('Spaltenbreite automatisch abpassen') + '"></button>'
+      : '';
 
     const selectLenCtrl = () => {
       if (!myOpts.flags.pagelenctrl) return '';
@@ -427,10 +420,11 @@ const dlgConfig = (opts) => {
       return '<select id="lenctrl">\n' + options + '</select>\n';
     };
 
-    const pageBrowseCtrl = () => `<button class='firstBtn'><span class='ui-icon ui-icon-seek-first'/></button>\
-              <button class='backBtn'><span  class='ui-icon ui-icon-seek-prev' /></button>\
-        <button class='nextBtn'><span  class='ui-icon ui-icon-seek-next' /></button>\
-              <button class='lastBtn'><span  class='ui-icon ui-icon-seek-end'  /></button>`;
+    const pageBrowseCtrl = `
+            <button class='firstBtn'><span class='ui-icon ui-icon-seek-first'/></button>
+            <button class='backBtn'><span  class='ui-icon ui-icon-seek-prev' /></button>
+            <button class='nextBtn'><span  class='ui-icon ui-icon-seek-next' /></button>
+            <button class='lastBtn'><span  class='ui-icon ui-icon-seek-end'  /></button>`;
 
     const ctrlInfo = () => {
       const cntSel = selectionFcts.getSelectedRows().length;
@@ -455,16 +449,16 @@ const dlgConfig = (opts) => {
         if (!coldef.invisible) {
           const t_inputfld = '<input type="text" id="<%=colid%>" value="<%=filter%> " title="<%=tooltip%>"/>';
           const t_selectfld = '<select id="<%=colid%>" value="<%=filter%>"><%=opts%></select>';
-          const opts = (coldef.valuelist || []).reduce((acc, o) => acc + '<option>' + o + '</option>\n', '');
+          const selOptions = (coldef.valuelist || []).reduce((acc, o) => acc + '<option>' + o + '</option>\n', '');
           const t = coldef.valuelist ? t_selectfld : t_inputfld;
           const fld = _.template(t)({
             colid: coldef.id,
-            opts: opts,
+            opts: selOptions,
             tooltip: coldef.tooltip,
             filter: coldef.filter
           });
-          const thwidth = coldef.width ? 'width:' + coldef.width + ';' : '';
-          const thstyle = coldef.css || coldef.width ? ' style="' + thwidth + ' ' + (coldef.css ? coldef.css : '') + '"' : '';
+          const thwidth = coldef.width ? `width:${coldef.width};` : '';
+          const thstyle = coldef.css || coldef.width ? ' style="' + thwidth + ' ' + (coldef.css || '') + '"' : '';
           const hdrTemplate = `
               <th id="<%=colid%>"<%=thstyle%> title="<%=tooltip%>" >
                 <div style="display:inline-flex">
@@ -565,9 +559,9 @@ const dlgConfig = (opts) => {
           configButton: configButton(),
           clearFilterButton: clearFilterButton(),
           arrangeColumnsButton: arrangeColumnsButton(),
-          browseBtns: pageBrowseCtrl(),
-          info: '', //ctrlInfo(),
-          addInfo: '', //ctrlAddInfo(),
+          browseBtns: pageBrowseCtrl,
+          info: '', //ctrlInfo TODO ???
+          addInfo: '', //ctrlAddInfo(), TODO ???
           ctrlStyle: myOpts.flags.ctrls ? '' : 'style="display:none"',
           bodyWidth: myOpts.bodyWidth,
           bodyHeight: myOpts.bodyHeight,
