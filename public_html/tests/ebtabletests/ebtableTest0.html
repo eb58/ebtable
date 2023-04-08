@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang='de'>
-<head>
-  <title>Beispiel</title>
+  <head>
+    <title>Beispiel</title>
   <meta charset='UTF-8' />
   <meta name='viewport' content='width=device-width, initial-scale=1.0' />
   <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css' />
@@ -17,37 +17,37 @@
   <script src='../../javascript/ebtable/mx.js'></script>
   <script src='../../data/divTableData.js'></script>
 
-  <script>
-    const opts = {
-      debug: true,
-      bodyWidth: '700px',
-      flags: {
-        clearFilter: true
-      },
-      columns: [
-        { name: 'Tierart', match: 'contains', sortorder: 'desc', valuelist: ['', 'Einhorn', 'Karpfen', 'Forelle'] },
-        { name: 'Datum', sortformat: 'date-de', width: '150px', css: 'text-align: center' },
-        { name: 'Name' },
-        { name: 'Flag' }
-      ],
-      sortcolname: 'Name',
-      selectionCol: true
-    };
-    $().ready(() => {
-      $('#grid').ebtable(opts, basketTestdata);
-      $('#saveGridStatus').on('click', grid.saveSessionState);
-      $('#loadGridStatus').on('click', () => {
-        const mixOpts = _.extend({}, opts, $.fn.ebtable.loadSessionState());
-        $('#grid').ebtable(mixOpts, basketTestdata).setFilterValues(mixOpts.filters);
+    <script>
+      const opts = {
+        debug: true,
+        bodyWidth: '700px',
+        flags: {
+          clearFilter: true
+        },
+        columns: [
+          { name: 'Tierart', match: 'contains', sortorder: 'desc', valuelist: ['', 'Einhorn', 'Karpfen', 'Forelle'], filter:'Einhorn' },
+          { name: 'Datum', sortformat: 'date-de', width: '150px', css: 'text-align: center' },
+          { name: 'Name' },
+          { name: 'Flag' }
+        ],
+        sortcolname: 'Name',
+        selectionCol: true
+      };
+      $(() => {
+        $('#grid').ebtable(opts, basketTestdata);
+        $('#saveGridStatus').on('click', grid.saveSessionState);
+        $('#loadGridStatus').on('click', () => {
+          const mixOpts = _.extend({}, opts, $.fn.ebtable.loadSessionState());
+          $('#grid').ebtable(mixOpts, basketTestdata).setFilterValues(mixOpts.filters);
+        });
       });
-    });
-  </script>
-</head>
-<body>
+    </script>
+  </head>
+  <body>
 <div id='grid'></div>
-<div>
+    <div>
   <button id='saveGridStatus'>SaveGridStatus</button>
   <button id='loadGridStatus'>LoadGridStatus</button>
-</div>
-</body>
+    </div>
+  </body>
 </html>

@@ -57,7 +57,7 @@
       rowsPerPage: 10
     };
 
-    $().ready(function() {
+    $(() => {
       QUnit.test('testset: easy ones', (assert) => {
         reinit('grid', opts, data);
         assert.ok(true, 'qunit works');
