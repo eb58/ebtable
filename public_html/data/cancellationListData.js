@@ -1,7 +1,7 @@
 const result1 = {
-  'hasMoreElements': false,
-  'listSize': 100,
-  'list': [
+  hasMoreElements: false,
+  listSize: 100,
+  list: [
     [
       50000007544,
       'nein',
@@ -26,27 +26,10 @@ const result1 = {
 };
 
 const result2 = {
-  'hasMoreElements': false,
-  'listSize': 100,
-  'list': [
-    [
-      50000006265,
-      'ja',
-      -10,
-      359,
-      2,
-      'TEST',
-      '08',
-      'System',
-      null,
-      'Erfasst',
-      '',
-      'Gremmen, Jeroen, 17.08.1972',
-      null,
-      null,
-      'BZ 1',
-      'Workflow'
-    ],
+  hasMoreElements: false,
+  listSize: 100,
+  list: [
+    [50000006265, 'ja', -10, 359, 2, 'TEST', '08', 'System', null, 'Erfasst', '', 'Gremmen, Jeroen, 17.08.1972', null, null, 'BZ 1', 'Workflow'],
     [
       50000007544,
       'nein',
@@ -167,7 +150,7 @@ const result2 = {
       null,
       'Zurückgegeben (ohne Begründung)',
       '',
-      'Weibsch\', Steffi, 05.10.1973',
+      "Weibsch', Steffi, 05.10.1973",
       '21',
       'Eiterfreude (TEST)',
       'Default',

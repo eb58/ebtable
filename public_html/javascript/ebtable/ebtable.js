@@ -1,8 +1,8 @@
 const range = (n) => [...Array(n).keys()];
 const dlgConfig = (opts) => {
   const dlgTemplate = _.template(
-    `<div id="<%=gridId%>configDlg" class='configDlg'>
-        <ol id="<%=gridId%>selectable" class="ebtableSelectable">
+    `<div id='<%=gridId%>configDlg' class='configDlg'>
+        <ol id='<%=gridId%>selectable' class='ebtableSelectable'>
           <%=listOfColumnNames%>
         </ol>
     </div>`
@@ -304,7 +304,7 @@ const dlgConfig = (opts) => {
         const coldef = myOpts.columns[colidx];
         const bAsc = coldef.sortorder === 'asc';
         $(`${selGridId} thead div .sort-indicator`).text('');
-        $(`${selGridId} thead #${colid} div .sort-indicator`).html(bAsc ? '&#x25B2;' : '&#x25BC;');
+        $(`${selGridId} thead #${colid} div .sort-indicator`).html(bAsc ? '&bigtriangleup;' : '&bigtriangledown;');
       },
       getSortState: () => {
         const colidx = util.colIdxFromName(myOpts.sortcolname);
@@ -429,8 +429,8 @@ const dlgConfig = (opts) => {
       const cntSel = selectionFcts.getSelectedRows().length;
       const startRow = Math.min(myOpts.rowsPerPage * pageCur + 1, tblData.length);
       const endRow = Math.min(startRow + myOpts.rowsPerPage - 1, tblData.length);
-      const filtered = origData.length === tblData.length ? '' : _.template(util.translate('(<%=len%> Eintr\u00e4ge)'))({ len: origData.length });
-      const cntSelected = !cntSel || !myOpts.selectionCol || myOpts.selectionCol.singleSelection ? '' : _.template(util.translate('(<%=len%> ausgew\u00e4hlt)'))({ len: cntSel });
+      const filtered = origData.length === tblData.length ? '' : _.template(util.translate('(<%=len%> Eintr&auml;ge)'))({ len: origData.length });
+      const cntSelected = !cntSel || !myOpts.selectionCol || myOpts.selectionCol.singleSelection ? '' : _.template(util.translate('(<%=len%> ausgew&auml;hlt)'))({ len: cntSel });
       const template = _.template(util.translate('<%=start%> bis <%=end%> von <%=count%> Zeilen <%=filtered%> <%=cntSelected%>'));
       return template({
         start: startRow,
@@ -459,10 +459,10 @@ const dlgConfig = (opts) => {
           const thwidth = coldef.width ? `width:${coldef.width};` : '';
           const thstyle = coldef.css || coldef.width ? ` style="${thwidth} ${coldef.css || ''}` : '';
           const hdrTemplate = `
-              <th id="<%=colid%>"<%=thstyle%> title="<%=tooltip%>" >
-                <div style="display:inline-flex">
+              <th id='<%=colid%>'<%=thstyle%> title="<%=tooltip%>" >
+                <div style='display:inline-flex'>
                   <%=colname%>
-                  <span class="sort-indicator"></span>
+                  <span class='sort-indicator'></span>
                 </div>
                 <div<%=filtersvisible%>><%=fld%></div>
               </th>`;
@@ -697,6 +697,7 @@ const dlgConfig = (opts) => {
         .off()
         .on('click', () => {
           $(selGridId + 'thead input[type=text]').val('');
+          $(selGridId + 'thead select option:selected').prop('selected', false);
           myOpts.reloadData && myOpts.reloadData();
           filteringFcts.filtering();
         });
@@ -852,8 +853,8 @@ const dlgConfig = (opts) => {
   $.fn.ebtable.lang = {
     de: {},
     en: {
-      '(<%=len%> ausgew\u00e4hlt)': '(<%=len%> selected)',
-      '(<%=len%> Eintr\u00e4ge)': '(<%=len%> entries)',
+      '(<%=len%> ausgew&auml;hlt)': '(<%=len%> selected)',
+      '(<%=len%> Eintr&auml;ge)': '(<%=len%> entries)',
       '<%=start%> bis <%=end%> von <%=count%> Zeilen <%=filtered%> <%=cntSelected%>': '<%=start%> to <%=end%> of <%=count%> shown entries <%= filtered %> <%=cntSelected%>',
       'Spalten verwalten': 'Configure Columns',
       'Alle Filter entfernen': 'Remove all filters',

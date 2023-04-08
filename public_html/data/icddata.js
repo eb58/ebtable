@@ -435,7 +435,7 @@ const gIcddata = [
   [142146, 'Hämorrhagisches Dengue-Fieber', 'A91'],
   [142147, 'Sonstige durch Moskitos [Stechmücken] übertragene Viruskrankheiten', 'A92.-'],
   [142148, 'Chikungunya-Viruskrankheit', 'A92.0'],
-  [142149, 'O\'Nyong-nyong-Fieber', 'A92.1'],
+  [142149, "O'Nyong-nyong-Fieber", 'A92.1'],
   [142150, 'Venezolanisches Pferdefieber', 'A92.2'],
   [142151, 'West-Nil-Virusinfektion', 'A92.3'],
   [142152, 'Rifttalfieber', 'A92.4'],
@@ -890,7 +890,11 @@ const gIcddata = [
   [142601, 'Haemophilus und Moraxella als Ursache von Krankheiten, die in anderen Kapiteln klassifiziert sind', 'B96.3!'],
   [142602, 'Pseudomonas und andere Nonfermenter als Ursache von Krankheiten, die in anderen Kapiteln klassifiziert sind', 'B96.5!'],
   [142603, 'Bacteroides fragilis [B. fragilis] und andere gramnegative Anaerobier als Ursache von Krankheiten, die in anderen Kapiteln klassifiziert sind', 'B96.6!'],
-  [142604, 'Clostridium perfringens [C. perfringens] und andere grampositive, sporenbildende Anaerobier als Ursache von Krankheiten, die in anderen Kapiteln klassifiziert sind', 'B96.7!'],
+  [
+    142604,
+    'Clostridium perfringens [C. perfringens] und andere grampositive, sporenbildende Anaerobier als Ursache von Krankheiten, die in anderen Kapiteln klassifiziert sind',
+    'B96.7!'
+  ],
   [142605, 'Sonstige näher bezeichnete Bakterien als Ursache von Krankheiten, die in anderen Kapiteln klassifiziert sind', 'B96.8!'],
   [142606, 'Viren als Ursache von Krankheiten, die in anderen Kapiteln klassifiziert sind', 'B97.-!'],
   [142607, 'Adenoviren als Ursache von Krankheiten, die in anderen Kapiteln klassifiziert sind', 'B97.0!'],
@@ -2195,7 +2199,11 @@ const gIcddata = [
   [143906, 'Primär insulinabhängiger Diabetes mellitus [Typ-1-Diabetes]: Mit sonstigen näher bezeichneten Komplikationen: Nicht als entgleist bezeichnet', 'E10.60'],
   [143907, 'Primär insulinabhängiger Diabetes mellitus [Typ-1-Diabetes]: Mit sonstigen näher bezeichneten Komplikationen: Als entgleist bezeichnet', 'E10.61'],
   [143908, 'Primär insulinabhängiger Diabetes mellitus [Typ-1-Diabetes]: Mit multiplen Komplikationen', 'E10.7-'],
-  [143909, 'Primär insulinabhängiger Diabetes mellitus [Typ-1-Diabetes]: Mit multiplen Komplikationen: Mit sonstigen multiplen Komplikationen, nicht als entgleist bezeichnet', 'E10.72'],
+  [
+    143909,
+    'Primär insulinabhängiger Diabetes mellitus [Typ-1-Diabetes]: Mit multiplen Komplikationen: Mit sonstigen multiplen Komplikationen, nicht als entgleist bezeichnet',
+    'E10.72'
+  ],
   [143910, 'Primär insulinabhängiger Diabetes mellitus [Typ-1-Diabetes]: Mit multiplen Komplikationen: Mit sonstigen multiplen Komplikationen, als entgleist bezeichnet', 'E10.73'],
   [143911, 'Primär insulinabhängiger Diabetes mellitus [Typ-1-Diabetes]: Mit multiplen Komplikationen: Mit diabetischem Fußsyndrom, nicht als entgleist bezeichnet', 'E10.74'],
   [143912, 'Primär insulinabhängiger Diabetes mellitus [Typ-1-Diabetes]: Mit multiplen Komplikationen: Mit diabetischem Fußsyndrom, als entgleist bezeichnet', 'E10.75'],
@@ -2226,9 +2234,21 @@ const gIcddata = [
   [143937, 'Nicht primär insulinabhängiger Diabetes mellitus [Typ-2-Diabetes]: Mit sonstigen näher bezeichneten Komplikationen: Nicht als entgleist bezeichnet', 'E11.60'],
   [143938, 'Nicht primär insulinabhängiger Diabetes mellitus [Typ-2-Diabetes]: Mit sonstigen näher bezeichneten Komplikationen: Als entgleist bezeichnet', 'E11.61'],
   [143939, 'Nicht primär insulinabhängiger Diabetes mellitus [Typ-2-Diabetes]: Mit multiplen Komplikationen', 'E11.7-'],
-  [143940, 'Nicht primär insulinabhängiger Diabetes mellitus [Typ-2-Diabetes]: Mit multiplen Komplikationen: Mit sonstigen multiplen Komplikationen, nicht als entgleist bezeichnet', 'E11.72'],
-  [143941, 'Nicht primär insulinabhängiger Diabetes mellitus [Typ-2-Diabetes]: Mit multiplen Komplikationen: Mit sonstigen multiplen Komplikationen, als entgleist bezeichnet', 'E11.73'],
-  [143942, 'Nicht primär insulinabhängiger Diabetes mellitus [Typ-2-Diabetes]: Mit multiplen Komplikationen: Mit diabetischem Fußsyndrom, nicht als entgleist bezeichnet', 'E11.74'],
+  [
+    143940,
+    'Nicht primär insulinabhängiger Diabetes mellitus [Typ-2-Diabetes]: Mit multiplen Komplikationen: Mit sonstigen multiplen Komplikationen, nicht als entgleist bezeichnet',
+    'E11.72'
+  ],
+  [
+    143941,
+    'Nicht primär insulinabhängiger Diabetes mellitus [Typ-2-Diabetes]: Mit multiplen Komplikationen: Mit sonstigen multiplen Komplikationen, als entgleist bezeichnet',
+    'E11.73'
+  ],
+  [
+    143942,
+    'Nicht primär insulinabhängiger Diabetes mellitus [Typ-2-Diabetes]: Mit multiplen Komplikationen: Mit diabetischem Fußsyndrom, nicht als entgleist bezeichnet',
+    'E11.74'
+  ],
   [143943, 'Nicht primär insulinabhängiger Diabetes mellitus [Typ-2-Diabetes]: Mit multiplen Komplikationen: Mit diabetischem Fußsyndrom, als entgleist bezeichnet', 'E11.75'],
   [143944, 'Nicht primär insulinabhängiger Diabetes mellitus [Typ-2-Diabetes]: Mit nicht näher bezeichneten Komplikationen', 'E11.8-'],
   [143945, 'Nicht primär insulinabhängiger Diabetes mellitus [Typ-2-Diabetes]: Mit nicht näher bezeichneten Komplikationen: Nicht als entgleist bezeichnet', 'E11.80'],
@@ -2254,13 +2274,33 @@ const gIcddata = [
   [143965, 'Diabetes mellitus in Verbindung mit Fehl- oder Mangelernährung [Malnutrition]: Mit peripheren vaskulären Komplikationen: Nicht als entgleist bezeichnet', 'E12.50'],
   [143966, 'Diabetes mellitus in Verbindung mit Fehl- oder Mangelernährung [Malnutrition]: Mit peripheren vaskulären Komplikationen: Als entgleist bezeichnet', 'E12.51'],
   [143967, 'Diabetes mellitus in Verbindung mit Fehl- oder Mangelernährung [Malnutrition]: Mit sonstigen näher bezeichneten Komplikationen', 'E12.6-'],
-  [143968, 'Diabetes mellitus in Verbindung mit Fehl- oder Mangelernährung [Malnutrition]: Mit sonstigen näher bezeichneten Komplikationen: Nicht als entgleist bezeichnet', 'E12.60'],
+  [
+    143968,
+    'Diabetes mellitus in Verbindung mit Fehl- oder Mangelernährung [Malnutrition]: Mit sonstigen näher bezeichneten Komplikationen: Nicht als entgleist bezeichnet',
+    'E12.60'
+  ],
   [143969, 'Diabetes mellitus in Verbindung mit Fehl- oder Mangelernährung [Malnutrition]: Mit sonstigen näher bezeichneten Komplikationen: Als entgleist bezeichnet', 'E12.61'],
   [143970, 'Diabetes mellitus in Verbindung mit Fehl- oder Mangelernährung [Malnutrition]: Mit multiplen Komplikationen', 'E12.7-'],
-  [143971, 'Diabetes mellitus in Verbindung mit Fehl- oder Mangelernährung [Malnutrition]: Mit multiplen Komplikationen: Mit sonstigen multiplen Komplikationen, nicht als entgleist bezeichnet', 'E12.72'],
-  [143972, 'Diabetes mellitus in Verbindung mit Fehl- oder Mangelernährung [Malnutrition]: Mit multiplen Komplikationen: Mit sonstigen multiplen Komplikationen, als entgleist bezeichnet', 'E12.73'],
-  [143973, 'Diabetes mellitus in Verbindung mit Fehl- oder Mangelernährung [Malnutrition]: Mit multiplen Komplikationen: Mit diabetischem Fußsyndrom, nicht als entgleist bezeichnet', 'E12.74'],
-  [143974, 'Diabetes mellitus in Verbindung mit Fehl- oder Mangelernährung [Malnutrition]: Mit multiplen Komplikationen: Mit diabetischem Fußsyndrom, als entgleist bezeichnet', 'E12.75'],
+  [
+    143971,
+    'Diabetes mellitus in Verbindung mit Fehl- oder Mangelernährung [Malnutrition]: Mit multiplen Komplikationen: Mit sonstigen multiplen Komplikationen, nicht als entgleist bezeichnet',
+    'E12.72'
+  ],
+  [
+    143972,
+    'Diabetes mellitus in Verbindung mit Fehl- oder Mangelernährung [Malnutrition]: Mit multiplen Komplikationen: Mit sonstigen multiplen Komplikationen, als entgleist bezeichnet',
+    'E12.73'
+  ],
+  [
+    143973,
+    'Diabetes mellitus in Verbindung mit Fehl- oder Mangelernährung [Malnutrition]: Mit multiplen Komplikationen: Mit diabetischem Fußsyndrom, nicht als entgleist bezeichnet',
+    'E12.74'
+  ],
+  [
+    143974,
+    'Diabetes mellitus in Verbindung mit Fehl- oder Mangelernährung [Malnutrition]: Mit multiplen Komplikationen: Mit diabetischem Fußsyndrom, als entgleist bezeichnet',
+    'E12.75'
+  ],
   [143975, 'Diabetes mellitus in Verbindung mit Fehl- oder Mangelernährung [Malnutrition]: Mit nicht näher bezeichneten Komplikationen', 'E12.8-'],
   [143976, 'Diabetes mellitus in Verbindung mit Fehl- oder Mangelernährung [Malnutrition]: Mit nicht näher bezeichneten Komplikationen: Nicht als entgleist bezeichnet', 'E12.80'],
   [143977, 'Diabetes mellitus in Verbindung mit Fehl- oder Mangelernährung [Malnutrition]: Mit nicht näher bezeichneten Komplikationen: Als entgleist bezeichnet', 'E12.81'],
@@ -2826,9 +2866,17 @@ const gIcddata = [
   [144537, 'Psychische und Verhaltensstörungen durch multiplen Substanzgebrauch und Konsum anderer psychotroper Substanzen: Entzugssyndrom mit Delir', 'F19.4'],
   [144538, 'Psychische und Verhaltensstörungen durch multiplen Substanzgebrauch und Konsum anderer psychotroper Substanzen: Psychotische Störung', 'F19.5'],
   [144539, 'Psychische und Verhaltensstörungen durch multiplen Substanzgebrauch und Konsum anderer psychotroper Substanzen: Amnestisches Syndrom', 'F19.6'],
-  [144540, 'Psychische und Verhaltensstörungen durch multiplen Substanzgebrauch und Konsum anderer psychotroper Substanzen: Restzustand und verzögert auftretende psychotische Störung', 'F19.7'],
+  [
+    144540,
+    'Psychische und Verhaltensstörungen durch multiplen Substanzgebrauch und Konsum anderer psychotroper Substanzen: Restzustand und verzögert auftretende psychotische Störung',
+    'F19.7'
+  ],
   [144541, 'Psychische und Verhaltensstörungen durch multiplen Substanzgebrauch und Konsum anderer psychotroper Substanzen: Sonstige psychische und Verhaltensstörungen', 'F19.8'],
-  [144542, 'Psychische und Verhaltensstörungen durch multiplen Substanzgebrauch und Konsum anderer psychotroper Substanzen: Nicht näher bezeichnete psychische und Verhaltensstörung', 'F19.9'],
+  [
+    144542,
+    'Psychische und Verhaltensstörungen durch multiplen Substanzgebrauch und Konsum anderer psychotroper Substanzen: Nicht näher bezeichnete psychische und Verhaltensstörung',
+    'F19.9'
+  ],
   [144543, 'Schizophrenie', 'F20.-'],
   [144544, 'Paranoide Schizophrenie', 'F20.0'],
   [144545, 'Hebephrene Schizophrenie', 'F20.1'],
@@ -6124,13 +6172,25 @@ const gIcddata = [
   [147835, 'Arthritis und Polyarthritis durch sonstige Streptokokken: Nicht näher bezeichnete Lokalisationen', 'M00.29'],
   [147836, 'Arthritis und Polyarthritis durch sonstige näher bezeichnete bakterielle Erreger', 'M00.8-'],
   [147837, 'Arthritis und Polyarthritis durch sonstige näher bezeichnete bakterielle Erreger: Mehrere Lokalisationen', 'M00.80'],
-  [147838, 'Arthritis und Polyarthritis durch sonstige näher bezeichnete bakterielle Erreger: Schulterregion [Klavikula, Skapula, Akromioklavikular-, Schulter-, Sternoklavikulargelenk]', 'M00.81'],
+  [
+    147838,
+    'Arthritis und Polyarthritis durch sonstige näher bezeichnete bakterielle Erreger: Schulterregion [Klavikula, Skapula, Akromioklavikular-, Schulter-, Sternoklavikulargelenk]',
+    'M00.81'
+  ],
   [147839, 'Arthritis und Polyarthritis durch sonstige näher bezeichnete bakterielle Erreger: Oberarm [Humerus, Ellenbogengelenk]', 'M00.82'],
   [147840, 'Arthritis und Polyarthritis durch sonstige näher bezeichnete bakterielle Erreger: Unterarm [Radius, Ulna, Handgelenk]', 'M00.83'],
   [147841, 'Arthritis und Polyarthritis durch sonstige näher bezeichnete bakterielle Erreger: Hand [Finger, Handwurzel, Mittelhand, Gelenke zwischen diesen Knochen]', 'M00.84'],
-  [147842, 'Arthritis und Polyarthritis durch sonstige näher bezeichnete bakterielle Erreger: Beckenregion und Oberschenkel [Becken, Femur, Gesäß, Hüfte, Hüftgelenk, Iliosakralgelenk]', 'M00.85'],
+  [
+    147842,
+    'Arthritis und Polyarthritis durch sonstige näher bezeichnete bakterielle Erreger: Beckenregion und Oberschenkel [Becken, Femur, Gesäß, Hüfte, Hüftgelenk, Iliosakralgelenk]',
+    'M00.85'
+  ],
   [147843, 'Arthritis und Polyarthritis durch sonstige näher bezeichnete bakterielle Erreger: Unterschenkel [Fibula, Tibia, Kniegelenk]', 'M00.86'],
-  [147844, 'Arthritis und Polyarthritis durch sonstige näher bezeichnete bakterielle Erreger: Knöchel und Fuß [Fußwurzel, Mittelfuß, Zehen, Sprunggelenk, sonstige Gelenke des Fußes]', 'M00.87'],
+  [
+    147844,
+    'Arthritis und Polyarthritis durch sonstige näher bezeichnete bakterielle Erreger: Knöchel und Fuß [Fußwurzel, Mittelfuß, Zehen, Sprunggelenk, sonstige Gelenke des Fußes]',
+    'M00.87'
+  ],
   [147845, 'Arthritis und Polyarthritis durch sonstige näher bezeichnete bakterielle Erreger: Sonstige [Hals, Kopf, Rippen, Rumpf, Schädel, Wirbelsäule]', 'M00.88'],
   [147846, 'Arthritis und Polyarthritis durch sonstige näher bezeichnete bakterielle Erreger: Nicht näher bezeichnete Lokalisationen', 'M00.89'],
   [147847, 'Eitrige Arthritis, nicht näher bezeichnet', 'M00.9-'],
@@ -6180,13 +6240,25 @@ const gIcddata = [
   [147891, 'Arthritis bei Lyme-Krankheit: Nicht näher bezeichnete Lokalisationen', 'M01.29*'],
   [147892, 'Arthritis bei sonstigen anderenorts klassifizierten bakteriellen Krankheiten', 'M01.3-*'],
   [147893, 'Arthritis bei sonstigen anderenorts klassifizierten bakteriellen Krankheiten: Mehrere Lokalisationen', 'M01.30*'],
-  [147894, 'Arthritis bei sonstigen anderenorts klassifizierten bakteriellen Krankheiten: Schulterregion [Klavikula, Skapula, Akromioklavikular-, Schulter-, Sternoklavikulargelenk]', 'M01.31*'],
+  [
+    147894,
+    'Arthritis bei sonstigen anderenorts klassifizierten bakteriellen Krankheiten: Schulterregion [Klavikula, Skapula, Akromioklavikular-, Schulter-, Sternoklavikulargelenk]',
+    'M01.31*'
+  ],
   [147895, 'Arthritis bei sonstigen anderenorts klassifizierten bakteriellen Krankheiten: Oberarm [Humerus, Ellenbogengelenk]', 'M01.32*'],
   [147896, 'Arthritis bei sonstigen anderenorts klassifizierten bakteriellen Krankheiten: Unterarm [Radius, Ulna, Handgelenk]', 'M01.33*'],
   [147897, 'Arthritis bei sonstigen anderenorts klassifizierten bakteriellen Krankheiten: Hand [Finger, Handwurzel, Mittelhand, Gelenke zwischen diesen Knochen]', 'M01.34*'],
-  [147898, 'Arthritis bei sonstigen anderenorts klassifizierten bakteriellen Krankheiten: Beckenregion und Oberschenkel [Becken, Femur, Gesäß, Hüfte, Hüftgelenk, Iliosakralgelenk]', 'M01.35*'],
+  [
+    147898,
+    'Arthritis bei sonstigen anderenorts klassifizierten bakteriellen Krankheiten: Beckenregion und Oberschenkel [Becken, Femur, Gesäß, Hüfte, Hüftgelenk, Iliosakralgelenk]',
+    'M01.35*'
+  ],
   [147899, 'Arthritis bei sonstigen anderenorts klassifizierten bakteriellen Krankheiten: Unterschenkel [Fibula, Tibia, Kniegelenk]', 'M01.36*'],
-  [147900, 'Arthritis bei sonstigen anderenorts klassifizierten bakteriellen Krankheiten: Knöchel und Fuß [Fußwurzel, Mittelfuß, Zehen, Sprunggelenk, sonstige Gelenke des Fußes]', 'M01.37*'],
+  [
+    147900,
+    'Arthritis bei sonstigen anderenorts klassifizierten bakteriellen Krankheiten: Knöchel und Fuß [Fußwurzel, Mittelfuß, Zehen, Sprunggelenk, sonstige Gelenke des Fußes]',
+    'M01.37*'
+  ],
   [147901, 'Arthritis bei sonstigen anderenorts klassifizierten bakteriellen Krankheiten: Sonstige [Hals, Kopf, Rippen, Rumpf, Schädel, Wirbelsäule]', 'M01.38*'],
   [147902, 'Arthritis bei sonstigen anderenorts klassifizierten bakteriellen Krankheiten: Nicht näher bezeichnete Lokalisationen', 'M01.39*'],
   [147903, 'Arthritis bei Röteln', 'M01.4-*'],
@@ -6202,13 +6274,25 @@ const gIcddata = [
   [147913, 'Arthritis bei Röteln: Nicht näher bezeichnete Lokalisationen', 'M01.49*'],
   [147914, 'Arthritis bei sonstigen anderenorts klassifizierten Viruskrankheiten', 'M01.5-*'],
   [147915, 'Arthritis bei sonstigen anderenorts klassifizierten Viruskrankheiten: Mehrere Lokalisationen', 'M01.50*'],
-  [147916, 'Arthritis bei sonstigen anderenorts klassifizierten Viruskrankheiten: Schulterregion [Klavikula, Skapula, Akromioklavikular-, Schulter-, Sternoklavikulargelenk]', 'M01.51*'],
+  [
+    147916,
+    'Arthritis bei sonstigen anderenorts klassifizierten Viruskrankheiten: Schulterregion [Klavikula, Skapula, Akromioklavikular-, Schulter-, Sternoklavikulargelenk]',
+    'M01.51*'
+  ],
   [147917, 'Arthritis bei sonstigen anderenorts klassifizierten Viruskrankheiten: Oberarm [Humerus, Ellenbogengelenk]', 'M01.52*'],
   [147918, 'Arthritis bei sonstigen anderenorts klassifizierten Viruskrankheiten: Unterarm [Radius, Ulna, Handgelenk]', 'M01.53*'],
   [147919, 'Arthritis bei sonstigen anderenorts klassifizierten Viruskrankheiten: Hand [Finger, Handwurzel, Mittelhand, Gelenke zwischen diesen Knochen]', 'M01.54*'],
-  [147920, 'Arthritis bei sonstigen anderenorts klassifizierten Viruskrankheiten: Beckenregion und Oberschenkel [Becken, Femur, Gesäß, Hüfte, Hüftgelenk, Iliosakralgelenk]', 'M01.55*'],
+  [
+    147920,
+    'Arthritis bei sonstigen anderenorts klassifizierten Viruskrankheiten: Beckenregion und Oberschenkel [Becken, Femur, Gesäß, Hüfte, Hüftgelenk, Iliosakralgelenk]',
+    'M01.55*'
+  ],
   [147921, 'Arthritis bei sonstigen anderenorts klassifizierten Viruskrankheiten: Unterschenkel [Fibula, Tibia, Kniegelenk]', 'M01.56*'],
-  [147922, 'Arthritis bei sonstigen anderenorts klassifizierten Viruskrankheiten: Knöchel und Fuß [Fußwurzel, Mittelfuß, Zehen, Sprunggelenk, sonstige Gelenke des Fußes]', 'M01.57*'],
+  [
+    147922,
+    'Arthritis bei sonstigen anderenorts klassifizierten Viruskrankheiten: Knöchel und Fuß [Fußwurzel, Mittelfuß, Zehen, Sprunggelenk, sonstige Gelenke des Fußes]',
+    'M01.57*'
+  ],
   [147923, 'Arthritis bei sonstigen anderenorts klassifizierten Viruskrankheiten: Sonstige [Hals, Kopf, Rippen, Rumpf, Schädel, Wirbelsäule]', 'M01.58*'],
   [147924, 'Arthritis bei sonstigen anderenorts klassifizierten Viruskrankheiten: Nicht näher bezeichnete Lokalisationen', 'M01.59*'],
   [147925, 'Arthritis bei Mykosen', 'M01.6-*'],
@@ -6224,13 +6308,29 @@ const gIcddata = [
   [147935, 'Arthritis bei Mykosen: Nicht näher bezeichnete Lokalisationen', 'M01.69*'],
   [147936, 'Arthritis bei sonstigen anderenorts klassifizierten infektiösen und parasitären Krankheiten', 'M01.8-*'],
   [147937, 'Arthritis bei sonstigen anderenorts klassifizierten infektiösen und parasitären Krankheiten: Mehrere Lokalisationen', 'M01.80*'],
-  [147938, 'Arthritis bei sonstigen anderenorts klassifizierten infektiösen und parasitären Krankheiten: Schulterregion [Klavikula, Skapula, Akromioklavikular-, Schulter-, Sternoklavikulargelenk]', 'M01.81*'],
+  [
+    147938,
+    'Arthritis bei sonstigen anderenorts klassifizierten infektiösen und parasitären Krankheiten: Schulterregion [Klavikula, Skapula, Akromioklavikular-, Schulter-, Sternoklavikulargelenk]',
+    'M01.81*'
+  ],
   [147939, 'Arthritis bei sonstigen anderenorts klassifizierten infektiösen und parasitären Krankheiten: Oberarm [Humerus, Ellenbogengelenk]', 'M01.82*'],
   [147940, 'Arthritis bei sonstigen anderenorts klassifizierten infektiösen und parasitären Krankheiten: Unterarm [Radius, Ulna, Handgelenk]', 'M01.83*'],
-  [147941, 'Arthritis bei sonstigen anderenorts klassifizierten infektiösen und parasitären Krankheiten: Hand [Finger, Handwurzel, Mittelhand, Gelenke zwischen diesen Knochen]', 'M01.84*'],
-  [147942, 'Arthritis bei sonstigen anderenorts klassifizierten infektiösen und parasitären Krankheiten: Beckenregion und Oberschenkel [Becken, Femur, Gesäß, Hüfte, Hüftgelenk, Iliosakralgelenk]', 'M01.85*'],
+  [
+    147941,
+    'Arthritis bei sonstigen anderenorts klassifizierten infektiösen und parasitären Krankheiten: Hand [Finger, Handwurzel, Mittelhand, Gelenke zwischen diesen Knochen]',
+    'M01.84*'
+  ],
+  [
+    147942,
+    'Arthritis bei sonstigen anderenorts klassifizierten infektiösen und parasitären Krankheiten: Beckenregion und Oberschenkel [Becken, Femur, Gesäß, Hüfte, Hüftgelenk, Iliosakralgelenk]',
+    'M01.85*'
+  ],
   [147943, 'Arthritis bei sonstigen anderenorts klassifizierten infektiösen und parasitären Krankheiten: Unterschenkel [Fibula, Tibia, Kniegelenk]', 'M01.86*'],
-  [147944, 'Arthritis bei sonstigen anderenorts klassifizierten infektiösen und parasitären Krankheiten: Knöchel und Fuß [Fußwurzel, Mittelfuß, Zehen, Sprunggelenk, sonstige Gelenke des Fußes]', 'M01.87*'],
+  [
+    147944,
+    'Arthritis bei sonstigen anderenorts klassifizierten infektiösen und parasitären Krankheiten: Knöchel und Fuß [Fußwurzel, Mittelfuß, Zehen, Sprunggelenk, sonstige Gelenke des Fußes]',
+    'M01.87*'
+  ],
   [147945, 'Arthritis bei sonstigen anderenorts klassifizierten infektiösen und parasitären Krankheiten: Sonstige [Hals, Kopf, Rippen, Rumpf, Schädel, Wirbelsäule]', 'M01.88*'],
   [147946, 'Arthritis bei sonstigen anderenorts klassifizierten infektiösen und parasitären Krankheiten: Nicht näher bezeichnete Lokalisationen', 'M01.89*'],
   [147947, 'Reaktive Arthritiden', 'M02.-'],
@@ -6325,24 +6425,48 @@ const gIcddata = [
   [148036, 'Postinfektiöse Arthritis bei Syphilis: Nicht näher bezeichnete Lokalisationen', 'M03.19*'],
   [148037, 'Sonstige postinfektiöse Arthritiden bei anderenorts klassifizierten Krankheiten', 'M03.2-*'],
   [148038, 'Sonstige postinfektiöse Arthritiden bei anderenorts klassifizierten Krankheiten: Mehrere Lokalisationen', 'M03.20*'],
-  [148039, 'Sonstige postinfektiöse Arthritiden bei anderenorts klassifizierten Krankheiten: Schulterregion [Klavikula, Skapula, Akromioklavikular-, Schulter-, Sternoklavikulargelenk]', 'M03.21*'],
+  [
+    148039,
+    'Sonstige postinfektiöse Arthritiden bei anderenorts klassifizierten Krankheiten: Schulterregion [Klavikula, Skapula, Akromioklavikular-, Schulter-, Sternoklavikulargelenk]',
+    'M03.21*'
+  ],
   [148040, 'Sonstige postinfektiöse Arthritiden bei anderenorts klassifizierten Krankheiten: Oberarm [Humerus, Ellenbogengelenk]', 'M03.22*'],
   [148041, 'Sonstige postinfektiöse Arthritiden bei anderenorts klassifizierten Krankheiten: Unterarm [Radius, Ulna, Handgelenk]', 'M03.23*'],
   [148042, 'Sonstige postinfektiöse Arthritiden bei anderenorts klassifizierten Krankheiten: Hand [Finger, Handwurzel, Mittelhand, Gelenke zwischen diesen Knochen]', 'M03.24*'],
-  [148043, 'Sonstige postinfektiöse Arthritiden bei anderenorts klassifizierten Krankheiten: Beckenregion und Oberschenkel [Becken, Femur, Gesäß, Hüfte, Hüftgelenk, Iliosakralgelenk]', 'M03.25*'],
+  [
+    148043,
+    'Sonstige postinfektiöse Arthritiden bei anderenorts klassifizierten Krankheiten: Beckenregion und Oberschenkel [Becken, Femur, Gesäß, Hüfte, Hüftgelenk, Iliosakralgelenk]',
+    'M03.25*'
+  ],
   [148044, 'Sonstige postinfektiöse Arthritiden bei anderenorts klassifizierten Krankheiten: Unterschenkel [Fibula, Tibia, Kniegelenk]', 'M03.26*'],
-  [148045, 'Sonstige postinfektiöse Arthritiden bei anderenorts klassifizierten Krankheiten: Knöchel und Fuß [Fußwurzel, Mittelfuß, Zehen, Sprunggelenk, sonstige Gelenke des Fußes]', 'M03.27*'],
+  [
+    148045,
+    'Sonstige postinfektiöse Arthritiden bei anderenorts klassifizierten Krankheiten: Knöchel und Fuß [Fußwurzel, Mittelfuß, Zehen, Sprunggelenk, sonstige Gelenke des Fußes]',
+    'M03.27*'
+  ],
   [148046, 'Sonstige postinfektiöse Arthritiden bei anderenorts klassifizierten Krankheiten: Sonstige [Hals, Kopf, Rippen, Rumpf, Schädel, Wirbelsäule]', 'M03.28*'],
   [148047, 'Sonstige postinfektiöse Arthritiden bei anderenorts klassifizierten Krankheiten: Nicht näher bezeichnete Lokalisationen', 'M03.29*'],
   [148048, 'Reaktive Arthritis bei sonstigen anderenorts klassifizierten Krankheiten', 'M03.6-*'],
   [148049, 'Reaktive Arthritis bei sonstigen anderenorts klassifizierten Krankheiten: Mehrere Lokalisationen', 'M03.60*'],
-  [148050, 'Reaktive Arthritis bei sonstigen anderenorts klassifizierten Krankheiten: Schulterregion [Klavikula, Skapula, Akromioklavikular-, Schulter-, Sternoklavikulargelenk]', 'M03.61*'],
+  [
+    148050,
+    'Reaktive Arthritis bei sonstigen anderenorts klassifizierten Krankheiten: Schulterregion [Klavikula, Skapula, Akromioklavikular-, Schulter-, Sternoklavikulargelenk]',
+    'M03.61*'
+  ],
   [148051, 'Reaktive Arthritis bei sonstigen anderenorts klassifizierten Krankheiten: Oberarm [Humerus, Ellenbogengelenk]', 'M03.62*'],
   [148052, 'Reaktive Arthritis bei sonstigen anderenorts klassifizierten Krankheiten: Unterarm [Radius, Ulna, Handgelenk]', 'M03.63*'],
   [148053, 'Reaktive Arthritis bei sonstigen anderenorts klassifizierten Krankheiten: Hand [Finger, Handwurzel, Mittelhand, Gelenke zwischen diesen Knochen]', 'M03.64*'],
-  [148054, 'Reaktive Arthritis bei sonstigen anderenorts klassifizierten Krankheiten: Beckenregion und Oberschenkel [Becken, Femur, Gesäß, Hüfte, Hüftgelenk, Iliosakralgelenk]', 'M03.65*'],
+  [
+    148054,
+    'Reaktive Arthritis bei sonstigen anderenorts klassifizierten Krankheiten: Beckenregion und Oberschenkel [Becken, Femur, Gesäß, Hüfte, Hüftgelenk, Iliosakralgelenk]',
+    'M03.65*'
+  ],
   [148055, 'Reaktive Arthritis bei sonstigen anderenorts klassifizierten Krankheiten: Unterschenkel [Fibula, Tibia, Kniegelenk]', 'M03.66*'],
-  [148056, 'Reaktive Arthritis bei sonstigen anderenorts klassifizierten Krankheiten: Knöchel und Fuß [Fußwurzel, Mittelfuß, Zehen, Sprunggelenk, sonstige Gelenke des Fußes]', 'M03.67*'],
+  [
+    148056,
+    'Reaktive Arthritis bei sonstigen anderenorts klassifizierten Krankheiten: Knöchel und Fuß [Fußwurzel, Mittelfuß, Zehen, Sprunggelenk, sonstige Gelenke des Fußes]',
+    'M03.67*'
+  ],
   [148057, 'Reaktive Arthritis bei sonstigen anderenorts klassifizierten Krankheiten: Sonstige [Hals, Kopf, Rippen, Rumpf, Schädel, Wirbelsäule]', 'M03.68*'],
   [148058, 'Reaktive Arthritis bei sonstigen anderenorts klassifizierten Krankheiten: Nicht näher bezeichnete Lokalisationen', 'M03.69*'],
   [148059, 'Seropositive chronische Polyarthritis', 'M05.-'],
@@ -6381,13 +6505,29 @@ const gIcddata = [
   [148092, 'Vaskulitis bei seropositiver chronischer Polyarthritis: Nicht näher bezeichnete Lokalisationen', 'M05.29'],
   [148093, 'Seropositive chronische Polyarthritis mit Beteiligung sonstiger Organe und Organsysteme', 'M05.3-'],
   [148094, 'Seropositive chronische Polyarthritis mit Beteiligung sonstiger Organe und Organsysteme: Mehrere Lokalisationen', 'M05.30'],
-  [148095, 'Seropositive chronische Polyarthritis mit Beteiligung sonstiger Organe und Organsysteme: Schulterregion [Klavikula, Skapula, Akromioklavikular-, Schulter-, Sternoklavikulargelenk]', 'M05.31'],
+  [
+    148095,
+    'Seropositive chronische Polyarthritis mit Beteiligung sonstiger Organe und Organsysteme: Schulterregion [Klavikula, Skapula, Akromioklavikular-, Schulter-, Sternoklavikulargelenk]',
+    'M05.31'
+  ],
   [148096, 'Seropositive chronische Polyarthritis mit Beteiligung sonstiger Organe und Organsysteme: Oberarm [Humerus, Ellenbogengelenk]', 'M05.32'],
   [148097, 'Seropositive chronische Polyarthritis mit Beteiligung sonstiger Organe und Organsysteme: Unterarm [Radius, Ulna, Handgelenk]', 'M05.33'],
-  [148098, 'Seropositive chronische Polyarthritis mit Beteiligung sonstiger Organe und Organsysteme: Hand [Finger, Handwurzel, Mittelhand, Gelenke zwischen diesen Knochen]', 'M05.34'],
-  [148099, 'Seropositive chronische Polyarthritis mit Beteiligung sonstiger Organe und Organsysteme: Beckenregion und Oberschenkel [Becken, Femur, Gesäß, Hüfte, Hüftgelenk, Iliosakralgelenk]', 'M05.35'],
+  [
+    148098,
+    'Seropositive chronische Polyarthritis mit Beteiligung sonstiger Organe und Organsysteme: Hand [Finger, Handwurzel, Mittelhand, Gelenke zwischen diesen Knochen]',
+    'M05.34'
+  ],
+  [
+    148099,
+    'Seropositive chronische Polyarthritis mit Beteiligung sonstiger Organe und Organsysteme: Beckenregion und Oberschenkel [Becken, Femur, Gesäß, Hüfte, Hüftgelenk, Iliosakralgelenk]',
+    'M05.35'
+  ],
   [148100, 'Seropositive chronische Polyarthritis mit Beteiligung sonstiger Organe und Organsysteme: Unterschenkel [Fibula, Tibia, Kniegelenk]', 'M05.36'],
-  [148101, 'Seropositive chronische Polyarthritis mit Beteiligung sonstiger Organe und Organsysteme: Knöchel und Fuß [Fußwurzel, Mittelfuß, Zehen, Sprunggelenk, sonstige Gelenke des Fußes]', 'M05.37'],
+  [
+    148101,
+    'Seropositive chronische Polyarthritis mit Beteiligung sonstiger Organe und Organsysteme: Knöchel und Fuß [Fußwurzel, Mittelfuß, Zehen, Sprunggelenk, sonstige Gelenke des Fußes]',
+    'M05.37'
+  ],
   [148102, 'Seropositive chronische Polyarthritis mit Beteiligung sonstiger Organe und Organsysteme: Sonstige [Hals, Kopf, Rippen, Rumpf, Schädel, Wirbelsäule]', 'M05.38'],
   [148103, 'Seropositive chronische Polyarthritis mit Beteiligung sonstiger Organe und Organsysteme: Nicht näher bezeichnete Lokalisationen', 'M05.39'],
   [148104, 'Sonstige seropositive chronische Polyarthritis', 'M05.8-'],
@@ -6667,13 +6807,25 @@ const gIcddata = [
   [148378, 'Juvenile Arthritis bei Colitis ulcerosa: Nicht näher bezeichnete Lokalisationen', 'M09.29*'],
   [148379, 'Juvenile Arthritis bei sonstigen anderenorts klassifizierten Krankheiten', 'M09.8-*'],
   [148380, 'Juvenile Arthritis bei sonstigen anderenorts klassifizierten Krankheiten: Mehrere Lokalisationen', 'M09.80*'],
-  [148381, 'Juvenile Arthritis bei sonstigen anderenorts klassifizierten Krankheiten: Schulterregion [Klavikula, Skapula, Akromioklavikular-, Schulter-, Sternoklavikulargelenk]', 'M09.81*'],
+  [
+    148381,
+    'Juvenile Arthritis bei sonstigen anderenorts klassifizierten Krankheiten: Schulterregion [Klavikula, Skapula, Akromioklavikular-, Schulter-, Sternoklavikulargelenk]',
+    'M09.81*'
+  ],
   [148382, 'Juvenile Arthritis bei sonstigen anderenorts klassifizierten Krankheiten: Oberarm [Humerus, Ellenbogengelenk]', 'M09.82*'],
   [148383, 'Juvenile Arthritis bei sonstigen anderenorts klassifizierten Krankheiten: Unterarm [Radius, Ulna, Handgelenk]', 'M09.83*'],
   [148384, 'Juvenile Arthritis bei sonstigen anderenorts klassifizierten Krankheiten: Hand [Finger, Handwurzel, Mittelhand, Gelenke zwischen diesen Knochen]', 'M09.84*'],
-  [148385, 'Juvenile Arthritis bei sonstigen anderenorts klassifizierten Krankheiten: Beckenregion und Oberschenkel [Becken, Femur, Gesäß, Hüfte, Hüftgelenk, Iliosakralgelenk]', 'M09.85*'],
+  [
+    148385,
+    'Juvenile Arthritis bei sonstigen anderenorts klassifizierten Krankheiten: Beckenregion und Oberschenkel [Becken, Femur, Gesäß, Hüfte, Hüftgelenk, Iliosakralgelenk]',
+    'M09.85*'
+  ],
   [148386, 'Juvenile Arthritis bei sonstigen anderenorts klassifizierten Krankheiten: Unterschenkel [Fibula, Tibia, Kniegelenk]', 'M09.86*'],
-  [148387, 'Juvenile Arthritis bei sonstigen anderenorts klassifizierten Krankheiten: Knöchel und Fuß [Fußwurzel, Mittelfuß, Zehen, Sprunggelenk, sonstige Gelenke des Fußes]', 'M09.87*'],
+  [
+    148387,
+    'Juvenile Arthritis bei sonstigen anderenorts klassifizierten Krankheiten: Knöchel und Fuß [Fußwurzel, Mittelfuß, Zehen, Sprunggelenk, sonstige Gelenke des Fußes]',
+    'M09.87*'
+  ],
   [148388, 'Juvenile Arthritis bei sonstigen anderenorts klassifizierten Krankheiten: Sonstige [Hals, Kopf, Rippen, Rumpf, Schädel, Wirbelsäule]', 'M09.88*'],
   [148389, 'Juvenile Arthritis bei sonstigen anderenorts klassifizierten Krankheiten: Nicht näher bezeichnete Lokalisationen', 'M09.89*'],
   [148390, 'Gicht', 'M10.-'],
@@ -6868,13 +7020,25 @@ const gIcddata = [
   [148579, 'Traumatische Arthropathie: Nicht näher bezeichnete Lokalisationen', 'M12.59'],
   [148580, 'Sonstige näher bezeichnete Arthropathien, anderenorts nicht klassifiziert', 'M12.8-'],
   [148581, 'Sonstige näher bezeichnete Arthropathien, anderenorts nicht klassifiziert: Mehrere Lokalisationen', 'M12.80'],
-  [148582, 'Sonstige näher bezeichnete Arthropathien, anderenorts nicht klassifiziert: Schulterregion [Klavikula, Skapula, Akromioklavikular-, Schulter-, Sternoklavikulargelenk]', 'M12.81'],
+  [
+    148582,
+    'Sonstige näher bezeichnete Arthropathien, anderenorts nicht klassifiziert: Schulterregion [Klavikula, Skapula, Akromioklavikular-, Schulter-, Sternoklavikulargelenk]',
+    'M12.81'
+  ],
   [148583, 'Sonstige näher bezeichnete Arthropathien, anderenorts nicht klassifiziert: Oberarm [Humerus, Ellenbogengelenk]', 'M12.82'],
   [148584, 'Sonstige näher bezeichnete Arthropathien, anderenorts nicht klassifiziert: Unterarm [Radius, Ulna, Handgelenk]', 'M12.83'],
   [148585, 'Sonstige näher bezeichnete Arthropathien, anderenorts nicht klassifiziert: Hand [Finger, Handwurzel, Mittelhand, Gelenke zwischen diesen Knochen]', 'M12.84'],
-  [148586, 'Sonstige näher bezeichnete Arthropathien, anderenorts nicht klassifiziert: Beckenregion und Oberschenkel [Becken, Femur, Gesäß, Hüfte, Hüftgelenk, Iliosakralgelenk]', 'M12.85'],
+  [
+    148586,
+    'Sonstige näher bezeichnete Arthropathien, anderenorts nicht klassifiziert: Beckenregion und Oberschenkel [Becken, Femur, Gesäß, Hüfte, Hüftgelenk, Iliosakralgelenk]',
+    'M12.85'
+  ],
   [148587, 'Sonstige näher bezeichnete Arthropathien, anderenorts nicht klassifiziert: Unterschenkel [Fibula, Tibia, Kniegelenk]', 'M12.86'],
-  [148588, 'Sonstige näher bezeichnete Arthropathien, anderenorts nicht klassifiziert: Knöchel und Fuß [Fußwurzel, Mittelfuß, Zehen, Sprunggelenk, sonstige Gelenke des Fußes]', 'M12.87'],
+  [
+    148588,
+    'Sonstige näher bezeichnete Arthropathien, anderenorts nicht klassifiziert: Knöchel und Fuß [Fußwurzel, Mittelfuß, Zehen, Sprunggelenk, sonstige Gelenke des Fußes]',
+    'M12.87'
+  ],
   [148589, 'Sonstige näher bezeichnete Arthropathien, anderenorts nicht klassifiziert: Sonstige [Hals, Kopf, Rippen, Rumpf, Schädel, Wirbelsäule]', 'M12.88'],
   [148590, 'Sonstige näher bezeichnete Arthropathien, anderenorts nicht klassifiziert: Nicht näher bezeichnete Lokalisationen', 'M12.89'],
   [148591, 'Sonstige Arthritis', 'M13.-'],
@@ -7066,11 +7230,19 @@ const gIcddata = [
   [148777, 'Unterschiedliche Extremitätenlänge (erworben): Nicht näher bezeichnete Lokalisationen', 'M21.79'],
   [148778, 'Sonstige näher bezeichnete erworbene Deformitäten der Extremitäten', 'M21.8-'],
   [148779, 'Sonstige näher bezeichnete erworbene Deformitäten der Extremitäten: Mehrere Lokalisationen', 'M21.80'],
-  [148780, 'Sonstige näher bezeichnete erworbene Deformitäten der Extremitäten: Schulterregion [Klavikula, Skapula, Akromioklavikular-, Schulter-, Sternoklavikulargelenk]', 'M21.81'],
+  [
+    148780,
+    'Sonstige näher bezeichnete erworbene Deformitäten der Extremitäten: Schulterregion [Klavikula, Skapula, Akromioklavikular-, Schulter-, Sternoklavikulargelenk]',
+    'M21.81'
+  ],
   [148781, 'Sonstige näher bezeichnete erworbene Deformitäten der Extremitäten: Oberarm [Humerus, Ellenbogengelenk]', 'M21.82'],
   [148782, 'Sonstige näher bezeichnete erworbene Deformitäten der Extremitäten: Unterarm [Radius, Ulna, Handgelenk]', 'M21.83'],
   [148783, 'Sonstige näher bezeichnete erworbene Deformitäten der Extremitäten: Hand [Finger, Handwurzel, Mittelhand, Gelenke zwischen diesen Knochen]', 'M21.84'],
-  [148784, 'Sonstige näher bezeichnete erworbene Deformitäten der Extremitäten: Beckenregion und Oberschenkel [Becken, Femur, Gesäß, Hüfte, Hüftgelenk, Iliosakralgelenk]', 'M21.85'],
+  [
+    148784,
+    'Sonstige näher bezeichnete erworbene Deformitäten der Extremitäten: Beckenregion und Oberschenkel [Becken, Femur, Gesäß, Hüfte, Hüftgelenk, Iliosakralgelenk]',
+    'M21.85'
+  ],
   [148785, 'Sonstige näher bezeichnete erworbene Deformitäten der Extremitäten: Unterschenkel [Fibula, Tibia, Kniegelenk]', 'M21.86'],
   [148786, 'Sonstige näher bezeichnete erworbene Deformitäten der Extremitäten: Knöchel und Fuß [Fußwurzel, Mittelfuß, Zehen, Sprunggelenk, sonstige Gelenke des Fußes]', 'M21.87'],
   [148787, 'Sonstige näher bezeichnete erworbene Deformitäten der Extremitäten: Nicht näher bezeichnete Lokalisationen', 'M21.89'],
@@ -7171,7 +7343,11 @@ const gIcddata = [
   [148882, 'Binnenschädigung des Kniegelenkes, nicht näher bezeichnet: Mehrere Lokalisationen', 'M23.90'],
   [148883, 'Binnenschädigung des Kniegelenkes, nicht näher bezeichnet: Vorderes Kreuzband oder Vorderhorn des Innenmeniskus', 'M23.91'],
   [148884, 'Binnenschädigung des Kniegelenkes, nicht näher bezeichnet: Hinteres Kreuzband oder Hinterhorn des Innenmeniskus', 'M23.92'],
-  [148885, 'Binnenschädigung des Kniegelenkes, nicht näher bezeichnet: Innenband [Lig. collaterale tibiale] oder sonstiger und nicht näher bezeichneter Teil des Innenmeniskus', 'M23.93'],
+  [
+    148885,
+    'Binnenschädigung des Kniegelenkes, nicht näher bezeichnet: Innenband [Lig. collaterale tibiale] oder sonstiger und nicht näher bezeichneter Teil des Innenmeniskus',
+    'M23.93'
+  ],
   [148886, 'Binnenschädigung des Kniegelenkes, nicht näher bezeichnet: Außenband [Lig. collaterale fibulare] oder Vorderhorn des Außenmeniskus', 'M23.94'],
   [148887, 'Binnenschädigung des Kniegelenkes, nicht näher bezeichnet: Hinterhorn des Außenmeniskus', 'M23.95'],
   [148888, 'Binnenschädigung des Kniegelenkes, nicht näher bezeichnet: Sonstiger und nicht näher bezeichneter Teil des Außenmeniskus', 'M23.96'],
@@ -7210,13 +7386,29 @@ const gIcddata = [
   [148921, 'Krankheiten der Bänder: Nicht näher bezeichnete Lokalisationen', 'M24.29'],
   [148922, 'Pathologische Luxation und Subluxation eines Gelenkes, anderenorts nicht klassifiziert', 'M24.3-'],
   [148923, 'Pathologische Luxation und Subluxation eines Gelenkes, anderenorts nicht klassifiziert: Mehrere Lokalisationen', 'M24.30'],
-  [148924, 'Pathologische Luxation und Subluxation eines Gelenkes, anderenorts nicht klassifiziert: Schulterregion [Klavikula, Skapula, Akromioklavikular-, Schulter-, Sternoklavikulargelenk]', 'M24.31'],
+  [
+    148924,
+    'Pathologische Luxation und Subluxation eines Gelenkes, anderenorts nicht klassifiziert: Schulterregion [Klavikula, Skapula, Akromioklavikular-, Schulter-, Sternoklavikulargelenk]',
+    'M24.31'
+  ],
   [148925, 'Pathologische Luxation und Subluxation eines Gelenkes, anderenorts nicht klassifiziert: Oberarm [Humerus, Ellenbogengelenk]', 'M24.32'],
   [148926, 'Pathologische Luxation und Subluxation eines Gelenkes, anderenorts nicht klassifiziert: Unterarm [Radius, Ulna, Handgelenk]', 'M24.33'],
-  [148927, 'Pathologische Luxation und Subluxation eines Gelenkes, anderenorts nicht klassifiziert: Hand [Finger, Handwurzel, Mittelhand, Gelenke zwischen diesen Knochen]', 'M24.34'],
-  [148928, 'Pathologische Luxation und Subluxation eines Gelenkes, anderenorts nicht klassifiziert: Beckenregion und Oberschenkel [Becken, Femur, Gesäß, Hüfte, Hüftgelenk, Iliosakralgelenk]', 'M24.35'],
+  [
+    148927,
+    'Pathologische Luxation und Subluxation eines Gelenkes, anderenorts nicht klassifiziert: Hand [Finger, Handwurzel, Mittelhand, Gelenke zwischen diesen Knochen]',
+    'M24.34'
+  ],
+  [
+    148928,
+    'Pathologische Luxation und Subluxation eines Gelenkes, anderenorts nicht klassifiziert: Beckenregion und Oberschenkel [Becken, Femur, Gesäß, Hüfte, Hüftgelenk, Iliosakralgelenk]',
+    'M24.35'
+  ],
   [148929, 'Pathologische Luxation und Subluxation eines Gelenkes, anderenorts nicht klassifiziert: Unterschenkel [Fibula, Tibia, Kniegelenk]', 'M24.36'],
-  [148930, 'Pathologische Luxation und Subluxation eines Gelenkes, anderenorts nicht klassifiziert: Knöchel und Fuß [Fußwurzel, Mittelfuß, Zehen, Sprunggelenk, sonstige Gelenke des Fußes]', 'M24.37'],
+  [
+    148930,
+    'Pathologische Luxation und Subluxation eines Gelenkes, anderenorts nicht klassifiziert: Knöchel und Fuß [Fußwurzel, Mittelfuß, Zehen, Sprunggelenk, sonstige Gelenke des Fußes]',
+    'M24.37'
+  ],
   [148931, 'Pathologische Luxation und Subluxation eines Gelenkes, anderenorts nicht klassifiziert: Sonstige [Hals, Kopf, Rippen, Rumpf, Schädel, Wirbelsäule]', 'M24.38'],
   [148932, 'Pathologische Luxation und Subluxation eines Gelenkes, anderenorts nicht klassifiziert: Nicht näher bezeichnete Lokalisationen', 'M24.39'],
   [148933, 'Habituelle Luxation und Subluxation eines Gelenkes', 'M24.4-'],
@@ -7255,12 +7447,24 @@ const gIcddata = [
   [148966, 'Protrusio acetabuli', 'M24.7'],
   [148967, 'Sonstige näher bezeichnete Gelenkschädigungen, anderenorts nicht klassifiziert', 'M24.8-'],
   [148968, 'Sonstige näher bezeichnete Gelenkschädigungen, anderenorts nicht klassifiziert: Mehrere Lokalisationen', 'M24.80'],
-  [148969, 'Sonstige näher bezeichnete Gelenkschädigungen, anderenorts nicht klassifiziert: Schulterregion [Klavikula, Skapula, Akromioklavikular-, Schulter-, Sternoklavikulargelenk]', 'M24.81'],
+  [
+    148969,
+    'Sonstige näher bezeichnete Gelenkschädigungen, anderenorts nicht klassifiziert: Schulterregion [Klavikula, Skapula, Akromioklavikular-, Schulter-, Sternoklavikulargelenk]',
+    'M24.81'
+  ],
   [148970, 'Sonstige näher bezeichnete Gelenkschädigungen, anderenorts nicht klassifiziert: Oberarm [Humerus, Ellenbogengelenk]', 'M24.82'],
   [148971, 'Sonstige näher bezeichnete Gelenkschädigungen, anderenorts nicht klassifiziert: Unterarm [Radius, Ulna, Handgelenk]', 'M24.83'],
   [148972, 'Sonstige näher bezeichnete Gelenkschädigungen, anderenorts nicht klassifiziert: Hand [Finger, Handwurzel, Mittelhand, Gelenke zwischen diesen Knochen]', 'M24.84'],
-  [148973, 'Sonstige näher bezeichnete Gelenkschädigungen, anderenorts nicht klassifiziert: Beckenregion und Oberschenkel [Becken, Femur, Gesäß, Hüfte, Hüftgelenk, Iliosakralgelenk]', 'M24.85'],
-  [148974, 'Sonstige näher bezeichnete Gelenkschädigungen, anderenorts nicht klassifiziert: Knöchel und Fuß [Fußwurzel, Mittelfuß, Zehen, Sprunggelenk, sonstige Gelenke des Fußes]', 'M24.87'],
+  [
+    148973,
+    'Sonstige näher bezeichnete Gelenkschädigungen, anderenorts nicht klassifiziert: Beckenregion und Oberschenkel [Becken, Femur, Gesäß, Hüfte, Hüftgelenk, Iliosakralgelenk]',
+    'M24.85'
+  ],
+  [
+    148974,
+    'Sonstige näher bezeichnete Gelenkschädigungen, anderenorts nicht klassifiziert: Knöchel und Fuß [Fußwurzel, Mittelfuß, Zehen, Sprunggelenk, sonstige Gelenke des Fußes]',
+    'M24.87'
+  ],
   [148975, 'Sonstige näher bezeichnete Gelenkschädigungen, anderenorts nicht klassifiziert: Sonstige [Hals, Kopf, Rippen, Rumpf, Schädel, Wirbelsäule]', 'M24.88'],
   [148976, 'Sonstige näher bezeichnete Gelenkschädigungen, anderenorts nicht klassifiziert: Nicht näher bezeichnete Lokalisationen', 'M24.89'],
   [148977, 'Gelenkschädigung, nicht näher bezeichnet', 'M24.9-'],
@@ -8135,13 +8339,25 @@ const gIcddata = [
   [149846, 'Interstitielle Myositis: Nicht näher bezeichnete Lokalisationen', 'M60.19'],
   [149847, 'Fremdkörpergranulom im Weichteilgewebe, anderenorts nicht klassifiziert', 'M60.2-'],
   [149848, 'Fremdkörpergranulom im Weichteilgewebe, anderenorts nicht klassifiziert: Mehrere Lokalisationen', 'M60.20'],
-  [149849, 'Fremdkörpergranulom im Weichteilgewebe, anderenorts nicht klassifiziert: Schulterregion [Klavikula, Skapula, Akromioklavikular-, Schulter-, Sternoklavikulargelenk]', 'M60.21'],
+  [
+    149849,
+    'Fremdkörpergranulom im Weichteilgewebe, anderenorts nicht klassifiziert: Schulterregion [Klavikula, Skapula, Akromioklavikular-, Schulter-, Sternoklavikulargelenk]',
+    'M60.21'
+  ],
   [149850, 'Fremdkörpergranulom im Weichteilgewebe, anderenorts nicht klassifiziert: Oberarm [Humerus, Ellenbogengelenk]', 'M60.22'],
   [149851, 'Fremdkörpergranulom im Weichteilgewebe, anderenorts nicht klassifiziert: Unterarm [Radius, Ulna, Handgelenk]', 'M60.23'],
   [149852, 'Fremdkörpergranulom im Weichteilgewebe, anderenorts nicht klassifiziert: Hand [Finger, Handwurzel, Mittelhand, Gelenke zwischen diesen Knochen]', 'M60.24'],
-  [149853, 'Fremdkörpergranulom im Weichteilgewebe, anderenorts nicht klassifiziert: Beckenregion und Oberschenkel [Becken, Femur, Gesäß, Hüfte, Hüftgelenk, Iliosakralgelenk]', 'M60.25'],
+  [
+    149853,
+    'Fremdkörpergranulom im Weichteilgewebe, anderenorts nicht klassifiziert: Beckenregion und Oberschenkel [Becken, Femur, Gesäß, Hüfte, Hüftgelenk, Iliosakralgelenk]',
+    'M60.25'
+  ],
   [149854, 'Fremdkörpergranulom im Weichteilgewebe, anderenorts nicht klassifiziert: Unterschenkel [Fibula, Tibia, Kniegelenk]', 'M60.26'],
-  [149855, 'Fremdkörpergranulom im Weichteilgewebe, anderenorts nicht klassifiziert: Knöchel und Fuß [Fußwurzel, Mittelfuß, Zehen, Sprunggelenk, sonstige Gelenke des Fußes]', 'M60.27'],
+  [
+    149855,
+    'Fremdkörpergranulom im Weichteilgewebe, anderenorts nicht klassifiziert: Knöchel und Fuß [Fußwurzel, Mittelfuß, Zehen, Sprunggelenk, sonstige Gelenke des Fußes]',
+    'M60.27'
+  ],
   [149856, 'Fremdkörpergranulom im Weichteilgewebe, anderenorts nicht klassifiziert: Sonstige [Hals, Kopf, Rippen, Rumpf, Schädel, Wirbelsäule]', 'M60.28'],
   [149857, 'Fremdkörpergranulom im Weichteilgewebe, anderenorts nicht klassifiziert: Nicht näher bezeichnete Lokalisationen', 'M60.29'],
   [149858, 'Sonstige Myositis', 'M60.8-'],
@@ -8235,11 +8451,19 @@ const gIcddata = [
   [149946, 'Sonstige Ossifikation von Muskeln: Nicht näher bezeichnete Lokalisationen', 'M61.59'],
   [149947, 'Kalzifikation und Ossifikation von Muskeln, nicht näher bezeichnet', 'M61.9-'],
   [149948, 'Kalzifikation und Ossifikation von Muskeln, nicht näher bezeichnet: Mehrere Lokalisationen', 'M61.90'],
-  [149949, 'Kalzifikation und Ossifikation von Muskeln, nicht näher bezeichnet: Schulterregion [Klavikula, Skapula, Akromioklavikular-, Schulter-, Sternoklavikulargelenk]', 'M61.91'],
+  [
+    149949,
+    'Kalzifikation und Ossifikation von Muskeln, nicht näher bezeichnet: Schulterregion [Klavikula, Skapula, Akromioklavikular-, Schulter-, Sternoklavikulargelenk]',
+    'M61.91'
+  ],
   [149950, 'Kalzifikation und Ossifikation von Muskeln, nicht näher bezeichnet: Oberarm [Humerus, Ellenbogengelenk]', 'M61.92'],
   [149951, 'Kalzifikation und Ossifikation von Muskeln, nicht näher bezeichnet: Unterarm [Radius, Ulna, Handgelenk]', 'M61.93'],
   [149952, 'Kalzifikation und Ossifikation von Muskeln, nicht näher bezeichnet: Hand [Finger, Handwurzel, Mittelhand, Gelenke zwischen diesen Knochen]', 'M61.94'],
-  [149953, 'Kalzifikation und Ossifikation von Muskeln, nicht näher bezeichnet: Beckenregion und Oberschenkel [Becken, Femur, Gesäß, Hüfte, Hüftgelenk, Iliosakralgelenk]', 'M61.95'],
+  [
+    149953,
+    'Kalzifikation und Ossifikation von Muskeln, nicht näher bezeichnet: Beckenregion und Oberschenkel [Becken, Femur, Gesäß, Hüfte, Hüftgelenk, Iliosakralgelenk]',
+    'M61.95'
+  ],
   [149954, 'Kalzifikation und Ossifikation von Muskeln, nicht näher bezeichnet: Unterschenkel [Fibula, Tibia, Kniegelenk]', 'M61.96'],
   [149955, 'Kalzifikation und Ossifikation von Muskeln, nicht näher bezeichnet: Knöchel und Fuß [Fußwurzel, Mittelfuß, Zehen, Sprunggelenk, sonstige Gelenke des Fußes]', 'M61.97'],
   [149956, 'Kalzifikation und Ossifikation von Muskeln, nicht näher bezeichnet: Sonstige [Hals, Kopf, Rippen, Rumpf, Schädel, Wirbelsäule]', 'M61.98'],
@@ -8347,35 +8571,67 @@ const gIcddata = [
   [150058, 'Muskelkrankheiten bei anderenorts klassifizierten Krankheiten', 'M63.-*'],
   [150059, 'Myositis bei anderenorts klassifizierten bakteriellen Krankheiten', 'M63.0-*'],
   [150060, 'Myositis bei anderenorts klassifizierten bakteriellen Krankheiten: Mehrere Lokalisationen', 'M63.00*'],
-  [150061, 'Myositis bei anderenorts klassifizierten bakteriellen Krankheiten: Schulterregion [Klavikula, Skapula, Akromioklavikular-, Schulter-, Sternoklavikulargelenk]', 'M63.01*'],
+  [
+    150061,
+    'Myositis bei anderenorts klassifizierten bakteriellen Krankheiten: Schulterregion [Klavikula, Skapula, Akromioklavikular-, Schulter-, Sternoklavikulargelenk]',
+    'M63.01*'
+  ],
   [150062, 'Myositis bei anderenorts klassifizierten bakteriellen Krankheiten: Oberarm [Humerus, Ellenbogengelenk]', 'M63.02*'],
   [150063, 'Myositis bei anderenorts klassifizierten bakteriellen Krankheiten: Unterarm [Radius, Ulna, Handgelenk]', 'M63.03*'],
   [150064, 'Myositis bei anderenorts klassifizierten bakteriellen Krankheiten: Hand [Finger, Handwurzel, Mittelhand, Gelenke zwischen diesen Knochen]', 'M63.04*'],
-  [150065, 'Myositis bei anderenorts klassifizierten bakteriellen Krankheiten: Beckenregion und Oberschenkel [Becken, Femur, Gesäß, Hüfte, Hüftgelenk, Iliosakralgelenk]', 'M63.05*'],
+  [
+    150065,
+    'Myositis bei anderenorts klassifizierten bakteriellen Krankheiten: Beckenregion und Oberschenkel [Becken, Femur, Gesäß, Hüfte, Hüftgelenk, Iliosakralgelenk]',
+    'M63.05*'
+  ],
   [150066, 'Myositis bei anderenorts klassifizierten bakteriellen Krankheiten: Unterschenkel [Fibula, Tibia, Kniegelenk]', 'M63.06*'],
   [150067, 'Myositis bei anderenorts klassifizierten bakteriellen Krankheiten: Knöchel und Fuß [Fußwurzel, Mittelfuß, Zehen, Sprunggelenk, sonstige Gelenke des Fußes]', 'M63.07*'],
   [150068, 'Myositis bei anderenorts klassifizierten bakteriellen Krankheiten: Sonstige [Hals, Kopf, Rippen, Rumpf, Schädel, Wirbelsäule]', 'M63.08*'],
   [150069, 'Myositis bei anderenorts klassifizierten bakteriellen Krankheiten: Nicht näher bezeichnete Lokalisationen', 'M63.09*'],
   [150070, 'Myositis bei anderenorts klassifizierten Protozoen- und Parasiteninfektionen', 'M63.1-*'],
   [150071, 'Myositis bei anderenorts klassifizierten Protozoen- und Parasiteninfektionen: Mehrere Lokalisationen', 'M63.10*'],
-  [150072, 'Myositis bei anderenorts klassifizierten Protozoen- und Parasiteninfektionen: Schulterregion [Klavikula, Skapula, Akromioklavikular-, Schulter-, Sternoklavikulargelenk]', 'M63.11*'],
+  [
+    150072,
+    'Myositis bei anderenorts klassifizierten Protozoen- und Parasiteninfektionen: Schulterregion [Klavikula, Skapula, Akromioklavikular-, Schulter-, Sternoklavikulargelenk]',
+    'M63.11*'
+  ],
   [150073, 'Myositis bei anderenorts klassifizierten Protozoen- und Parasiteninfektionen: Oberarm [Humerus, Ellenbogengelenk]', 'M63.12*'],
   [150074, 'Myositis bei anderenorts klassifizierten Protozoen- und Parasiteninfektionen: Unterarm [Radius, Ulna, Handgelenk]', 'M63.13*'],
   [150075, 'Myositis bei anderenorts klassifizierten Protozoen- und Parasiteninfektionen: Hand [Finger, Handwurzel, Mittelhand, Gelenke zwischen diesen Knochen]', 'M63.14*'],
-  [150076, 'Myositis bei anderenorts klassifizierten Protozoen- und Parasiteninfektionen: Beckenregion und Oberschenkel [Becken, Femur, Gesäß, Hüfte, Hüftgelenk, Iliosakralgelenk]', 'M63.15*'],
+  [
+    150076,
+    'Myositis bei anderenorts klassifizierten Protozoen- und Parasiteninfektionen: Beckenregion und Oberschenkel [Becken, Femur, Gesäß, Hüfte, Hüftgelenk, Iliosakralgelenk]',
+    'M63.15*'
+  ],
   [150077, 'Myositis bei anderenorts klassifizierten Protozoen- und Parasiteninfektionen: Unterschenkel [Fibula, Tibia, Kniegelenk]', 'M63.16*'],
-  [150078, 'Myositis bei anderenorts klassifizierten Protozoen- und Parasiteninfektionen: Knöchel und Fuß [Fußwurzel, Mittelfuß, Zehen, Sprunggelenk, sonstige Gelenke des Fußes]', 'M63.17*'],
+  [
+    150078,
+    'Myositis bei anderenorts klassifizierten Protozoen- und Parasiteninfektionen: Knöchel und Fuß [Fußwurzel, Mittelfuß, Zehen, Sprunggelenk, sonstige Gelenke des Fußes]',
+    'M63.17*'
+  ],
   [150079, 'Myositis bei anderenorts klassifizierten Protozoen- und Parasiteninfektionen: Sonstige [Hals, Kopf, Rippen, Rumpf, Schädel, Wirbelsäule]', 'M63.18*'],
   [150080, 'Myositis bei anderenorts klassifizierten Protozoen- und Parasiteninfektionen: Nicht näher bezeichnete Lokalisationen', 'M63.19*'],
   [150081, 'Myositis bei sonstigen anderenorts klassifizierten Infektionskrankheiten', 'M63.2-*'],
   [150082, 'Myositis bei sonstigen anderenorts klassifizierten Infektionskrankheiten: Mehrere Lokalisationen', 'M63.20*'],
-  [150083, 'Myositis bei sonstigen anderenorts klassifizierten Infektionskrankheiten: Schulterregion [Klavikula, Skapula, Akromioklavikular-, Schulter-, Sternoklavikulargelenk]', 'M63.21*'],
+  [
+    150083,
+    'Myositis bei sonstigen anderenorts klassifizierten Infektionskrankheiten: Schulterregion [Klavikula, Skapula, Akromioklavikular-, Schulter-, Sternoklavikulargelenk]',
+    'M63.21*'
+  ],
   [150084, 'Myositis bei sonstigen anderenorts klassifizierten Infektionskrankheiten: Oberarm [Humerus, Ellenbogengelenk]', 'M63.22*'],
   [150085, 'Myositis bei sonstigen anderenorts klassifizierten Infektionskrankheiten: Unterarm [Radius, Ulna, Handgelenk]', 'M63.23*'],
   [150086, 'Myositis bei sonstigen anderenorts klassifizierten Infektionskrankheiten: Hand [Finger, Handwurzel, Mittelhand, Gelenke zwischen diesen Knochen]', 'M63.24*'],
-  [150087, 'Myositis bei sonstigen anderenorts klassifizierten Infektionskrankheiten: Beckenregion und Oberschenkel [Becken, Femur, Gesäß, Hüfte, Hüftgelenk, Iliosakralgelenk]', 'M63.25*'],
+  [
+    150087,
+    'Myositis bei sonstigen anderenorts klassifizierten Infektionskrankheiten: Beckenregion und Oberschenkel [Becken, Femur, Gesäß, Hüfte, Hüftgelenk, Iliosakralgelenk]',
+    'M63.25*'
+  ],
   [150088, 'Myositis bei sonstigen anderenorts klassifizierten Infektionskrankheiten: Unterschenkel [Fibula, Tibia, Kniegelenk]', 'M63.26*'],
-  [150089, 'Myositis bei sonstigen anderenorts klassifizierten Infektionskrankheiten: Knöchel und Fuß [Fußwurzel, Mittelfuß, Zehen, Sprunggelenk, sonstige Gelenke des Fußes]', 'M63.27*'],
+  [
+    150089,
+    'Myositis bei sonstigen anderenorts klassifizierten Infektionskrankheiten: Knöchel und Fuß [Fußwurzel, Mittelfuß, Zehen, Sprunggelenk, sonstige Gelenke des Fußes]',
+    'M63.27*'
+  ],
   [150090, 'Myositis bei sonstigen anderenorts klassifizierten Infektionskrankheiten: Sonstige [Hals, Kopf, Rippen, Rumpf, Schädel, Wirbelsäule]', 'M63.28*'],
   [150091, 'Myositis bei sonstigen anderenorts klassifizierten Infektionskrankheiten: Nicht näher bezeichnete Lokalisationen', 'M63.29*'],
   [150092, 'Myositis bei Sarkoidose', 'M63.3-*'],
@@ -8391,13 +8647,25 @@ const gIcddata = [
   [150102, 'Myositis bei Sarkoidose: Nicht näher bezeichnete Lokalisationen', 'M63.39*'],
   [150103, 'Sonstige Muskelkrankheiten bei anderenorts klassifizierten Krankheiten', 'M63.8-*'],
   [150104, 'Sonstige Muskelkrankheiten bei anderenorts klassifizierten Krankheiten: Mehrere Lokalisationen', 'M63.80*'],
-  [150105, 'Sonstige Muskelkrankheiten bei anderenorts klassifizierten Krankheiten: Schulterregion [Klavikula, Skapula, Akromioklavikular-, Schulter-, Sternoklavikulargelenk]', 'M63.81*'],
+  [
+    150105,
+    'Sonstige Muskelkrankheiten bei anderenorts klassifizierten Krankheiten: Schulterregion [Klavikula, Skapula, Akromioklavikular-, Schulter-, Sternoklavikulargelenk]',
+    'M63.81*'
+  ],
   [150106, 'Sonstige Muskelkrankheiten bei anderenorts klassifizierten Krankheiten: Oberarm [Humerus, Ellenbogengelenk]', 'M63.82*'],
   [150107, 'Sonstige Muskelkrankheiten bei anderenorts klassifizierten Krankheiten: Unterarm [Radius, Ulna, Handgelenk]', 'M63.83*'],
   [150108, 'Sonstige Muskelkrankheiten bei anderenorts klassifizierten Krankheiten: Hand [Finger, Handwurzel, Mittelhand, Gelenke zwischen diesen Knochen]', 'M63.84*'],
-  [150109, 'Sonstige Muskelkrankheiten bei anderenorts klassifizierten Krankheiten: Beckenregion und Oberschenkel [Becken, Femur, Gesäß, Hüfte, Hüftgelenk, Iliosakralgelenk]', 'M63.85*'],
+  [
+    150109,
+    'Sonstige Muskelkrankheiten bei anderenorts klassifizierten Krankheiten: Beckenregion und Oberschenkel [Becken, Femur, Gesäß, Hüfte, Hüftgelenk, Iliosakralgelenk]',
+    'M63.85*'
+  ],
   [150110, 'Sonstige Muskelkrankheiten bei anderenorts klassifizierten Krankheiten: Unterschenkel [Fibula, Tibia, Kniegelenk]', 'M63.86*'],
-  [150111, 'Sonstige Muskelkrankheiten bei anderenorts klassifizierten Krankheiten: Knöchel und Fuß [Fußwurzel, Mittelfuß, Zehen, Sprunggelenk, sonstige Gelenke des Fußes]', 'M63.87*'],
+  [
+    150111,
+    'Sonstige Muskelkrankheiten bei anderenorts klassifizierten Krankheiten: Knöchel und Fuß [Fußwurzel, Mittelfuß, Zehen, Sprunggelenk, sonstige Gelenke des Fußes]',
+    'M63.87*'
+  ],
   [150112, 'Sonstige Muskelkrankheiten bei anderenorts klassifizierten Krankheiten: Sonstige [Hals, Kopf, Rippen, Rumpf, Schädel, Wirbelsäule]', 'M63.88*'],
   [150113, 'Sonstige Muskelkrankheiten bei anderenorts klassifizierten Krankheiten: Nicht näher bezeichnete Lokalisationen', 'M63.89*'],
   [150114, 'Synovitis und Tenosynovitis', 'M65.-'],
@@ -8562,13 +8830,25 @@ const gIcddata = [
   [150273, 'Ganglion: Nicht näher bezeichnete Lokalisationen', 'M67.49'],
   [150274, 'Sonstige näher bezeichnete Krankheiten der Synovialis und der Sehnen', 'M67.8-'],
   [150275, 'Sonstige näher bezeichnete Krankheiten der Synovialis und der Sehnen: Mehrere Lokalisationen', 'M67.80'],
-  [150276, 'Sonstige näher bezeichnete Krankheiten der Synovialis und der Sehnen: Schulterregion [Klavikula, Skapula, Akromioklavikular-, Schulter-, Sternoklavikulargelenk]', 'M67.81'],
+  [
+    150276,
+    'Sonstige näher bezeichnete Krankheiten der Synovialis und der Sehnen: Schulterregion [Klavikula, Skapula, Akromioklavikular-, Schulter-, Sternoklavikulargelenk]',
+    'M67.81'
+  ],
   [150277, 'Sonstige näher bezeichnete Krankheiten der Synovialis und der Sehnen: Oberarm [Humerus, Ellenbogengelenk]', 'M67.82'],
   [150278, 'Sonstige näher bezeichnete Krankheiten der Synovialis und der Sehnen: Unterarm [Radius, Ulna, Handgelenk]', 'M67.83'],
   [150279, 'Sonstige näher bezeichnete Krankheiten der Synovialis und der Sehnen: Hand [Finger, Handwurzel, Mittelhand, Gelenke zwischen diesen Knochen]', 'M67.84'],
-  [150280, 'Sonstige näher bezeichnete Krankheiten der Synovialis und der Sehnen: Beckenregion und Oberschenkel [Becken, Femur, Gesäß, Hüfte, Hüftgelenk, Iliosakralgelenk]', 'M67.85'],
+  [
+    150280,
+    'Sonstige näher bezeichnete Krankheiten der Synovialis und der Sehnen: Beckenregion und Oberschenkel [Becken, Femur, Gesäß, Hüfte, Hüftgelenk, Iliosakralgelenk]',
+    'M67.85'
+  ],
   [150281, 'Sonstige näher bezeichnete Krankheiten der Synovialis und der Sehnen: Unterschenkel [Fibula, Tibia, Kniegelenk]', 'M67.86'],
-  [150282, 'Sonstige näher bezeichnete Krankheiten der Synovialis und der Sehnen: Knöchel und Fuß [Fußwurzel, Mittelfuß, Zehen, Sprunggelenk, sonstige Gelenke des Fußes]', 'M67.87'],
+  [
+    150282,
+    'Sonstige näher bezeichnete Krankheiten der Synovialis und der Sehnen: Knöchel und Fuß [Fußwurzel, Mittelfuß, Zehen, Sprunggelenk, sonstige Gelenke des Fußes]',
+    'M67.87'
+  ],
   [150283, 'Sonstige näher bezeichnete Krankheiten der Synovialis und der Sehnen: Sonstige [Hals, Kopf, Rippen, Rumpf, Schädel, Wirbelsäule]', 'M67.88'],
   [150284, 'Sonstige näher bezeichnete Krankheiten der Synovialis und der Sehnen: Nicht näher bezeichnete Lokalisationen', 'M67.89'],
   [150285, 'Krankheit der Synovialis und der Sehnen, nicht näher bezeichnet', 'M67.9-'],
@@ -8585,24 +8865,56 @@ const gIcddata = [
   [150296, 'Krankheiten der Synovialis und der Sehnen bei anderenorts klassifizierten Krankheiten', 'M68.-*'],
   [150297, 'Synovitis und Tenosynovitis bei anderenorts klassifizierten bakteriellen Krankheiten', 'M68.0-*'],
   [150298, 'Synovitis und Tenosynovitis bei anderenorts klassifizierten bakteriellen Krankheiten: Mehrere Lokalisationen', 'M68.00*'],
-  [150299, 'Synovitis und Tenosynovitis bei anderenorts klassifizierten bakteriellen Krankheiten: Schulterregion [Klavikula, Skapula, Akromioklavikular-, Schulter-, Sternoklavikulargelenk]', 'M68.01*'],
+  [
+    150299,
+    'Synovitis und Tenosynovitis bei anderenorts klassifizierten bakteriellen Krankheiten: Schulterregion [Klavikula, Skapula, Akromioklavikular-, Schulter-, Sternoklavikulargelenk]',
+    'M68.01*'
+  ],
   [150300, 'Synovitis und Tenosynovitis bei anderenorts klassifizierten bakteriellen Krankheiten: Oberarm [Humerus, Ellenbogengelenk]', 'M68.02*'],
   [150301, 'Synovitis und Tenosynovitis bei anderenorts klassifizierten bakteriellen Krankheiten: Unterarm [Radius, Ulna, Handgelenk]', 'M68.03*'],
-  [150302, 'Synovitis und Tenosynovitis bei anderenorts klassifizierten bakteriellen Krankheiten: Hand [Finger, Handwurzel, Mittelhand, Gelenke zwischen diesen Knochen]', 'M68.04*'],
-  [150303, 'Synovitis und Tenosynovitis bei anderenorts klassifizierten bakteriellen Krankheiten: Beckenregion und Oberschenkel [Becken, Femur, Gesäß, Hüfte, Hüftgelenk, Iliosakralgelenk]', 'M68.05*'],
+  [
+    150302,
+    'Synovitis und Tenosynovitis bei anderenorts klassifizierten bakteriellen Krankheiten: Hand [Finger, Handwurzel, Mittelhand, Gelenke zwischen diesen Knochen]',
+    'M68.04*'
+  ],
+  [
+    150303,
+    'Synovitis und Tenosynovitis bei anderenorts klassifizierten bakteriellen Krankheiten: Beckenregion und Oberschenkel [Becken, Femur, Gesäß, Hüfte, Hüftgelenk, Iliosakralgelenk]',
+    'M68.05*'
+  ],
   [150304, 'Synovitis und Tenosynovitis bei anderenorts klassifizierten bakteriellen Krankheiten: Unterschenkel [Fibula, Tibia, Kniegelenk]', 'M68.06*'],
-  [150305, 'Synovitis und Tenosynovitis bei anderenorts klassifizierten bakteriellen Krankheiten: Knöchel und Fuß [Fußwurzel, Mittelfuß, Zehen, Sprunggelenk, sonstige Gelenke des Fußes]', 'M68.07*'],
+  [
+    150305,
+    'Synovitis und Tenosynovitis bei anderenorts klassifizierten bakteriellen Krankheiten: Knöchel und Fuß [Fußwurzel, Mittelfuß, Zehen, Sprunggelenk, sonstige Gelenke des Fußes]',
+    'M68.07*'
+  ],
   [150306, 'Synovitis und Tenosynovitis bei anderenorts klassifizierten bakteriellen Krankheiten: Sonstige [Hals, Kopf, Rippen, Rumpf, Schädel, Wirbelsäule]', 'M68.08*'],
   [150307, 'Synovitis und Tenosynovitis bei anderenorts klassifizierten bakteriellen Krankheiten: Nicht näher bezeichnete Lokalisationen', 'M68.09*'],
   [150308, 'Sonstige Krankheiten der Synovialis und der Sehnen bei anderenorts klassifizierten Krankheiten', 'M68.8-*'],
   [150309, 'Sonstige Krankheiten der Synovialis und der Sehnen bei anderenorts klassifizierten Krankheiten: Mehrere Lokalisationen', 'M68.80*'],
-  [150310, 'Sonstige Krankheiten der Synovialis und der Sehnen bei anderenorts klassifizierten Krankheiten: Schulterregion [Klavikula, Skapula, Akromioklavikular-, Schulter-, Sternoklavikulargelenk]', 'M68.81*'],
+  [
+    150310,
+    'Sonstige Krankheiten der Synovialis und der Sehnen bei anderenorts klassifizierten Krankheiten: Schulterregion [Klavikula, Skapula, Akromioklavikular-, Schulter-, Sternoklavikulargelenk]',
+    'M68.81*'
+  ],
   [150311, 'Sonstige Krankheiten der Synovialis und der Sehnen bei anderenorts klassifizierten Krankheiten: Oberarm [Humerus, Ellenbogengelenk]', 'M68.82*'],
   [150312, 'Sonstige Krankheiten der Synovialis und der Sehnen bei anderenorts klassifizierten Krankheiten: Unterarm [Radius, Ulna, Handgelenk]', 'M68.83*'],
-  [150313, 'Sonstige Krankheiten der Synovialis und der Sehnen bei anderenorts klassifizierten Krankheiten: Hand [Finger, Handwurzel, Mittelhand, Gelenke zwischen diesen Knochen]', 'M68.84*'],
-  [150314, 'Sonstige Krankheiten der Synovialis und der Sehnen bei anderenorts klassifizierten Krankheiten: Beckenregion und Oberschenkel [Becken, Femur, Gesäß, Hüfte, Hüftgelenk, Iliosakralgelenk]', 'M68.85*'],
+  [
+    150313,
+    'Sonstige Krankheiten der Synovialis und der Sehnen bei anderenorts klassifizierten Krankheiten: Hand [Finger, Handwurzel, Mittelhand, Gelenke zwischen diesen Knochen]',
+    'M68.84*'
+  ],
+  [
+    150314,
+    'Sonstige Krankheiten der Synovialis und der Sehnen bei anderenorts klassifizierten Krankheiten: Beckenregion und Oberschenkel [Becken, Femur, Gesäß, Hüfte, Hüftgelenk, Iliosakralgelenk]',
+    'M68.85*'
+  ],
   [150315, 'Sonstige Krankheiten der Synovialis und der Sehnen bei anderenorts klassifizierten Krankheiten: Unterschenkel [Fibula, Tibia, Kniegelenk]', 'M68.86*'],
-  [150316, 'Sonstige Krankheiten der Synovialis und der Sehnen bei anderenorts klassifizierten Krankheiten: Knöchel und Fuß [Fußwurzel, Mittelfuß, Zehen, Sprunggelenk, sonstige Gelenke des Fußes]', 'M68.87*'],
+  [
+    150316,
+    'Sonstige Krankheiten der Synovialis und der Sehnen bei anderenorts klassifizierten Krankheiten: Knöchel und Fuß [Fußwurzel, Mittelfuß, Zehen, Sprunggelenk, sonstige Gelenke des Fußes]',
+    'M68.87*'
+  ],
   [150317, 'Sonstige Krankheiten der Synovialis und der Sehnen bei anderenorts klassifizierten Krankheiten: Sonstige [Hals, Kopf, Rippen, Rumpf, Schädel, Wirbelsäule]', 'M68.88*'],
   [150318, 'Sonstige Krankheiten der Synovialis und der Sehnen bei anderenorts klassifizierten Krankheiten: Nicht näher bezeichnete Lokalisationen', 'M68.89*'],
   [150319, 'Krankheiten des Weichteilgewebes im Zusammenhang mit Beanspruchung, Überbeanspruchung und Druck', 'M70.-'],
@@ -8766,14 +9078,34 @@ const gIcddata = [
   [150477, 'Bursitis syphilitica: Nicht näher bezeichnete Lokalisationen', 'M73.19*'],
   [150478, 'Sonstige Krankheiten des Weichteilgewebes bei sonstigen anderenorts klassifizierten Krankheiten', 'M73.8-*'],
   [150479, 'Sonstige Krankheiten des Weichteilgewebes bei sonstigen anderenorts klassifizierten Krankheiten: Mehrere Lokalisationen', 'M73.80*'],
-  [150480, 'Sonstige Krankheiten des Weichteilgewebes bei sonstigen anderenorts klassifizierten Krankheiten: Schulterregion [Klavikula, Skapula, Akromioklavikular-, Schulter-, Sternoklavikulargelenk]', 'M73.81*'],
+  [
+    150480,
+    'Sonstige Krankheiten des Weichteilgewebes bei sonstigen anderenorts klassifizierten Krankheiten: Schulterregion [Klavikula, Skapula, Akromioklavikular-, Schulter-, Sternoklavikulargelenk]',
+    'M73.81*'
+  ],
   [150481, 'Sonstige Krankheiten des Weichteilgewebes bei sonstigen anderenorts klassifizierten Krankheiten: Oberarm [Humerus, Ellenbogengelenk]', 'M73.82*'],
   [150482, 'Sonstige Krankheiten des Weichteilgewebes bei sonstigen anderenorts klassifizierten Krankheiten: Unterarm [Radius, Ulna, Handgelenk]', 'M73.83*'],
-  [150483, 'Sonstige Krankheiten des Weichteilgewebes bei sonstigen anderenorts klassifizierten Krankheiten: Hand [Finger, Handwurzel, Mittelhand, Gelenke zwischen diesen Knochen]', 'M73.84*'],
-  [150484, 'Sonstige Krankheiten des Weichteilgewebes bei sonstigen anderenorts klassifizierten Krankheiten: Beckenregion und Oberschenkel [Becken, Femur, Gesäß, Hüfte, Hüftgelenk, Iliosakralgelenk]', 'M73.85*'],
+  [
+    150483,
+    'Sonstige Krankheiten des Weichteilgewebes bei sonstigen anderenorts klassifizierten Krankheiten: Hand [Finger, Handwurzel, Mittelhand, Gelenke zwischen diesen Knochen]',
+    'M73.84*'
+  ],
+  [
+    150484,
+    'Sonstige Krankheiten des Weichteilgewebes bei sonstigen anderenorts klassifizierten Krankheiten: Beckenregion und Oberschenkel [Becken, Femur, Gesäß, Hüfte, Hüftgelenk, Iliosakralgelenk]',
+    'M73.85*'
+  ],
   [150485, 'Sonstige Krankheiten des Weichteilgewebes bei sonstigen anderenorts klassifizierten Krankheiten: Unterschenkel [Fibula, Tibia, Kniegelenk]', 'M73.86*'],
-  [150486, 'Sonstige Krankheiten des Weichteilgewebes bei sonstigen anderenorts klassifizierten Krankheiten: Knöchel und Fuß [Fußwurzel, Mittelfuß, Zehen, Sprunggelenk, sonstige Gelenke des Fußes]', 'M73.87*'],
-  [150487, 'Sonstige Krankheiten des Weichteilgewebes bei sonstigen anderenorts klassifizierten Krankheiten: Sonstige [Hals, Kopf, Rippen, Rumpf, Schädel, Wirbelsäule]', 'M73.88*'],
+  [
+    150486,
+    'Sonstige Krankheiten des Weichteilgewebes bei sonstigen anderenorts klassifizierten Krankheiten: Knöchel und Fuß [Fußwurzel, Mittelfuß, Zehen, Sprunggelenk, sonstige Gelenke des Fußes]',
+    'M73.87*'
+  ],
+  [
+    150487,
+    'Sonstige Krankheiten des Weichteilgewebes bei sonstigen anderenorts klassifizierten Krankheiten: Sonstige [Hals, Kopf, Rippen, Rumpf, Schädel, Wirbelsäule]',
+    'M73.88*'
+  ],
   [150488, 'Sonstige Krankheiten des Weichteilgewebes bei sonstigen anderenorts klassifizierten Krankheiten: Nicht näher bezeichnete Lokalisationen', 'M73.89*'],
   [150489, 'Schulterläsionen', 'M75.-'],
   [150490, 'Adhäsive Entzündung der Schultergelenkkapsel', 'M75.0'],
@@ -8932,13 +9264,29 @@ const gIcddata = [
   [150643, 'Inaktivitätsosteoporose mit pathologischer Fraktur: Nicht näher bezeichnete Lokalisationen', 'M80.29'],
   [150644, 'Osteoporose mit pathologischer Fraktur infolge Malabsorption nach chirurgischem Eingriff', 'M80.3-'],
   [150645, 'Osteoporose mit pathologischer Fraktur infolge Malabsorption nach chirurgischem Eingriff: Mehrere Lokalisationen', 'M80.30'],
-  [150646, 'Osteoporose mit pathologischer Fraktur infolge Malabsorption nach chirurgischem Eingriff: Schulterregion [Klavikula, Skapula, Akromioklavikular-, Schulter-, Sternoklavikulargelenk]', 'M80.31'],
+  [
+    150646,
+    'Osteoporose mit pathologischer Fraktur infolge Malabsorption nach chirurgischem Eingriff: Schulterregion [Klavikula, Skapula, Akromioklavikular-, Schulter-, Sternoklavikulargelenk]',
+    'M80.31'
+  ],
   [150647, 'Osteoporose mit pathologischer Fraktur infolge Malabsorption nach chirurgischem Eingriff: Oberarm [Humerus, Ellenbogengelenk]', 'M80.32'],
   [150648, 'Osteoporose mit pathologischer Fraktur infolge Malabsorption nach chirurgischem Eingriff: Unterarm [Radius, Ulna, Handgelenk]', 'M80.33'],
-  [150649, 'Osteoporose mit pathologischer Fraktur infolge Malabsorption nach chirurgischem Eingriff: Hand [Finger, Handwurzel, Mittelhand, Gelenke zwischen diesen Knochen]', 'M80.34'],
-  [150650, 'Osteoporose mit pathologischer Fraktur infolge Malabsorption nach chirurgischem Eingriff: Beckenregion und Oberschenkel [Becken, Femur, Gesäß, Hüfte, Hüftgelenk, Iliosakralgelenk]', 'M80.35'],
+  [
+    150649,
+    'Osteoporose mit pathologischer Fraktur infolge Malabsorption nach chirurgischem Eingriff: Hand [Finger, Handwurzel, Mittelhand, Gelenke zwischen diesen Knochen]',
+    'M80.34'
+  ],
+  [
+    150650,
+    'Osteoporose mit pathologischer Fraktur infolge Malabsorption nach chirurgischem Eingriff: Beckenregion und Oberschenkel [Becken, Femur, Gesäß, Hüfte, Hüftgelenk, Iliosakralgelenk]',
+    'M80.35'
+  ],
   [150651, 'Osteoporose mit pathologischer Fraktur infolge Malabsorption nach chirurgischem Eingriff: Unterschenkel [Fibula, Tibia, Kniegelenk]', 'M80.36'],
-  [150652, 'Osteoporose mit pathologischer Fraktur infolge Malabsorption nach chirurgischem Eingriff: Knöchel und Fuß [Fußwurzel, Mittelfuß, Zehen, Sprunggelenk, sonstige Gelenke des Fußes]', 'M80.37'],
+  [
+    150652,
+    'Osteoporose mit pathologischer Fraktur infolge Malabsorption nach chirurgischem Eingriff: Knöchel und Fuß [Fußwurzel, Mittelfuß, Zehen, Sprunggelenk, sonstige Gelenke des Fußes]',
+    'M80.37'
+  ],
   [150653, 'Osteoporose mit pathologischer Fraktur infolge Malabsorption nach chirurgischem Eingriff: Sonstige [Hals, Kopf, Rippen, Rumpf, Schädel, Wirbelsäule]', 'M80.38'],
   [150654, 'Osteoporose mit pathologischer Fraktur infolge Malabsorption nach chirurgischem Eingriff: Nicht näher bezeichnete Lokalisationen', 'M80.39'],
   [150655, 'Arzneimittelinduzierte Osteoporose mit pathologischer Fraktur', 'M80.4-'],
@@ -9110,11 +9458,19 @@ const gIcddata = [
   [150821, 'Osteoporose bei endokrinen Störungen: Nicht näher bezeichnete Lokalisationen', 'M82.19*'],
   [150822, 'Osteoporose bei sonstigen anderenorts klassifizierten Krankheiten', 'M82.8-*'],
   [150823, 'Osteoporose bei sonstigen anderenorts klassifizierten Krankheiten: Mehrere Lokalisationen', 'M82.80*'],
-  [150824, 'Osteoporose bei sonstigen anderenorts klassifizierten Krankheiten: Schulterregion [Klavikula, Skapula, Akromioklavikular-, Schulter-, Sternoklavikulargelenk]', 'M82.81*'],
+  [
+    150824,
+    'Osteoporose bei sonstigen anderenorts klassifizierten Krankheiten: Schulterregion [Klavikula, Skapula, Akromioklavikular-, Schulter-, Sternoklavikulargelenk]',
+    'M82.81*'
+  ],
   [150825, 'Osteoporose bei sonstigen anderenorts klassifizierten Krankheiten: Oberarm [Humerus, Ellenbogengelenk]', 'M82.82*'],
   [150826, 'Osteoporose bei sonstigen anderenorts klassifizierten Krankheiten: Unterarm [Radius, Ulna, Handgelenk]', 'M82.83*'],
   [150827, 'Osteoporose bei sonstigen anderenorts klassifizierten Krankheiten: Hand [Finger, Handwurzel, Mittelhand, Gelenke zwischen diesen Knochen]', 'M82.84*'],
-  [150828, 'Osteoporose bei sonstigen anderenorts klassifizierten Krankheiten: Beckenregion und Oberschenkel [Becken, Femur, Gesäß, Hüfte, Hüftgelenk, Iliosakralgelenk]', 'M82.85*'],
+  [
+    150828,
+    'Osteoporose bei sonstigen anderenorts klassifizierten Krankheiten: Beckenregion und Oberschenkel [Becken, Femur, Gesäß, Hüfte, Hüftgelenk, Iliosakralgelenk]',
+    'M82.85*'
+  ],
   [150829, 'Osteoporose bei sonstigen anderenorts klassifizierten Krankheiten: Unterschenkel [Fibula, Tibia, Kniegelenk]', 'M82.86*'],
   [150830, 'Osteoporose bei sonstigen anderenorts klassifizierten Krankheiten: Knöchel und Fuß [Fußwurzel, Mittelfuß, Zehen, Sprunggelenk, sonstige Gelenke des Fußes]', 'M82.87*'],
   [150831, 'Osteoporose bei sonstigen anderenorts klassifizierten Krankheiten: Sonstige [Hals, Kopf, Rippen, Rumpf, Schädel, Wirbelsäule]', 'M82.88*'],
@@ -9155,11 +9511,19 @@ const gIcddata = [
   [150866, 'Osteomalazie im Erwachsenenalter durch Malabsorption: Nicht näher bezeichnete Lokalisationen', 'M83.29'],
   [150867, 'Osteomalazie im Erwachsenenalter durch Fehl- oder Mangelernährung', 'M83.3-'],
   [150868, 'Osteomalazie im Erwachsenenalter durch Fehl- oder Mangelernährung: Mehrere Lokalisationen', 'M83.30'],
-  [150869, 'Osteomalazie im Erwachsenenalter durch Fehl- oder Mangelernährung: Schulterregion [Klavikula, Skapula, Akromioklavikular-, Schulter-, Sternoklavikulargelenk]', 'M83.31'],
+  [
+    150869,
+    'Osteomalazie im Erwachsenenalter durch Fehl- oder Mangelernährung: Schulterregion [Klavikula, Skapula, Akromioklavikular-, Schulter-, Sternoklavikulargelenk]',
+    'M83.31'
+  ],
   [150870, 'Osteomalazie im Erwachsenenalter durch Fehl- oder Mangelernährung: Oberarm [Humerus, Ellenbogengelenk]', 'M83.32'],
   [150871, 'Osteomalazie im Erwachsenenalter durch Fehl- oder Mangelernährung: Unterarm [Radius, Ulna, Handgelenk]', 'M83.33'],
   [150872, 'Osteomalazie im Erwachsenenalter durch Fehl- oder Mangelernährung: Hand [Finger, Handwurzel, Mittelhand, Gelenke zwischen diesen Knochen]', 'M83.34'],
-  [150873, 'Osteomalazie im Erwachsenenalter durch Fehl- oder Mangelernährung: Beckenregion und Oberschenkel [Becken, Femur, Gesäß, Hüfte, Hüftgelenk, Iliosakralgelenk]', 'M83.35'],
+  [
+    150873,
+    'Osteomalazie im Erwachsenenalter durch Fehl- oder Mangelernährung: Beckenregion und Oberschenkel [Becken, Femur, Gesäß, Hüfte, Hüftgelenk, Iliosakralgelenk]',
+    'M83.35'
+  ],
   [150874, 'Osteomalazie im Erwachsenenalter durch Fehl- oder Mangelernährung: Unterschenkel [Fibula, Tibia, Kniegelenk]', 'M83.36'],
   [150875, 'Osteomalazie im Erwachsenenalter durch Fehl- oder Mangelernährung: Knöchel und Fuß [Fußwurzel, Mittelfuß, Zehen, Sprunggelenk, sonstige Gelenke des Fußes]', 'M83.37'],
   [150876, 'Osteomalazie im Erwachsenenalter durch Fehl- oder Mangelernährung: Sonstige [Hals, Kopf, Rippen, Rumpf, Schädel, Wirbelsäule]', 'M83.38'],
@@ -9356,24 +9720,48 @@ const gIcddata = [
   [151067, 'Sonstige Knochenzyste: Nicht näher bezeichnete Lokalisationen', 'M85.69'],
   [151068, 'Sonstige näher bezeichnete Veränderungen der Knochendichte und -struktur', 'M85.8-'],
   [151069, 'Sonstige näher bezeichnete Veränderungen der Knochendichte und -struktur: Mehrere Lokalisationen', 'M85.80'],
-  [151070, 'Sonstige näher bezeichnete Veränderungen der Knochendichte und -struktur: Schulterregion [Klavikula, Skapula, Akromioklavikular-, Schulter-, Sternoklavikulargelenk]', 'M85.81'],
+  [
+    151070,
+    'Sonstige näher bezeichnete Veränderungen der Knochendichte und -struktur: Schulterregion [Klavikula, Skapula, Akromioklavikular-, Schulter-, Sternoklavikulargelenk]',
+    'M85.81'
+  ],
   [151071, 'Sonstige näher bezeichnete Veränderungen der Knochendichte und -struktur: Oberarm [Humerus, Ellenbogengelenk]', 'M85.82'],
   [151072, 'Sonstige näher bezeichnete Veränderungen der Knochendichte und -struktur: Unterarm [Radius, Ulna, Handgelenk]', 'M85.83'],
   [151073, 'Sonstige näher bezeichnete Veränderungen der Knochendichte und -struktur: Hand [Finger, Handwurzel, Mittelhand, Gelenke zwischen diesen Knochen]', 'M85.84'],
-  [151074, 'Sonstige näher bezeichnete Veränderungen der Knochendichte und -struktur: Beckenregion und Oberschenkel [Becken, Femur, Gesäß, Hüfte, Hüftgelenk, Iliosakralgelenk]', 'M85.85'],
+  [
+    151074,
+    'Sonstige näher bezeichnete Veränderungen der Knochendichte und -struktur: Beckenregion und Oberschenkel [Becken, Femur, Gesäß, Hüfte, Hüftgelenk, Iliosakralgelenk]',
+    'M85.85'
+  ],
   [151075, 'Sonstige näher bezeichnete Veränderungen der Knochendichte und -struktur: Unterschenkel [Fibula, Tibia, Kniegelenk]', 'M85.86'],
-  [151076, 'Sonstige näher bezeichnete Veränderungen der Knochendichte und -struktur: Knöchel und Fuß [Fußwurzel, Mittelfuß, Zehen, Sprunggelenk, sonstige Gelenke des Fußes]', 'M85.87'],
+  [
+    151076,
+    'Sonstige näher bezeichnete Veränderungen der Knochendichte und -struktur: Knöchel und Fuß [Fußwurzel, Mittelfuß, Zehen, Sprunggelenk, sonstige Gelenke des Fußes]',
+    'M85.87'
+  ],
   [151077, 'Sonstige näher bezeichnete Veränderungen der Knochendichte und -struktur: Sonstige [Hals, Kopf, Rippen, Rumpf, Schädel, Wirbelsäule]', 'M85.88'],
   [151078, 'Sonstige näher bezeichnete Veränderungen der Knochendichte und -struktur: Nicht näher bezeichnete Lokalisationen', 'M85.89'],
   [151079, 'Veränderung der Knochendichte und -struktur, nicht näher bezeichnet', 'M85.9-'],
   [151080, 'Veränderung der Knochendichte und -struktur, nicht näher bezeichnet: Mehrere Lokalisationen', 'M85.90'],
-  [151081, 'Veränderung der Knochendichte und -struktur, nicht näher bezeichnet: Schulterregion [Klavikula, Skapula, Akromioklavikular-, Schulter-, Sternoklavikulargelenk]', 'M85.91'],
+  [
+    151081,
+    'Veränderung der Knochendichte und -struktur, nicht näher bezeichnet: Schulterregion [Klavikula, Skapula, Akromioklavikular-, Schulter-, Sternoklavikulargelenk]',
+    'M85.91'
+  ],
   [151082, 'Veränderung der Knochendichte und -struktur, nicht näher bezeichnet: Oberarm [Humerus, Ellenbogengelenk]', 'M85.92'],
   [151083, 'Veränderung der Knochendichte und -struktur, nicht näher bezeichnet: Unterarm [Radius, Ulna, Handgelenk]', 'M85.93'],
   [151084, 'Veränderung der Knochendichte und -struktur, nicht näher bezeichnet: Hand [Finger, Handwurzel, Mittelhand, Gelenke zwischen diesen Knochen]', 'M85.94'],
-  [151085, 'Veränderung der Knochendichte und -struktur, nicht näher bezeichnet: Beckenregion und Oberschenkel [Becken, Femur, Gesäß, Hüfte, Hüftgelenk, Iliosakralgelenk]', 'M85.95'],
+  [
+    151085,
+    'Veränderung der Knochendichte und -struktur, nicht näher bezeichnet: Beckenregion und Oberschenkel [Becken, Femur, Gesäß, Hüfte, Hüftgelenk, Iliosakralgelenk]',
+    'M85.95'
+  ],
   [151086, 'Veränderung der Knochendichte und -struktur, nicht näher bezeichnet: Unterschenkel [Fibula, Tibia, Kniegelenk]', 'M85.96'],
-  [151087, 'Veränderung der Knochendichte und -struktur, nicht näher bezeichnet: Knöchel und Fuß [Fußwurzel, Mittelfuß, Zehen, Sprunggelenk, sonstige Gelenke des Fußes]', 'M85.97'],
+  [
+    151087,
+    'Veränderung der Knochendichte und -struktur, nicht näher bezeichnet: Knöchel und Fuß [Fußwurzel, Mittelfuß, Zehen, Sprunggelenk, sonstige Gelenke des Fußes]',
+    'M85.97'
+  ],
   [151088, 'Veränderung der Knochendichte und -struktur, nicht näher bezeichnet: Sonstige [Hals, Kopf, Rippen, Rumpf, Schädel, Wirbelsäule]', 'M85.98'],
   [151089, 'Veränderung der Knochendichte und -struktur, nicht näher bezeichnet: Nicht näher bezeichnete Lokalisationen', 'M85.99'],
   [151090, 'Osteomyelitis', 'M86.-'],
@@ -9592,11 +9980,19 @@ const gIcddata = [
   [151303, 'Stillstand des Epiphysenwachstums: Nicht näher bezeichnete Lokalisationen', 'M89.19'],
   [151304, 'Sonstige Störungen der Knochenentwicklung und des Knochenwachstums', 'M89.2-'],
   [151305, 'Sonstige Störungen der Knochenentwicklung und des Knochenwachstums: Mehrere Lokalisationen', 'M89.20'],
-  [151306, 'Sonstige Störungen der Knochenentwicklung und des Knochenwachstums: Schulterregion [Klavikula, Skapula, Akromioklavikular-, Schulter-, Sternoklavikulargelenk]', 'M89.21'],
+  [
+    151306,
+    'Sonstige Störungen der Knochenentwicklung und des Knochenwachstums: Schulterregion [Klavikula, Skapula, Akromioklavikular-, Schulter-, Sternoklavikulargelenk]',
+    'M89.21'
+  ],
   [151307, 'Sonstige Störungen der Knochenentwicklung und des Knochenwachstums: Oberarm [Humerus, Ellenbogengelenk]', 'M89.22'],
   [151308, 'Sonstige Störungen der Knochenentwicklung und des Knochenwachstums: Unterarm [Radius, Ulna, Handgelenk]', 'M89.23'],
   [151309, 'Sonstige Störungen der Knochenentwicklung und des Knochenwachstums: Hand [Finger, Handwurzel, Mittelhand, Gelenke zwischen diesen Knochen]', 'M89.24'],
-  [151310, 'Sonstige Störungen der Knochenentwicklung und des Knochenwachstums: Beckenregion und Oberschenkel [Becken, Femur, Gesäß, Hüfte, Hüftgelenk, Iliosakralgelenk]', 'M89.25'],
+  [
+    151310,
+    'Sonstige Störungen der Knochenentwicklung und des Knochenwachstums: Beckenregion und Oberschenkel [Becken, Femur, Gesäß, Hüfte, Hüftgelenk, Iliosakralgelenk]',
+    'M89.25'
+  ],
   [151311, 'Sonstige Störungen der Knochenentwicklung und des Knochenwachstums: Unterschenkel [Fibula, Tibia, Kniegelenk]', 'M89.26'],
   [151312, 'Sonstige Störungen der Knochenentwicklung und des Knochenwachstums: Knöchel und Fuß [Fußwurzel, Mittelfuß, Zehen, Sprunggelenk, sonstige Gelenke des Fußes]', 'M89.27'],
   [151313, 'Sonstige Störungen der Knochenentwicklung und des Knochenwachstums: Sonstige [Hals, Kopf, Rippen, Rumpf, Schädel, Wirbelsäule]', 'M89.28'],
@@ -9681,24 +10077,48 @@ const gIcddata = [
   [151392, 'Knochentuberkulose: Nicht näher bezeichnete Lokalisationen', 'M90.09*'],
   [151393, 'Periostitis bei sonstigen anderenorts klassifizierten Infektionskrankheiten', 'M90.1-*'],
   [151394, 'Periostitis bei sonstigen anderenorts klassifizierten Infektionskrankheiten: Mehrere Lokalisationen', 'M90.10*'],
-  [151395, 'Periostitis bei sonstigen anderenorts klassifizierten Infektionskrankheiten: Schulterregion [Klavikula, Skapula, Akromioklavikular-, Schulter-, Sternoklavikulargelenk]', 'M90.11*'],
+  [
+    151395,
+    'Periostitis bei sonstigen anderenorts klassifizierten Infektionskrankheiten: Schulterregion [Klavikula, Skapula, Akromioklavikular-, Schulter-, Sternoklavikulargelenk]',
+    'M90.11*'
+  ],
   [151396, 'Periostitis bei sonstigen anderenorts klassifizierten Infektionskrankheiten: Oberarm [Humerus, Ellenbogengelenk]', 'M90.12*'],
   [151397, 'Periostitis bei sonstigen anderenorts klassifizierten Infektionskrankheiten: Unterarm [Radius, Ulna, Handgelenk]', 'M90.13*'],
   [151398, 'Periostitis bei sonstigen anderenorts klassifizierten Infektionskrankheiten: Hand [Finger, Handwurzel, Mittelhand, Gelenke zwischen diesen Knochen]', 'M90.14*'],
-  [151399, 'Periostitis bei sonstigen anderenorts klassifizierten Infektionskrankheiten: Beckenregion und Oberschenkel [Becken, Femur, Gesäß, Hüfte, Hüftgelenk, Iliosakralgelenk]', 'M90.15*'],
+  [
+    151399,
+    'Periostitis bei sonstigen anderenorts klassifizierten Infektionskrankheiten: Beckenregion und Oberschenkel [Becken, Femur, Gesäß, Hüfte, Hüftgelenk, Iliosakralgelenk]',
+    'M90.15*'
+  ],
   [151400, 'Periostitis bei sonstigen anderenorts klassifizierten Infektionskrankheiten: Unterschenkel [Fibula, Tibia, Kniegelenk]', 'M90.16*'],
-  [151401, 'Periostitis bei sonstigen anderenorts klassifizierten Infektionskrankheiten: Knöchel und Fuß [Fußwurzel, Mittelfuß, Zehen, Sprunggelenk, sonstige Gelenke des Fußes]', 'M90.17*'],
+  [
+    151401,
+    'Periostitis bei sonstigen anderenorts klassifizierten Infektionskrankheiten: Knöchel und Fuß [Fußwurzel, Mittelfuß, Zehen, Sprunggelenk, sonstige Gelenke des Fußes]',
+    'M90.17*'
+  ],
   [151402, 'Periostitis bei sonstigen anderenorts klassifizierten Infektionskrankheiten: Sonstige [Hals, Kopf, Rippen, Rumpf, Schädel, Wirbelsäule]', 'M90.18*'],
   [151403, 'Periostitis bei sonstigen anderenorts klassifizierten Infektionskrankheiten: Nicht näher bezeichnete Lokalisationen', 'M90.19*'],
   [151404, 'Osteopathie bei sonstigen anderenorts klassifizierten Infektionskrankheiten', 'M90.2-*'],
   [151405, 'Osteopathie bei sonstigen anderenorts klassifizierten Infektionskrankheiten: Mehrere Lokalisationen', 'M90.20*'],
-  [151406, 'Osteopathie bei sonstigen anderenorts klassifizierten Infektionskrankheiten: Schulterregion [Klavikula, Skapula, Akromioklavikular-, Schulter-, Sternoklavikulargelenk]', 'M90.21*'],
+  [
+    151406,
+    'Osteopathie bei sonstigen anderenorts klassifizierten Infektionskrankheiten: Schulterregion [Klavikula, Skapula, Akromioklavikular-, Schulter-, Sternoklavikulargelenk]',
+    'M90.21*'
+  ],
   [151407, 'Osteopathie bei sonstigen anderenorts klassifizierten Infektionskrankheiten: Oberarm [Humerus, Ellenbogengelenk]', 'M90.22*'],
   [151408, 'Osteopathie bei sonstigen anderenorts klassifizierten Infektionskrankheiten: Unterarm [Radius, Ulna, Handgelenk]', 'M90.23*'],
   [151409, 'Osteopathie bei sonstigen anderenorts klassifizierten Infektionskrankheiten: Hand [Finger, Handwurzel, Mittelhand, Gelenke zwischen diesen Knochen]', 'M90.24*'],
-  [151410, 'Osteopathie bei sonstigen anderenorts klassifizierten Infektionskrankheiten: Beckenregion und Oberschenkel [Becken, Femur, Gesäß, Hüfte, Hüftgelenk, Iliosakralgelenk]', 'M90.25*'],
+  [
+    151410,
+    'Osteopathie bei sonstigen anderenorts klassifizierten Infektionskrankheiten: Beckenregion und Oberschenkel [Becken, Femur, Gesäß, Hüfte, Hüftgelenk, Iliosakralgelenk]',
+    'M90.25*'
+  ],
   [151411, 'Osteopathie bei sonstigen anderenorts klassifizierten Infektionskrankheiten: Unterschenkel [Fibula, Tibia, Kniegelenk]', 'M90.26*'],
-  [151412, 'Osteopathie bei sonstigen anderenorts klassifizierten Infektionskrankheiten: Knöchel und Fuß [Fußwurzel, Mittelfuß, Zehen, Sprunggelenk, sonstige Gelenke des Fußes]', 'M90.27*'],
+  [
+    151412,
+    'Osteopathie bei sonstigen anderenorts klassifizierten Infektionskrankheiten: Knöchel und Fuß [Fußwurzel, Mittelfuß, Zehen, Sprunggelenk, sonstige Gelenke des Fußes]',
+    'M90.27*'
+  ],
   [151413, 'Osteopathie bei sonstigen anderenorts klassifizierten Infektionskrankheiten: Sonstige [Hals, Kopf, Rippen, Rumpf, Schädel, Wirbelsäule]', 'M90.28*'],
   [151414, 'Osteopathie bei sonstigen anderenorts klassifizierten Infektionskrankheiten: Nicht näher bezeichnete Lokalisationen', 'M90.29*'],
   [151415, 'Knochennekrose bei Caissonkrankheit', 'M90.3-*'],
@@ -9725,13 +10145,25 @@ const gIcddata = [
   [151436, 'Knochennekrose durch Hämoglobinopathie: Nicht näher bezeichnete Lokalisationen', 'M90.49*'],
   [151437, 'Knochennekrose bei sonstigen anderenorts klassifizierten Krankheiten', 'M90.5-*'],
   [151438, 'Knochennekrose bei sonstigen anderenorts klassifizierten Krankheiten: Mehrere Lokalisationen', 'M90.50*'],
-  [151439, 'Knochennekrose bei sonstigen anderenorts klassifizierten Krankheiten: Schulterregion [Klavikula, Skapula, Akromioklavikular-, Schulter-, Sternoklavikulargelenk]', 'M90.51*'],
+  [
+    151439,
+    'Knochennekrose bei sonstigen anderenorts klassifizierten Krankheiten: Schulterregion [Klavikula, Skapula, Akromioklavikular-, Schulter-, Sternoklavikulargelenk]',
+    'M90.51*'
+  ],
   [151440, 'Knochennekrose bei sonstigen anderenorts klassifizierten Krankheiten: Oberarm [Humerus, Ellenbogengelenk]', 'M90.52*'],
   [151441, 'Knochennekrose bei sonstigen anderenorts klassifizierten Krankheiten: Unterarm [Radius, Ulna, Handgelenk]', 'M90.53*'],
   [151442, 'Knochennekrose bei sonstigen anderenorts klassifizierten Krankheiten: Hand [Finger, Handwurzel, Mittelhand, Gelenke zwischen diesen Knochen]', 'M90.54*'],
-  [151443, 'Knochennekrose bei sonstigen anderenorts klassifizierten Krankheiten: Beckenregion und Oberschenkel [Becken, Femur, Gesäß, Hüfte, Hüftgelenk, Iliosakralgelenk]', 'M90.55*'],
+  [
+    151443,
+    'Knochennekrose bei sonstigen anderenorts klassifizierten Krankheiten: Beckenregion und Oberschenkel [Becken, Femur, Gesäß, Hüfte, Hüftgelenk, Iliosakralgelenk]',
+    'M90.55*'
+  ],
   [151444, 'Knochennekrose bei sonstigen anderenorts klassifizierten Krankheiten: Unterschenkel [Fibula, Tibia, Kniegelenk]', 'M90.56*'],
-  [151445, 'Knochennekrose bei sonstigen anderenorts klassifizierten Krankheiten: Knöchel und Fuß [Fußwurzel, Mittelfuß, Zehen, Sprunggelenk, sonstige Gelenke des Fußes]', 'M90.57*'],
+  [
+    151445,
+    'Knochennekrose bei sonstigen anderenorts klassifizierten Krankheiten: Knöchel und Fuß [Fußwurzel, Mittelfuß, Zehen, Sprunggelenk, sonstige Gelenke des Fußes]',
+    'M90.57*'
+  ],
   [151446, 'Knochennekrose bei sonstigen anderenorts klassifizierten Krankheiten: Sonstige [Hals, Kopf, Rippen, Rumpf, Schädel, Wirbelsäule]', 'M90.58*'],
   [151447, 'Knochennekrose bei sonstigen anderenorts klassifizierten Krankheiten: Nicht näher bezeichnete Lokalisationen', 'M90.59*'],
   [151448, 'Osteodystrophia deformans bei Neubildungen', 'M90.6-*'],
@@ -9758,11 +10190,19 @@ const gIcddata = [
   [151469, 'Knochenfraktur bei Neubildungen: Nicht näher bezeichnete Lokalisationen', 'M90.79*'],
   [151470, 'Osteopathie bei sonstigen anderenorts klassifizierten Krankheiten', 'M90.8-*'],
   [151471, 'Osteopathie bei sonstigen anderenorts klassifizierten Krankheiten: Mehrere Lokalisationen', 'M90.80*'],
-  [151472, 'Osteopathie bei sonstigen anderenorts klassifizierten Krankheiten: Schulterregion [Klavikula, Skapula, Akromioklavikular-, Schulter-, Sternoklavikulargelenk]', 'M90.81*'],
+  [
+    151472,
+    'Osteopathie bei sonstigen anderenorts klassifizierten Krankheiten: Schulterregion [Klavikula, Skapula, Akromioklavikular-, Schulter-, Sternoklavikulargelenk]',
+    'M90.81*'
+  ],
   [151473, 'Osteopathie bei sonstigen anderenorts klassifizierten Krankheiten: Oberarm [Humerus, Ellenbogengelenk]', 'M90.82*'],
   [151474, 'Osteopathie bei sonstigen anderenorts klassifizierten Krankheiten: Unterarm [Radius, Ulna, Handgelenk]', 'M90.83*'],
   [151475, 'Osteopathie bei sonstigen anderenorts klassifizierten Krankheiten: Hand [Finger, Handwurzel, Mittelhand, Gelenke zwischen diesen Knochen]', 'M90.84*'],
-  [151476, 'Osteopathie bei sonstigen anderenorts klassifizierten Krankheiten: Beckenregion und Oberschenkel [Becken, Femur, Gesäß, Hüfte, Hüftgelenk, Iliosakralgelenk]', 'M90.85*'],
+  [
+    151476,
+    'Osteopathie bei sonstigen anderenorts klassifizierten Krankheiten: Beckenregion und Oberschenkel [Becken, Femur, Gesäß, Hüfte, Hüftgelenk, Iliosakralgelenk]',
+    'M90.85*'
+  ],
   [151477, 'Osteopathie bei sonstigen anderenorts klassifizierten Krankheiten: Unterschenkel [Fibula, Tibia, Kniegelenk]', 'M90.86*'],
   [151478, 'Osteopathie bei sonstigen anderenorts klassifizierten Krankheiten: Knöchel und Fuß [Fußwurzel, Mittelfuß, Zehen, Sprunggelenk, sonstige Gelenke des Fußes]', 'M90.87*'],
   [151479, 'Osteopathie bei sonstigen anderenorts klassifizierten Krankheiten: Sonstige [Hals, Kopf, Rippen, Rumpf, Schädel, Wirbelsäule]', 'M90.88*'],
@@ -10988,7 +11428,11 @@ const gIcddata = [
   [152699, 'Nicht näher bezeichnete infektiöse oder parasitäre Krankheit der Mutter, die Schwangerschaft, Geburt und Wochenbett kompliziert', 'O98.9'],
   [152700, 'Sonstige Krankheiten der Mutter, die anderenorts klassifizierbar sind, die jedoch Schwangerschaft, Geburt und Wochenbett komplizieren', 'O99.-'],
   [152701, 'Anämie, die Schwangerschaft, Geburt und Wochenbett kompliziert', 'O99.0'],
-  [152702, 'Sonstige Krankheiten des Blutes und der blutbildenden Organe sowie bestimmte Störungen mit Beteiligung des Immunsystems, die Schwangerschaft, Geburt und Wochenbett komplizieren', 'O99.1'],
+  [
+    152702,
+    'Sonstige Krankheiten des Blutes und der blutbildenden Organe sowie bestimmte Störungen mit Beteiligung des Immunsystems, die Schwangerschaft, Geburt und Wochenbett komplizieren',
+    'O99.1'
+  ],
   [152703, 'Endokrine, Ernährungs- und Stoffwechselkrankheiten, die Schwangerschaft, Geburt und Wochenbett komplizieren', 'O99.2'],
   [152704, 'Psychische Krankheiten sowie Krankheiten des Nervensystems, die Schwangerschaft, Geburt und Wochenbett komplizieren', 'O99.3'],
   [152705, 'Krankheiten des Kreislaufsystems, die Schwangerschaft, Geburt und Wochenbett komplizieren', 'O99.4'],
@@ -12460,7 +12904,11 @@ const gIcddata = [
   [154171, 'Abnorme Befunde in Untersuchungsmaterialien aus Verdauungsorganen und Bauchhöhle', 'R85.-'],
   [154172, 'Abnorme Befunde in Untersuchungsmaterialien aus Verdauungsorganen und Bauchhöhle: Abnormer Enzymwert', 'R85.0'],
   [154173, 'Abnorme Befunde in Untersuchungsmaterialien aus Verdauungsorganen und Bauchhöhle: Abnormer Hormonwert', 'R85.1'],
-  [154174, 'Abnorme Befunde in Untersuchungsmaterialien aus Verdauungsorganen und Bauchhöhle: Abnormer Wert für sonstige Drogen, Arzneimittel und biologisch aktive Substanzen', 'R85.2'],
+  [
+    154174,
+    'Abnorme Befunde in Untersuchungsmaterialien aus Verdauungsorganen und Bauchhöhle: Abnormer Wert für sonstige Drogen, Arzneimittel und biologisch aktive Substanzen',
+    'R85.2'
+  ],
   [154175, 'Abnorme Befunde in Untersuchungsmaterialien aus Verdauungsorganen und Bauchhöhle: Abnormer Wert für Substanzen vorwiegend nichtmedizinischer Herkunft', 'R85.3'],
   [154176, 'Abnorme Befunde in Untersuchungsmaterialien aus Verdauungsorganen und Bauchhöhle: Abnorme immunologische Befunde', 'R85.4'],
   [154177, 'Abnorme Befunde in Untersuchungsmaterialien aus Verdauungsorganen und Bauchhöhle: Abnorme mikrobiologische Befunde', 'R85.5'],
@@ -12471,7 +12919,11 @@ const gIcddata = [
   [154182, 'Abnorme Befunde in Untersuchungsmaterialien aus den männlichen Genitalorganen', 'R86.-'],
   [154183, 'Abnorme Befunde in Untersuchungsmaterialien aus den männlichen Genitalorganen: Abnormer Enzymwert', 'R86.0'],
   [154184, 'Abnorme Befunde in Untersuchungsmaterialien aus den männlichen Genitalorganen: Abnormer Hormonwert', 'R86.1'],
-  [154185, 'Abnorme Befunde in Untersuchungsmaterialien aus den männlichen Genitalorganen: Abnormer Wert für sonstige Drogen, Arzneimittel und biologisch aktive Substanzen', 'R86.2'],
+  [
+    154185,
+    'Abnorme Befunde in Untersuchungsmaterialien aus den männlichen Genitalorganen: Abnormer Wert für sonstige Drogen, Arzneimittel und biologisch aktive Substanzen',
+    'R86.2'
+  ],
   [154186, 'Abnorme Befunde in Untersuchungsmaterialien aus den männlichen Genitalorganen: Abnormer Wert für Substanzen vorwiegend nichtmedizinischer Herkunft', 'R86.3'],
   [154187, 'Abnorme Befunde in Untersuchungsmaterialien aus den männlichen Genitalorganen: Abnorme immunologische Befunde', 'R86.4'],
   [154188, 'Abnorme Befunde in Untersuchungsmaterialien aus den männlichen Genitalorganen: Abnorme mikrobiologische Befunde', 'R86.5'],
@@ -12482,7 +12934,11 @@ const gIcddata = [
   [154193, 'Abnorme Befunde in Untersuchungsmaterialien aus den weiblichen Genitalorganen', 'R87.-'],
   [154194, 'Abnorme Befunde in Untersuchungsmaterialien aus den weiblichen Genitalorganen: Abnormer Enzymwert', 'R87.0'],
   [154195, 'Abnorme Befunde in Untersuchungsmaterialien aus den weiblichen Genitalorganen: Abnormer Hormonwert', 'R87.1'],
-  [154196, 'Abnorme Befunde in Untersuchungsmaterialien aus den weiblichen Genitalorganen: Abnormer Wert für sonstige Drogen, Arzneimittel und biologisch aktive Substanzen', 'R87.2'],
+  [
+    154196,
+    'Abnorme Befunde in Untersuchungsmaterialien aus den weiblichen Genitalorganen: Abnormer Wert für sonstige Drogen, Arzneimittel und biologisch aktive Substanzen',
+    'R87.2'
+  ],
   [154197, 'Abnorme Befunde in Untersuchungsmaterialien aus den weiblichen Genitalorganen: Abnormer Wert für Substanzen vorwiegend nichtmedizinischer Herkunft', 'R87.3'],
   [154198, 'Abnorme Befunde in Untersuchungsmaterialien aus den weiblichen Genitalorganen: Abnorme immunologische Befunde', 'R87.4'],
   [154199, 'Abnorme Befunde in Untersuchungsmaterialien aus den weiblichen Genitalorganen: Abnorme mikrobiologische Befunde', 'R87.5'],
@@ -12493,8 +12949,16 @@ const gIcddata = [
   [154204, 'Abnorme Befunde in Untersuchungsmaterialien aus anderen Körperorganen, -systemen und -geweben', 'R89.-'],
   [154205, 'Abnorme Befunde in Untersuchungsmaterialien aus anderen Körperorganen, -systemen und -geweben: Abnormer Enzymwert', 'R89.0'],
   [154206, 'Abnorme Befunde in Untersuchungsmaterialien aus anderen Körperorganen, -systemen und -geweben: Abnormer Hormonwert', 'R89.1'],
-  [154207, 'Abnorme Befunde in Untersuchungsmaterialien aus anderen Körperorganen, -systemen und -geweben: Abnormer Wert für sonstige Drogen, Arzneimittel und biologisch aktive Substanzen', 'R89.2'],
-  [154208, 'Abnorme Befunde in Untersuchungsmaterialien aus anderen Körperorganen, -systemen und -geweben: Abnormer Wert für Substanzen vorwiegend nichtmedizinischer Herkunft', 'R89.3'],
+  [
+    154207,
+    'Abnorme Befunde in Untersuchungsmaterialien aus anderen Körperorganen, -systemen und -geweben: Abnormer Wert für sonstige Drogen, Arzneimittel und biologisch aktive Substanzen',
+    'R89.2'
+  ],
+  [
+    154208,
+    'Abnorme Befunde in Untersuchungsmaterialien aus anderen Körperorganen, -systemen und -geweben: Abnormer Wert für Substanzen vorwiegend nichtmedizinischer Herkunft',
+    'R89.3'
+  ],
   [154209, 'Abnorme Befunde in Untersuchungsmaterialien aus anderen Körperorganen, -systemen und -geweben: Abnorme immunologische Befunde', 'R89.4'],
   [154210, 'Abnorme Befunde in Untersuchungsmaterialien aus anderen Körperorganen, -systemen und -geweben: Abnorme mikrobiologische Befunde', 'R89.5'],
   [154211, 'Abnorme Befunde in Untersuchungsmaterialien aus anderen Körperorganen, -systemen und -geweben: Abnorme zytologische Befunde', 'R89.6'],
@@ -13888,7 +14352,11 @@ const gIcddata = [
   [155599, 'Zerquetschungen mit Beteiligung mehrerer Regionen der oberen Extremität(en)', 'T04.2'],
   [155600, 'Zerquetschungen mit Beteiligung mehrerer Regionen der unteren Extremität(en)', 'T04.3'],
   [155601, 'Zerquetschungen mit Beteiligung mehrerer Regionen der oberen Extremität(en) und mehrerer Regionen der unteren Extremität(en)', 'T04.4'],
-  [155602, 'Zerquetschungen mit Beteiligung von Thorax, Abdomen und Extremität(en), von Thorax, Lumbosakralgegend und Extremität(en) oder von Thorax, Becken und Extremität(en)', 'T04.7'],
+  [
+    155602,
+    'Zerquetschungen mit Beteiligung von Thorax, Abdomen und Extremität(en), von Thorax, Lumbosakralgegend und Extremität(en) oder von Thorax, Becken und Extremität(en)',
+    'T04.7'
+  ],
   [155603, 'Zerquetschungen mit Beteiligung sonstiger Kombinationen von Körperregionen', 'T04.8'],
   [155604, 'Multiple Zerquetschungen, nicht näher bezeichnet', 'T04.9'],
   [155605, 'Traumatische Amputationen mit Beteiligung mehrerer Körperregionen', 'T05.-'],
@@ -14555,7 +15023,11 @@ const gIcddata = [
   [156266, 'Vergiftung: Arzneimittel gegen Erkältungskrankheiten', 'T48.5'],
   [156267, 'Vergiftung: Antiasthmatika, anderenorts nicht klassifiziert', 'T48.6'],
   [156268, 'Vergiftung: Sonstige und nicht näher bezeichnete, primär auf das Atmungssystem wirkende Mittel', 'T48.7'],
-  [156269, 'Vergiftung durch primär auf Haut und Schleimhäute wirkende und in der Augen-, der Hals-Nasen-Ohren- und der Zahnheilkunde angewendete Mittel zur topischen Anwendung', 'T49.-'],
+  [
+    156269,
+    'Vergiftung durch primär auf Haut und Schleimhäute wirkende und in der Augen-, der Hals-Nasen-Ohren- und der Zahnheilkunde angewendete Mittel zur topischen Anwendung',
+    'T49.-'
+  ],
   [156270, 'Vergiftung: Antimykotika, Antiinfektiva und Antiphlogistika zur lokalen Anwendung, anderenorts nicht klassifiziert', 'T49.0'],
   [156271, 'Vergiftung: Antipruriginosa', 'T49.1'],
   [156272, 'Vergiftung: Adstringenzien und Detergenzien zur lokalen Anwendung', 'T49.2'],
@@ -14862,7 +15334,11 @@ const gIcddata = [
   [156573, 'Maligne Hyperthermie durch Anästhesie', 'T88.3'],
   [156574, 'Misslungene oder schwierige Intubation', 'T88.4'],
   [156575, 'Sonstige Komplikationen infolge Anästhesie', 'T88.5'],
-  [156576, 'Anaphylaktischer Schock als unerwünschte Nebenwirkung eines indikationsgerechten Arzneimittels oder einer indikationsgerechten Droge bei ordnungsgemäßer Verabreichung', 'T88.6'],
+  [
+    156576,
+    'Anaphylaktischer Schock als unerwünschte Nebenwirkung eines indikationsgerechten Arzneimittels oder einer indikationsgerechten Droge bei ordnungsgemäßer Verabreichung',
+    'T88.6'
+  ],
   [156577, 'Nicht näher bezeichnete unerwünschte Nebenwirkung eines Arzneimittels oder einer Droge', 'T88.7'],
   [156578, 'Sonstige näher bezeichnete Komplikationen bei chirurgischen Eingriffen und medizinischer Behandlung, anderenorts nicht klassifiziert', 'T88.8'],
   [156579, 'Komplikation bei chirurgischen Eingriffen und medizinischer Behandlung, nicht näher bezeichnet', 'T88.9'],
@@ -15005,7 +15481,11 @@ const gIcddata = [
   [156716, 'Sekundäre Schlüsselnummern für Zwecke der externen Qualitätssicherung', 'U69.0-!'],
   [156717, 'Anderenorts klassifizierte, im Krankenhaus erworbene Pneumonie bei Patienten von 18 Jahren und älter', 'U69.00!'],
   [156718, 'Sekundäre Schlüsselnummern für besondere administrative Zwecke', 'U69.1-!'],
-  [156719, 'Anderenorts klassifizierte Krankheit, für die der Verdacht besteht, dass sie Folge einer medizinisch nicht indizierten ästhetischen Operation, einer Tätowierung oder eines Piercings ist', 'U69.10!'],
+  [
+    156719,
+    'Anderenorts klassifizierte Krankheit, für die der Verdacht besteht, dass sie Folge einer medizinisch nicht indizierten ästhetischen Operation, einer Tätowierung oder eines Piercings ist',
+    'U69.10!'
+  ],
   [156720, 'Sekundäre Schlüsselnummern für besondere epidemiologische Zwecke', 'U69.2-!'],
   [156721, 'Influenza A/H1N1 Pandemie 2009 [Schweinegrippe]', 'U69.20!'],
   [156722, 'Influenza A/H5N1 Epidemie [Vogelgrippe]', 'U69.21!'],
@@ -15014,7 +15494,11 @@ const gIcddata = [
   [156725, 'Streptococcus pneumoniae mit Resistenz gegen Penizillin, Oxacillin, Makrolid-Antibiotika, Oxazolidinone oder Streptogramine', 'U80.1!'],
   [156726, 'Enterococcus faecalis mit Resistenz gegen Glykopeptid-Antibiotika, Oxazolidinone, oder mit High-Level-Aminoglykosid-Resistenz', 'U80.2!'],
   [156727, 'Enterococcus faecium mit Resistenz gegen Glykopeptid-Antibiotika, Oxazolidinone, Streptogramine, oder mit High-Level-Aminoglykosid-Resistenz', 'U80.3!'],
-  [156728, 'Escherichia, Klebsiella und Proteus mit Resistenz gegen Chinolone, Carbapeneme, Amikacin, oder mit nachgewiesener Resistenz gegen alle Beta-Laktam-Antibiotika [ESBL-Resistenz]', 'U80.4!'],
+  [
+    156728,
+    'Escherichia, Klebsiella und Proteus mit Resistenz gegen Chinolone, Carbapeneme, Amikacin, oder mit nachgewiesener Resistenz gegen alle Beta-Laktam-Antibiotika [ESBL-Resistenz]',
+    'U80.4!'
+  ],
   [156729, 'Enterobacter, Citrobacter und Serratia mit Resistenz gegen Carbapeneme, Chinolone oder Amikacin', 'U80.5!'],
   [156730, 'Pseudomonas aeruginosa und andere Nonfermenter mit Resistenz gegen Carbapeneme, Chinolone, Amikacin, Ceftazidim oder Piperacillin/Tazobactam', 'U80.6!'],
   [156731, 'Burkholderia und Stenotrophomonas mit Resistenz gegen Chinolone, Amikacin, Ceftazidim, Piperacillin/Tazobactam oder Cotrimoxazol', 'U80.7!'],
@@ -15077,7 +15561,11 @@ const gIcddata = [
   [156788, 'Zwischenfälle bei chirurgischem Eingriff und medizinischer Behandlung', 'Y69!'],
   [156789, 'Medizintechnische Geräte und Produkte im Zusammenhang mit Zwischenfällen bei diagnostischer und therapeutischer Anwendung', 'Y82.-!'],
   [156790, 'Zwischenfälle durch medizintechnische Geräte und Produkte', 'Y82.8!'],
-  [156791, 'Chirurgische und sonstige medizinische Maßnahmen als Ursache einer abnormen Reaktion eines Patienten oder einer späteren Komplikation, ohne Angabe eines Zwischenfalls zum Zeitpunkt der Durchführung der Maßnahme', 'Y84.-!'],
+  [
+    156791,
+    'Chirurgische und sonstige medizinische Maßnahmen als Ursache einer abnormen Reaktion eines Patienten oder einer späteren Komplikation, ohne Angabe eines Zwischenfalls zum Zeitpunkt der Durchführung der Maßnahme',
+    'Y84.-!'
+  ],
   [156792, 'Zwischenfälle durch medizinische Maßnahmen, nicht näher bezeichnet', 'Y84.9!'],
   [156793, 'Allgemeinuntersuchung und Abklärung bei Personen ohne Beschwerden oder angegebene Diagnose', 'Z00.-'],
   [156794, 'Ärztliche Allgemeinuntersuchung', 'Z00.0'],
