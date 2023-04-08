@@ -303,9 +303,8 @@ const dlgConfig = (opts) => {
         const colidx = util.colIdxFromName(myOpts.sortcolname);
         const coldef = myOpts.columns[colidx];
         const bAsc = coldef.sortorder === 'asc';
-        $(`${selGridId} thead #${colid} div i`)
-          .removeClass()
-          .addClass('fa fa-arrow-' + (bAsc ? 'up' : 'down'));
+        $(`${selGridId} thead div .sort-indicator`).text('');
+        $(`${selGridId} thead #${colid} div .sort-indicator`).html(bAsc ? '&#x25B2;' : '&#x25BC;');
       },
       getSortState: () => {
         const colidx = util.colIdxFromName(myOpts.sortcolname);
@@ -408,8 +407,8 @@ const dlgConfig = (opts) => {
         : '';
     const arrangeColumnsButton = () =>
       myOpts.flags.arrangeColumnsButton
-      ? '<button id="arrangeColumnsButton"><span class="ui-icon ui-icon-arrow-2-e-w" title="' + util.translate('Spaltenbreite automatisch abpassen') + '"></button>'
-      : '';
+        ? '<button id="arrangeColumnsButton"><span class="ui-icon ui-icon-arrow-2-e-w" title="' + util.translate('Spaltenbreite automatisch abpassen') + '"></button>'
+        : '';
 
     const selectLenCtrl = () => {
       if (!myOpts.flags.pagelenctrl) return '';
@@ -458,12 +457,12 @@ const dlgConfig = (opts) => {
             filter: coldef.filter
           });
           const thwidth = coldef.width ? `width:${coldef.width};` : '';
-          const thstyle = coldef.css || coldef.width ? ' style="' + thwidth + ' ' + (coldef.css || '') + '"' : '';
+          const thstyle = coldef.css || coldef.width ? ` style="${thwidth} ${coldef.css || ''}` : '';
           const hdrTemplate = `
               <th id="<%=colid%>"<%=thstyle%> title="<%=tooltip%>" >
                 <div style="display:inline-flex">
                   <%=colname%>
-                  <i class="fa fa-arrow-up"></i>
+                  <span class="sort-indicator"></span>
                 </div>
                 <div<%=filtersvisible%>><%=fld%></div>
               </th>`;
@@ -532,11 +531,11 @@ const dlgConfig = (opts) => {
       const tableTemplate = _.template(
         `<div class='ebtable'>
             <div class='ctrl' <%=ctrlStyle%>>
-              <div id='ctrlLength' style='float: left;'><%= selectLen  %></div>
+              <div id='ctrlLength'         style='float: left;'><%= selectLen  %></div>
               <div id='ctrlConfig'         style='float: left;'><%= configButton %></div>
               <div id='ctrlClearFilter'    style='float: left;'><%= clearFilterButton %></div>
               <div id='ctrlArrangeColumns' style='float: left;'><%= arrangeColumnsButton %></div>
-              <div id='ctrlPage1'  style='float: right;'><%= browseBtns %></div>
+              <div id='ctrlPage1'          style='float: right;'><%= browseBtns %></div>
             </div>
             <div id='data' style='overflow-y:auto;overflow-x:auto; max-height:<%= bodyHeight %>px; width:100%'>
               <table <%= tblClass %>>

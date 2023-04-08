@@ -17,7 +17,7 @@
   min-width: 20px;
 }
 .ebtable #data th div{ height: 16px; color:white; font-size: 10px }
-.ebtable #data th div i { margin:0 0 0 4px; padding:0; width:11px; color:white; }
+.ebtable #data th div .sort-indicator { margin:0 0 0 4px; padding:0; width:11px; color:white; }
 .ebtable #data th input[type=text], .ebtable #data th select {  width: 95%;  box-sizing: border-box;}
 
 .ebtable #data tr:nth-child(even) { background-color: #eceff1;}
