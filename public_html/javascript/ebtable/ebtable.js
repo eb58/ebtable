@@ -134,20 +134,20 @@ const dlgConfig = (opts) => {
           coldef.sortorder = coldef.sortorder || 'asc';
         });
         if (origData[0] && origData[0].length !== myopts.columns.length) {
-          alert("Data definition and column definition don't match! " + origData[0].length + ' ' + myopts.columns.length);
           localStorage[localStorageKey] = '';
-          myopts = { ...defOpts, ...opts };
+          throw "Data definition and column definition don't match! " + origData[0].length + ' ' + myopts.columns.length;
         }
         const ls = localStorage[localStorageKey];
         if (ls && ls.colorder && ls.colorder.length !== myopts.columns.length) {
-          alert("Column definition and LocalStorage don't match!" + ls.colorder.length + ' ' + myopts.columns.length);
           localStorage[localStorageKey] = '';
-          myopts = $.extend({}, defOpts, opts);
+          throw "Column definition and LocalStorage don't match!" + ls.colorder.length + ' ' + myopts.columns.length;
         }
-        myopts.columns.forEach((col) => {
-          if (col.technical && !col.invisible) alert(col.name + ': technical column must be invisible!');
-          if (col.mandatory && col.invisible) alert(col.name + ': mandatory column must be visible!');
-        });
+        const msg = myopts.columns.reduce((acc, col) => {
+          acc = col.technical && !col.invisible ? [...acc, `${col.name}: technical column must be invisible!`] : acc;
+          acc = col.mandatory && col.invisible ? [...acc, `${col.name}:  mandatory column must be visible!`] : acc;
+          return acc;
+        }, '');
+        if (msg) throw msg;
       },
       getColWidths: () =>
         $(selGridId + '.ebtable th')
@@ -447,8 +447,8 @@ const dlgConfig = (opts) => {
         const coldef = myOpts.columns[myOpts.colorder[c]];
         if (!coldef.invisible) {
           const t_inputfld = '<input type="text" id="<%=colid%>" value="<%=filter%> " title="<%=tooltip%>"/>';
-          const t_selectfld = '<select id="<%=colid%>" value="<%=filter%>"><%=opts%></select>';
-          const selOptions = (coldef.valuelist || []).reduce((acc, o) => acc + '<option>' + o + '</option>\n', '');
+          const t_selectfld = '<select id="<%=colid%>"><%=opts%></select>';
+          const selOptions = (coldef.valuelist || []).reduce((acc, o) => acc + `<option${o === coldef.filter ? ' selected' : ''}>${o}</option>\n`, '');
           const t = coldef.valuelist ? t_selectfld : t_inputfld;
           const fld = _.template(t)({
             colid: coldef.id,
