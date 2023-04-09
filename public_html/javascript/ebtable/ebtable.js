@@ -453,7 +453,7 @@ const dlgConfig = (opts) => {
           const thwidth = coldef.width ? `width:${coldef.width};` : '';
           const thstyle = coldef.css || coldef.width ? ` style="${thwidth} ${coldef.css || ''}` : '';
           const hdrTemplate = `
-              <th id='<%=colid%>'<%=thstyle%> title="<%=tooltip%>">
+              <th id='<%=colid%>'<%=thstyle%> title="<%=tooltip%>" tabindex=0>
                 <div style='display:inline-flex'>
                   <%=colname%>
                   <span class='sort-indicator'></span>
