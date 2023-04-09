@@ -43,6 +43,10 @@ const dlgConfig = (opts) => {
 
   //###########################################################################################################
 
+  $.fn.myFocus = function () {
+    return this.prop('tabindex', 0).focus().prop('tabindex', -1);
+  };
+
   $.fn.ebtable = function (opts, data, hasMoreResults) {
     const stateUtil = {
       // saving/loading state
@@ -575,39 +579,35 @@ const dlgConfig = (opts) => {
     };
 
     const initHeaderActions = () => {
-      $(selGridId + 'thead th')
+      $(selGridId + 'thead th.selectCol')
+        .off()
+        .on('click', selectionFcts.selectRows)
+        .on('keydown', () => $(selGridId + '#checkAll').click());
+
+      $(selGridId + 'thead th:not(.selectCol)')
         .off()
         .on('click', sortingFcts.sorting)
         .on('keydown', (ev) => {
           switch (ev.which) {
-            case 32:
+            case 32: // space
               sortingFcts.sorting(ev);
               break;
             case 37: // arrow left
               {
-                const ths = $(ev.currentTarget).parent().children().toArray();
-                const idx = ths.findIndex((th) => $(th).prop('id') === ev.currentTarget.id);
-                $(ths[Math.max(0, idx - 1)])
-                  .prop('tabindex', 0)
-                  .focus()
-                  .prop('tabindex', -1);
+                const ths = $(ev.target).parent().children().toArray();
+                const idx = $(ev.target).index();
+                $(ths[Math.max(0, idx - 1)]).myFocus();
               }
               break;
             case 39: // arrow right
               {
                 const ths = $(ev.currentTarget).parent().children().toArray();
-                const idx = ths.findIndex((th) => $(th).prop('id') === ev.currentTarget.id);
-                $(ths[Math.min(idx + 1, ths.length - 1)])
-                  .prop('tabindex', 0)
-                  .focus()
-                  .prop('tabindex', -1);
+                const idx = $(ev.target).index();
+                $(ths[Math.min(idx + 1, ths.length - 1)]).myFocus();
               }
               break;
             case 40: // down
-              $(selGridId + 'tbody tr:first')
-                .prop('tabindex', 0)
-                .focus()
-                .prop('tabindex', -1);
+              $(selGridId + 'tbody tr:first').myFocus();
               break;
             default:
               return; // exit this handler for other keys
@@ -733,7 +733,7 @@ const dlgConfig = (opts) => {
         });
       $(selGridId + ' table tbody tr td')
         .off()
-        .on('click', (ev) =>  {
+        .on('click', (ev) => {
           const row = $(ev.target).parent();
           const idx = $(row).index();
           const rowData = tblData[pageCur * myOpts.rowsPerPage + idx];
