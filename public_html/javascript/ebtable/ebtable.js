@@ -213,11 +213,9 @@ const dlgConfig = (opts) => {
         .on('change', selectionFcts.selectRows);
       myOpts.selectionCol &&
         myOpts.selectionCol.selectOnRowClick &&
-        $(selGridId + '#data tr td:not(:first-child)')
+        $(selGridId + '#data tbody tr td')
           .off()
-          .on('click', function () {
-            $(event.target).parent().find('input').trigger('click');
-          });
+          .on('click', (e) => $(e.target).parent().find('input').trigger('click'));
       myOpts.selectionCol && myOpts.selectionCol.singleSelection && $(selGridId + '#checkAll').hide();
       myOpts.afterRedraw && myOpts.afterRedraw($(gridId));
     };
@@ -304,7 +302,7 @@ const dlgConfig = (opts) => {
         const coldef = myOpts.columns[colidx];
         const bAsc = coldef.sortorder === 'asc';
         $(`${selGridId} thead div .sort-indicator`).text('');
-        $(`${selGridId} thead #${colid} div .sort-indicator`).html(bAsc ? '&bigtriangleup;' : '&bigtriangledown;');
+        $(`${selGridId} thead #${colid} div .sort-indicator`).html(bAsc ? '&#x25B2' : '&#x25BC'); // triangle up/down
       },
       getSortState: () => {
         const colidx = util.colIdxFromName(myOpts.sortcolname);
@@ -400,15 +398,11 @@ const dlgConfig = (opts) => {
     };
 
     const ctrlAddInfo = () => (myOpts.addInfo && myOpts.addInfo(myOpts)) || '';
-    const configButton = () => (myOpts.flags.config ? '<button id="configButton">' + util.translate('Spalten verwalten') + ' <span class="ui-icon ui-icon-shuffle"></button>' : '');
+    const configButton = () => (myOpts.flags.config ? `<button id='configButton' title='${util.translate('Spalten verwalten')}'><span>&#x2699;</span></button>` : '');
     const clearFilterButton = () =>
-      myOpts.flags.filter && myOpts.flags.clearFilterButton
-        ? '<button id="clearFilterButton"><span class="ui-icon ui-icon-minus" title="' + util.translate('Alle Filter entfernen') + '"></button>'
-        : '';
+      myOpts.flags.filter && myOpts.flags.clearFilterButton ? `<button id='clearFilterButton' title='${util.translate('Filter entfernen')}'><span>&#x26D2;</span></button>` : '';
     const arrangeColumnsButton = () =>
-      myOpts.flags.arrangeColumnsButton
-        ? '<button id="arrangeColumnsButton"><span class="ui-icon ui-icon-arrow-2-e-w" title="' + util.translate('Spaltenbreite automatisch abpassen') + '"></button>'
-        : '';
+      myOpts.flags.arrangeColumnsButton ? `<button id='arrangeColumnsButton' title='${util.translate('Spaltenbreite anpassen')}'><span>&hArr;</span></button>` : '';
 
     const selectLenCtrl = () => {
       if (!myOpts.flags.pagelenctrl) return '';
@@ -459,7 +453,7 @@ const dlgConfig = (opts) => {
           const thwidth = coldef.width ? `width:${coldef.width};` : '';
           const thstyle = coldef.css || coldef.width ? ` style="${thwidth} ${coldef.css || ''}` : '';
           const hdrTemplate = `
-              <th id='<%=colid%>'<%=thstyle%> title="<%=tooltip%>" >
+              <th id='<%=colid%>'<%=thstyle%> title="<%=tooltip%>">
                 <div style='display:inline-flex'>
                   <%=colname%>
                   <span class='sort-indicator'></span>
@@ -583,7 +577,43 @@ const dlgConfig = (opts) => {
     const initHeaderActions = () => {
       $(selGridId + 'thead th')
         .off()
-        .on('click', sortingFcts.sorting);
+        .on('click', sortingFcts.sorting)
+        .on('keydown', (ev) => {
+          switch (ev.which) {
+            case 32:
+              sortingFcts.sorting(ev);
+              break;
+            case 37: // arrow left
+              {
+                const ths = $(ev.currentTarget).parent().children().toArray();
+                const idx = ths.findIndex((th) => $(th).prop('id') === ev.currentTarget.id);
+                $(ths[Math.max(0, idx - 1)])
+                  .prop('tabindex', 0)
+                  .focus()
+                  .prop('tabindex', -1);
+              }
+              break;
+            case 39: // arrow right
+              {
+                const ths = $(ev.currentTarget).parent().children().toArray();
+                const idx = ths.findIndex((th) => $(th).prop('id') === ev.currentTarget.id);
+                $(ths[Math.min(idx + 1, ths.length - 1)])
+                  .prop('tabindex', 0)
+                  .focus()
+                  .prop('tabindex', -1);
+              }
+              break;
+            case 40: // down
+              $(selGridId + 'tbody tr:first')
+                .prop('tabindex', 0)
+                .focus()
+                .prop('tabindex', -1);
+              break;
+            default:
+              return; // exit this handler for other keys
+          }
+          ev.preventDefault(); // prevent the default action (scroll / move caret)
+        });
       $(selGridId + 'thead input[type=text]')
         .off()
         .on('keypress', reloading)
@@ -703,11 +733,11 @@ const dlgConfig = (opts) => {
         });
       $(selGridId + ' table tbody tr td')
         .off()
-        .on('click', () => {
-          // TODO -> does not work!!!
-          const idx = $(this).index();
+        .on('click', (ev) =>  {
+          const row = $(ev.target).parent();
+          const idx = $(row).index();
           const rowData = tblData[pageCur * myOpts.rowsPerPage + idx];
-          myOpts.clickOnRowHandler && myOpts.clickOnRowHandler(rowData, $(this));
+          myOpts.clickOnRowHandler && myOpts.clickOnRowHandler(rowData, $(row));
         });
       $(selGridId + '#data input[type=checkbox]', selGridId + '#data input[type=radio]')
         .off()
@@ -857,7 +887,7 @@ const dlgConfig = (opts) => {
       '(<%=len%> Eintr&auml;ge)': '(<%=len%> entries)',
       '<%=start%> bis <%=end%> von <%=count%> Zeilen <%=filtered%> <%=cntSelected%>': '<%=start%> to <%=end%> of <%=count%> shown entries <%= filtered %> <%=cntSelected%>',
       'Spalten verwalten': 'Configure Columns',
-      'Alle Filter entfernen': 'Remove all filters',
+      'Filter entfernen': 'Remove all filters',
       'Spalten ausblenden und sortieren': 'Sort and hide columns',
       OK: 'OK',
       Abbrechen: 'Cancel'

@@ -1,38 +1,38 @@
-.ebtable .ctrl .ui-button                      { padding-top: 1px;  padding-bottom: 1px; height: 22px;}
-.ebtable .ctrl .ui-icon                        { padding:0; margin:0; color: white }
-.ebtable .ctrl .ui-selectmenu-button           { height: 15px;}
-.ebtable .ctrl .ui-selectmenu-button.ui-button { padding-top: 3px;  padding-bottom: 3px;  width: 40px;}
+.ebtable .ctrl .ui-button                      { padding-top: 1px;  padding-bottom: 1px; height: 22px; }
+.ebtable .ctrl .ui-selectmenu-button           { height: 15px; }
+.ebtable .ctrl .ui-selectmenu-button.ui-button { padding-top: 3px;padding-bottom: 3px;width: 50px; height: 14px;}
 
-.ebtable #ctrlInfo, .ebtable #ctrlAddInfo{  padding: 3px;  margin: 1px;}
+.ebtable #ctrlInfo, .ebtable #ctrlAddInfo {  padding: 3px;  margin: 1px;}
 
 .ebtable #data, .ebtable table{ width: 100%; }
-.ebtable #data, .ebtable #head{ background-color:#eaeaea;}
+.ebtable #data, .ebtable #head{ background-color: #eaeaea;}
 
-.ebtable #data th{
-  background:  #3f51b5;
-  color: white;
-  padding: 6px 0 6px 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  min-width: 20px;
+.ebtable #data thead th {
+    background: #3f51b5;
+    color: white;
+    border: solid #3f51b5 4px;
+    padding: 6px 0 6px 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 40px;
 }
-.ebtable #data th div{ height: 16px; color:white; font-size: 10px }
-.ebtable #data th div .sort-indicator { margin:0 0 0 4px; padding:0; width:11px; color:white; }
-.ebtable #data th input[type=text], .ebtable #data th select {  width: 95%;  box-sizing: border-box;}
+.ebtable #data thead th:focus { background: white;  color: #3f51b5; border: solid #3f51b5 4px }
+.ebtable #data thead th div { height: 16px; }
+.ebtable #data thead th div .sort-indicator { margin:0 0 0 4px; padding:0; width:11px;  }
+.ebtable #data thead th input[type=text], .ebtable #data thead th select {  width: 95%;  box-sizing: border-box;}
 
-.ebtable #data tr:nth-child(even) { background-color: #eceff1;}
-.ebtable #data tr:nth-child(odd ) { background-color: #ffffff;}
+.ebtable #data tbody tr { height: 48px; }
+.ebtable #data tbody tr:nth-child(even) { background-color: #eceff1;}
+.ebtable #data tbody tr:nth-child(odd ) { background-color: #ffffff;}
+.ebtable #data tbody tr:focus { color: #3f51b5; border: solid #3f51b5 4px; outline:red; }
 
 .ebtable #data td            { padding: 2px 1px 2px 1px;}
 .ebtable #data td.group      { background-color: #c7c7da;}
 .ebtable #data td.groupheader{ background-color: #c3c3d0;}
 .ebtable #data .selectCol{ width: 20px;  margin:0;  padding: 2px 1px 2px 1px;}
 
-.ebtablefix, .ebtablefix th, .ebtablefix td{
-  table-layout: fixed;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
+/* culumns not resizable */
+.ebtablefix, .ebtablefix th, .ebtablefix td{ table-layout: fixed;  overflow: hidden;  text-overflow: ellipsis;}
 
 /* resize handle for table */
 .ebtable>div.ui-resizable-e { cursor: e-resize; width: 10px; }
