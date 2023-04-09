@@ -579,18 +579,17 @@ const dlgConfig = (opts) => {
     };
 
     const initHeaderActions = () => {
-      $(selGridId + 'thead th.selectCol')
-        .off()
-        .on('click', selectionFcts.selectRows)
-        .on('keydown', () => $(selGridId + '#checkAll').click());
-
-      $(selGridId + 'thead th:not(.selectCol)')
+      $(selGridId + 'thead th')
         .off()
         .on('click', sortingFcts.sorting)
         .on('keydown', (ev) => {
           switch (ev.which) {
             case 32: // space
-              sortingFcts.sorting(ev);
+              if ($(ev.target).prop('class') === 'selectCol' || $(ev.target).prop('id') === 'checkAll') {
+                $(selGridId + '#checkAll').click();
+              } else {
+                sortingFcts.sorting(ev);
+              }
               break;
             case 37: // arrow left
               {
