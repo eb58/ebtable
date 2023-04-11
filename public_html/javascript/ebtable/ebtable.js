@@ -579,38 +579,36 @@ const dlgConfig = (opts) => {
     };
 
     const initHeaderActions = () => {
+      $(selGridId + 'table')
+        .off()
+        .on('keydown', (ev) => {
+          if ($(ev.target).parent().is($('head'))) {
+            console.log('in head');
+          }
+
+          if ($(ev.target).parent().is($('tbody'))) {
+            const idx = $(ev.target).index();
+            if (ev.which === 40) $($(selGridId + 'tbody tr').toArray()[idx + 1]).myFocus(); // arrow down
+            if (ev.which === 38) $($(selGridId + 'tbody tr').toArray()[idx - 1]).myFocus(); // arrow up
+          }
+        });
+
       $(selGridId + 'thead th')
         .off()
         .on('click', sortingFcts.sorting)
         .on('keydown', (ev) => {
-          switch (ev.which) {
-            case 32: // space
-              if ($(ev.target).prop('class') === 'selectCol' || $(ev.target).prop('id') === 'checkAll') {
-                $(selGridId + '#checkAll').click();
-              } else {
-                sortingFcts.sorting(ev);
-              }
-              break;
-            case 37: // arrow left
-              {
-                const ths = $(ev.target).parent().children().toArray();
-                const idx = $(ev.target).index();
-                $(ths[Math.max(0, idx - 1)]).myFocus();
-              }
-              break;
-            case 39: // arrow right
-              {
-                const ths = $(ev.currentTarget).parent().children().toArray();
-                const idx = $(ev.target).index();
-                $(ths[Math.min(idx + 1, ths.length - 1)]).myFocus();
-              }
-              break;
-            case 40: // down
-              $(selGridId + 'tbody tr:first').myFocus();
-              break;
-            default:
-              return; // exit this handler for other keys
+          if (ev.which === 32) {
+            // key space
+            if ($(ev.target).prop('class') === 'selectCol' || $(ev.target).prop('id') === 'checkAll') {
+              $(selGridId + '#checkAll').click();
+            } else {
+              sortingFcts.sorting(ev);
+            }
           }
+          const idx = $(ev.target).index();
+          if (ev.which === 37) $($(ev.target).parent().children().toArray()[idx - 1]).myFocus(); // arrow left
+          if (ev.which === 39) $($(ev.target).parent().children().toArray()[idx + 1]).myFocus(); // arrow right
+          if (ev.which === 40) $(selGridId + 'tbody tr:first').myFocus(); // arrow down
           ev.preventDefault(); // prevent the default action (scroll / move caret)
         });
       $(selGridId + 'thead input[type=text]')
@@ -730,13 +728,28 @@ const dlgConfig = (opts) => {
           myOpts.reloadData && myOpts.reloadData();
           filteringFcts.filtering();
         });
-      $(selGridId + ' table tbody tr td')
+      $(selGridId + 'table tbody tr td')
         .off()
         .on('click', (ev) => {
           const row = $(ev.target).parent();
           const idx = $(row).index();
           const rowData = tblData[pageCur * myOpts.rowsPerPage + idx];
           myOpts.clickOnRowHandler && myOpts.clickOnRowHandler(rowData, $(row));
+        })
+        .on('keydown', (ev) => {
+          console.log(ev.target);
+          if (ev.which === 38) {
+            // arrow up
+            const row = $(ev.target).parent();
+            const idx = $(row).index() - 1;
+            $(selGridId + 'tbody tr:nth.child(' + idx + ')').myFocus();
+          }
+          if (ev.which === 40) {
+            // arrow down
+            const row = $(ev.target).parent();
+            const idx = $(row).index() + 1;
+            $(selGridId + 'tbody tr:nth.child(' + idx + ')').focus();
+          }
         });
       $(selGridId + '#data input[type=checkbox]', selGridId + '#data input[type=radio]')
         .off()
