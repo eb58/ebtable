@@ -612,7 +612,6 @@ const dlgConfig = (opts) => {
           if (ev.which === 37) $($(ev.target).parent().children().toArray()[idx - 1]).myFocus(); // arrow left
           if (ev.which === 39) $($(ev.target).parent().children().toArray()[idx + 1]).myFocus(); // arrow right
           if (ev.which === 40) $(selGridId + 'tbody tr:first').myFocus(); // arrow down
-          ev.preventDefault(); // prevent the default action (scroll / move caret)
         });
       $(selGridId + 'thead input[type=text]')
         .off()
