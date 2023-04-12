@@ -60,7 +60,7 @@
         ctrls: false
       }
     };
-    $().ready(function() {
+    $(() => {
       const grid = $('#grid').ebtable(
         opts,
         mdks.map((mdk) => [mdk.mdkid, mdk.mdkname])

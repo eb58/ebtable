@@ -135,7 +135,7 @@
         grid = $('#grid').ebtable(myOpts, data);
       }
     };
-    $().ready(function() {
+    $(() => {
       grid = $('#grid').ebtable(gridOpts, data);
       $('#saveGridStatus').on('click', grid.saveSessionState());
       $('#loadGridStatus').on('click', function() {

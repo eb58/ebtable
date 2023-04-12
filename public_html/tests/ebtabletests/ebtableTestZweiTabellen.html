@@ -20,7 +20,7 @@
     const tblData1 = adata.workorderComments.map((o) => [o.creationDate, o.authorName, o.addComment]);
     const tblData2 = tblData1.slice(0);
 
-    $(document).ready(function() {
+    $(() => {
       const opts1 = {
         columns: [{ name: 'Datum' }, { name: 'Verfasser' }, { name: 'Kommentar' }],
         bodyHeight: 300,

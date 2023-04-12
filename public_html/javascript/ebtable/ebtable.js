@@ -219,7 +219,9 @@ const dlgConfig = (opts) => {
         myOpts.selectionCol.selectOnRowClick &&
         $(selGridId + '#data tbody tr td')
           .off()
-          .on('click', (e) => $(e.target).parent().find('input').trigger('click'));
+          .on('click', (e) => {
+            if (!$(e.target).is('input')) $(e.target).parent().find('input').trigger('click');
+          });
       myOpts.selectionCol && myOpts.selectionCol.singleSelection && $(selGridId + '#checkAll').hide();
       myOpts.afterRedraw && myOpts.afterRedraw($(gridId));
     };
