@@ -492,20 +492,21 @@ const dlgConfig = (opts) => {
 
         if (gc && row.isGroupElement && !origData.groupsdata[tblData[r][gc.groupid]].isOpen) continue;
 
-        let cls = row.isGroupElement ? ' class="group"' : '';
-        cls = row.isGroupHeader ? ' class="groupheader"' : cls;
+        let cls = row.isGroupElement ? 'group' : '';
+        cls = row.isGroupHeader ? 'groupheader' : cls;
         res += '<tr>';
         const checked = !!tblData[r].selected ? ' checked="checked" ' : '';
         const disabled = !!tblData[r].disabled ? ' disabled="disabled" ' : '';
 
         if (myOpts.selectionCol) {
+          cls = cls + ' selectCol';
           if (myOpts.selectionCol.render) {
-            const x = '<td' + cls + '>' + myOpts.selectionCol.render(origData, row, checked) + '</td>';
+            const x = `<td class="${cls}">${myOpts.selectionCol.render(origData, row, checked)}</td>`;
             res += x.replace('input type', 'input id="check' + r + '"' + checked + disabled + ' type');
           } else if (myOpts.selectionCol.singleSelection) {
-            res += '<td' + cls + '><input id="check' + r + '" type="radio"' + checked + disabled + '/></td>';
+            res += `<td class=${cls}><input id="check${r}" type="radio" ${checked}  ${disabled} /></td>`;
           } else if (!myOpts.selectionCol.singleSelection) {
-            res += '<td' + cls + '><input id="check' + r + '" type="checkbox"' + checked + disabled + '/></td>';
+            res += `<td class=${cls}><input id="check${r}" type="checkbox" ${checked}  ${disabled} /></td>`;
           }
         }
 

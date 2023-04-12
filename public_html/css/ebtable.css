@@ -7,39 +7,36 @@
 .ebtable #data, .ebtable table{ width: 100%; border-collapse: collapse; }
 .ebtable #data, .ebtable #head{ background-color: #eaeaea;}
 
-.ebtable #data thead th {
-    background: #3f51b5;
-    color: white;
-    border: solid #3f51b5 4px;
-    padding: 2px 0 2px 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    min-width: 40px;
-    height: 30px;
-}
+/* styling of selection column */
+.ebtable #data .selectCol    { width: 30px;  margin:0;  padding: 2px 1px 2px 1px; text-align: center;}
+
+/* styling of table header */
+.ebtable #data thead th { background: #3f51b5; color: white; border: solid #3f51b5 4px; padding: 2px 0 2px 0; overflow: hidden; text-overflow: ellipsis; min-width: 40px; height: 30px; }
 .ebtable #data thead th:focus { background: white;  color: #3f51b5; border: solid #3f51b5 4px }
 .ebtable #data thead th div { height: 16px; }
 .ebtable #data thead th div .sort-indicator { margin:0 0 0 4px; padding:0; width:11px;  }
-.ebtable #data thead th input[type=text], .ebtable #data thead th select {  width: 95%;  box-sizing: border-box;}
+.ebtable #data thead th input[type=text] { width: 95%; box-sizing: border-box; }
+.ebtable #data thead th select           { width: 95%; box-sizing: border-box; }
 
+/* styling of table body rows */
 .ebtable #data tbody tr { height: 48px; }
 .ebtable #data tbody tr:nth-child(even) { background: #eceff1; }
 .ebtable #data tbody tr:nth-child(odd)  { background: #ffffff; }
 .ebtable #data tbody tr:focus { color: #3f51b5; border: #3f51b5 solid 4px;  }
 
-.ebtable #data td            { padding: 2px 1px 2px 1px;}
-.ebtable #data td.group      { background-color: #c7c7da;}
-.ebtable #data td.groupheader{ background-color: #c3c3d0;}
-.ebtable #data .selectCol{ width: 20px;  margin:0;  padding: 2px 1px 2px 1px;}
+/* styling of table body tds */
+.ebtable #data tbody td            { padding: 2px 1px 2px 1px;}
+.ebtable #data tbody td.group      { background-color: #c7c7da;}
+.ebtable #data tbody td.groupheader{ background-color: #c3c3d0;}
 
-/* culumns not resizable */
-.ebtablefix, .ebtablefix th, .ebtablefix td{ table-layout: fixed;  overflow: hidden;  text-overflow: ellipsis;}
+/* table not resizable */
+.ebtablefix, .ebtablefix th, .ebtablefix td { table-layout: fixed;  overflow: hidden;  text-overflow: ellipsis; }
 
 /* resize handle for table */
 .ebtable>div.ui-resizable-e { cursor: e-resize; width: 10px; }
 
 /* resize handle for head of columns */
-.ebtable #data th .ui-resizable-e { cursor:col-resize; width:10px; height: 100%;}
+.ebtable #data thead th .ui-resizable-e { cursor:col-resize; width:10px; height: 100%; }
 
 /* ConfigDlg */
 .configDlg .ebtableSelectable { list-style-type: none; padding:0; width: 100%; }
