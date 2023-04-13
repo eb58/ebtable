@@ -98,7 +98,7 @@ const mx = (m, groupDef) => {
       },
       getCurPageData: () => {
         const startRow = pageSize * page;
-        return m.rows(range(startRow, startRow + pageSize));
+        return m.rows(range(pageSize).map((r) => startRow + r));
       }
     };
     return {
