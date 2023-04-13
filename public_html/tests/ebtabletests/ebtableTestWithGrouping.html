@@ -9,7 +9,6 @@
   <link rel='stylesheet' href='../../css/ebtable.css' />
   <link rel='stylesheet' href='../../css/ebtableTest.css' />
 
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js'></script>
   <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js'></script>
   <script src='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js'></script>
   <script src='../../javascript/ebtable/mx.js'></script>
@@ -36,14 +35,14 @@
           .toString(2) // 5 (101) --> '!P' # 7 (111) -> '!*p' # 8 (1000) -> F
           .split('')
           .reverse()
-          .reduce((acc, o, i) => (acc + o === '1' && flags[i] ? flagutilsflags[i] : ''), ''),
+          .reduce((acc, o, i) => acc + ((o === '1' && flags[i]) ? flags[i] : ''), ''),
       toBitNumber: (str) =>
         str
           .toUpperCase()
           .split('') // '!P' -> 5 (101), '!PG' -> 21
           .reduce((acc, c) => {
-            const x = _.findWhere(flagUtils.flagsDef, { key: c });
-            return acc + x ? x.id : 0;
+            const x = flagsDef.find((f) => f.key === c);
+            return acc + (x ? x.id : 0);
           }, 0)
     };
 
@@ -67,19 +66,15 @@
         return row[idx.gtyp] === 'GA' ? link : data;
       },
       flags: function(data) {
-        return _.reduce(
-          flagsDef,
-          function(acc, o) {
-            return (
-              acc +
-              (data & o.id
-                ? _.template('<img src=\'../../images/<\%=img%>\' title=\'<\%=title%>\' height=\'10px\' />')({
-                  img: o.img,
-                  title: o.alt
-                })
-                : '')
-            );
-          },
+        return flagsDef.reduce(
+          (acc, o) =>
+            acc +
+            (data & o.id
+              ? template('<img src=\'../../images/<%=img%>\' title=\'<%=title%>\' height=\'10px\' />')({
+                img: o.img,
+                title: o.alt
+              })
+              : ''),
           ''
         );
       }

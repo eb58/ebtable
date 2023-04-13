@@ -1,12 +1,14 @@
 const range = (n) => [...Array(n).keys()];
+
+const template = (str) => (opts) => Object.keys(opts).reduce((acc, key) => acc.replaceAll(`<%=${key}%>`, opts[key] || ''), str.replace(/<%= */g, '<%=').replace(/ *%>/g, '%>'));
+
 const dlgConfig = (opts) => {
-  const dlgTemplate = _.template(
-    `<div id='<%=gridId%>configDlg' class='configDlg'>
-        <ol id='<%=gridId%>selectable' class='ebtableSelectable'>
-          <%=listOfColumnNames%>
-        </ol>
-    </div>`
-  )(opts);
+  const dlgTemplate = template(`
+    <div id='<%=gridId%>configDlg' class='configDlg'>
+      <ol id='<%=gridId%>selectable' class='ebtableSelectable'>
+        <%=listOfColumnNames%>
+      </ol>
+    </div>`)(opts);
 
   const dlgOpts = {
     open: () => {
@@ -127,7 +129,7 @@ const dlgConfig = (opts) => {
       getRender: (colname) => util.colDefFromName(colname).render,
       getMatch: (colname) => {
         const match = util.colDefFromName(colname).match;
-        return (typeof match !== 'string' ? match:  mx.matcher[match]) || mx.matcher['starts-with-matches'];
+        return (typeof match !== 'string' ? match : mx.matcher[match]) || mx.matcher['starts-with-matches'];
       },
       checkConfig: (myopts, origData) => {
         myopts.columns.forEach((coldef) => {
@@ -429,10 +431,9 @@ const dlgConfig = (opts) => {
       const cntSel = selectionFcts.getSelectedRows().length;
       const startRow = Math.min(myOpts.rowsPerPage * pageCur + 1, tblData.length);
       const endRow = Math.min(startRow + myOpts.rowsPerPage - 1, tblData.length);
-      const filtered = origData.length === tblData.length ? '' : _.template(util.translate('(<%=len%> Eintr&auml;ge)'))({ len: origData.length });
-      const cntSelected = !cntSel || !myOpts.selectionCol || myOpts.selectionCol.singleSelection ? '' : _.template(util.translate('(<%=len%> ausgew&auml;hlt)'))({ len: cntSel });
-      const template = _.template(util.translate('<%=start%> bis <%=end%> von <%=count%> Zeilen <%=filtered%> <%=cntSelected%>'));
-      return template({
+      const filtered = origData.length === tblData.length ? '' : template(util.translate('(<%=len%> Eintr&auml;ge)'))({ len: origData.length });
+      const cntSelected = !cntSel || !myOpts.selectionCol || myOpts.selectionCol.singleSelection ? '' : template(util.translate('(<%=len%> ausgew&auml;hlt)'))({ len: cntSel });
+      return template(util.translate('<%=start%> bis <%=end%> von <%=count%> Zeilen <%=filtered%> <%=cntSelected%>'))({
         start: startRow,
         end: endRow,
         count: tblData.length,
@@ -450,7 +451,7 @@ const dlgConfig = (opts) => {
           const t_selectfld = '<select id="<%=colid%>"><%=opts%></select>';
           const selOptions = (coldef.valuelist || []).reduce((acc, o) => acc + `<option${o === coldef.filter ? ' selected' : ''}>${o}</option>\n`, '');
           const t = coldef.valuelist ? t_selectfld : t_inputfld;
-          const fld = _.template(t)({
+          const fld = template(t)({
             colid: coldef.id,
             opts: selOptions,
             tooltip: coldef.tooltip,
@@ -467,7 +468,7 @@ const dlgConfig = (opts) => {
                 <div<%=filtersvisible%>><%=fld%></div>
               </th>`;
           // &#8209; = non breakable hyphen : &#0160; = non breakable space
-          res += _.template(hdrTemplate)({
+          res += template(hdrTemplate)({
             colname: coldef.name.replace(/-/g, '&#8209;').replace(/ /g, '&#0160;'),
             colid: coldef.id,
             fld: fld,
@@ -545,7 +546,7 @@ const dlgConfig = (opts) => {
       </div>`;
 
     const initGrid = (a) => {
-      const tableTemplate = _.template(
+      const tableTemplate = template(
         `<div class='ebtable'>
             <%=ctrlsOnTop%>
             <div id='data' style='overflow-y:auto;overflow-x:auto; max-height:<%= bodyHeight %>px; width:100%'>
@@ -677,7 +678,7 @@ const dlgConfig = (opts) => {
         .off()
         .on('click', () => {
           const listOfColumnNames = myOpts.colorder.reduce((acc, idx) => {
-            const t = _.template('<li id="<%=name%>" class="ui-widget-content <%=cls%>"><%=name%></li>');
+            const t = template('<li id="<%=name%>" class="ui-widget-content <%=cls%>"><%=name%></li>');
             const colDef = myOpts.columns[idx];
             return (
               acc +

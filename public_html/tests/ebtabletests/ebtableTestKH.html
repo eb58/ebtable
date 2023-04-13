@@ -11,7 +11,6 @@
   <link rel='stylesheet' href='../../css/ebtable.css' />
   <link rel='stylesheet' href='../../css/ebtableTest.css' />
 
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js'></script>
   <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js'></script>
   <script src='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js'></script>
 
@@ -35,29 +34,21 @@
       { key: 'B', id: 1024, img: 'mimaBearbeitet.gif', alt: 'Vorgang bearbeitet' }
     ];
     const flags = flagsDef.map((f) => f.key).join(''); // '!*PFGKSC'
-
-    const flagutils = {
-      fromBitNumber: function(bits) {
-        // 5 (101)  -->  '!P' # 7 (111) -> '!*p' # 8 (1000) -> F
-        return _.reduce(
-          Number(bits).toString(2).split('').reverse(),
-          function(acc, o, i) {
-            return acc + (o === '1' && flags[i] ? flags[i] : '');
-          },
-          ''
-        );
-      },
-      toBitNumber: function(str) {
-        // '!P' -> 5 (101), '!PG' -> 21
-        return _.reduce(
-          str.toUpperCase().split(''),
-          function(acc, c) {
-            var x = _.findWhere(flagsDef, { key: c });
-            return acc + x ? x.id : 0;
-          },
-          0
-        );
-      }
+    const flagUtils = {
+      fromBitNumber: (bits) =>
+        Number(bits)
+          .toString(2) // 5 (101) --> '!P' # 7 (111) -> '!*p' # 8 (1000) -> F
+          .split('')
+          .reverse()
+          .reduce((acc, o, i) => acc + (o === '1' && flags[i] ? flags[i] : ''), ''),
+      toBitNumber: (str) =>
+        str
+          .toUpperCase()
+          .split('') // '!P' -> 5 (101), '!PG' -> 21
+          .reduce((acc, c) => {
+            const x = flagsDef.find((f) => f.key === c);
+            return acc + (x ? x.id : 0);
+          }, 0)
     };
 
     const downflagsdef = [
@@ -69,24 +60,23 @@
     const downflagutils = {
       fromBitNumber: function(bits) {
         // 3 (11) -> 'FD'
-        return _.reduce(
-          Number(bits).toString(2).split('').reverse(),
-          function(acc, o, i) {
+        return Number(bits)
+          .toString(2)
+          .split('')
+          .reverse()
+          .reduce(function(acc, o, i) {
             return acc + (o === '1' && downflags[i] ? downflags[i] : '');
-          },
-          ''
-        );
+          }, '');
       },
       toBitNumber: function(str) {
         // 'FD' -> 3 (11), 'F' -> 1, 'D' -> 2
-        return _.reduce(
-          str.toUpperCase().split(''),
-          function(acc, c) {
-            var x = _.findWhere(downflagsdef, { key: c });
+        return str
+          .toUpperCase()
+          .split('')
+          .reduce(function(acc, c) {
+            const x = downflagsdef.find((f) => f.key === c);
             return acc + x ? x.id : 0;
-          },
-          0
-        );
+          }, 0);
       }
     };
 
@@ -140,30 +130,30 @@
         if (row[0] === 'W') {
           //  render workorder
           const winfo = row[idx.winfo]
-            ? _.template(
-              '<a href=# onclick="showAuftragInfo    (<\%=wid%>,\'<\%=data%>\')"><img src="../../images/info.gif"           border="0" height="12px" title="Details Auftrag"></a>&nbsp;'
+            ? template(
+              `<a href='#' onclick="showAuftragInfo(<%=wid%>,\'<%=data%>')"><img src='../../images/info.gif'           border='0' height='12px' title='Details Auftrag'></a>&nbsp;`
             )({
               wid: row[idx.wid],
               data: data.replace('\'', '\\\'')
             })
             : '';
           const vinfo = row[idx.vinfo]
-            ? _.template(
-              '<a href=# onclick="showInsurantComment(<\%=wid%>,\'<\%=data%>\')"><img src="../../images/insurantComment.gif" border="0" height="12px" title="Hinweise zum Versicherten"></a>&nbsp;'
+            ? template(
+              '<a href=# onclick="showInsurantComment(<%=wid%>,\'<%=data%>\')"><img src="../../images/insurantComment.gif" border="0" height="12px" title="Hinweise zum Versicherten"></a>&nbsp;'
             )({
               wid: row[idx.wid],
               data: data.replace('\'', '\\\'')
             })
             : '';
           const isdwn = row[idx.isdwn]
-            ? _.template('<img id="isDownloaded_<\%=wid%>" border="0" src="../../images/downloaded.gif" title="Es wurde ein Download ohne Upload ausgeführt">')({
+            ? template('<img id="isDownloaded_<%=wid%>" border="0" src="../../images/downloaded.gif" title="Es wurde ein Download ohne Upload ausgeführt">')({
               wid: row[idx.wid]
             })
             : '';
-          const t = _.template(
-            '<input type="hidden" id="name_<\%=wid%>" value="<\%=data%>"/>\n\
-                      <a onclick="showOrder(<\%=wid%>,<\%=pageCur%> )" title="<\%=wid%>"><\%=data%></a>\n\
-                      <\%=winfo%><\%=vinfo%><\%=isdwn%>'
+          const t = template(
+            '<input type="hidden" id="name_<%=wid%>" value="<%=data%>"/>\n\
+                <a onclick="showOrder(<%=wid%>,<%=pageCur%> )" title="<%=wid%>"><%=data%></a>\n\
+                <%=winfo%><%=vinfo%><%=isdwn%>'
           );
           return t({
             winfo: winfo,
@@ -192,8 +182,8 @@
           })();
 
           const tmpl =
-            '<img src="<\%=imgsrc%>" height="15px" onclick="grid.toggleGroupIsOpen(\'<\%=chargeId%>\')" /><b>&nbsp;<\%=chargeName%>&nbsp;</b>(<\%=cnt%>&nbsp;<\%=auftrag%>)';
-          const link = _.template(tmpl)({
+            '<img src="<%=imgsrc%>" height="15px" onclick="grid.toggleGroupIsOpen(\'<%=chargeId%>\')" /><b>&nbsp;<%=chargeName%>&nbsp;</b>(<%=cnt%>&nbsp;<%=auftrag%>)';
+          const link = template(tmpl)({
             imgsrc: imgsrc,
             chargeId: chargeId,
             chargeName: chargeName,
@@ -209,38 +199,30 @@
           // mimastatus-Behandlung
           mima_status_0 = '<img src=\'../../images/empty_link.gif\' alt=\'\' id=\'mima_marker_' + row[4] + '\' title=\'\' height=\'0px\'/>';
         return (
-          _.reduce(
-            flagsDef,
-            function(acc, o) {
-              let imgid = '';
-              if (row[0] === 'W' && (o.id & 1792) === o.id) imgid = 'id="mima_marker_' + row[4] + '"';
-              return (acc +=
-                data & o.id
-                  ? _.template('<img src=\'../../images/<\%=img%>\' alt=\'<\%=alt%>\' <\%=id%> title=\'<\%=alt%>\' height=\'10px\'/>')({
-                    img: o.img,
-                    alt: o.alt,
-                    id: imgid
-                  })
-                  : '');
-            },
-            ''
-          ) + mima_status_0
+          flagsDef.reduce(function(acc, o) {
+            let imgid = '';
+            if (row[0] === 'W' && (o.id & 1792) === o.id) imgid = 'id="mima_marker_' + row[4] + '"';
+            return (acc +=
+              data & o.id
+                ? template('<img src=\'../../images/<%=img%>\' alt=\'<%=alt%>\' <%=id%> title=\'<%=alt%>\' height=\'10px\'/>')({
+                  img: o.img,
+                  alt: o.alt,
+                  id: imgid
+                })
+                : '');
+          }, '') + mima_status_0
         );
       },
       downflags: function(data, row) {
-        return _.reduce(
-          downflagsdef,
-          function(acc, o) {
-            return (acc +=
-              data & o.id
-                ? _.template('<img src=\'../../images/<\%=img%>\' alt=\'<\%=alt%>\' title=\'<\%=alt%>\' height=\'10px\'/>')({
-                  img: o.img,
-                  alt: o.alt
-                })
-                : '');
-          },
-          ''
-        );
+        return downflagsdef.reduce(function(acc, o) {
+          return (acc +=
+            data & o.id
+              ? template('<img src=\'../../images/<%=img%>\' alt=\'<%=alt%>\' title=\'<%=alt%>\' height=\'10px\'/>')({
+                img: o.img,
+                alt: o.alt
+              })
+              : '');
+        }, '');
       },
       frist: function(data, row) {
         return data < 0 ? '<span style="white-space: nowrap;"><font color="red">' + data + '</font></span>' : data;
@@ -249,10 +231,10 @@
         return data.replace(/,/g, ', ');
       },
       pruefanz: function(data) {
-        return data ? _.template('&nbsp;<img src=\'../../images/releaseable.gif\' alt=\'<\%=alt%>\' title=\'<\%=alt%>\' height=\'11px\'/>')({ alt: 'Prüfanzeige versendet' }) : '';
+        return data ? template('&nbsp;<img src=\'../../images/releaseable.gif\' alt=\'<%=alt%>\' title=\'<%=alt%>\' height=\'11px\'/>')({ alt: 'Prüfanzeige versendet' }) : '';
       },
       unterlag: function(data) {
-        return data ? _.template('&nbsp;<img src=\'../../images/releaseable.gif\' alt=\'<\%=alt%>\' title=\'<\%=alt%>\' height=\'11px\'/>')({ alt: 'Unterlagen vollständig' }) : '';
+        return data ? template('&nbsp;<img src=\'../../images/releaseable.gif\' alt=\'<%=alt%>\' title=\'<%=alt%>\' height=\'11px\'/>')({ alt: 'Unterlagen vollständig' }) : '';
       }
     };
 
@@ -437,8 +419,8 @@
       preprocessData(basketTestdataKH);
       grid = $('#grid').ebtable(gridOpts, basketTestdataKH);
       $('#saveGridStatus').on('click', grid.saveSessionState);
-      $('#loadGridStatus').on('click', function() {
-        const mixopts = _.extend({}, gridOpts, $.fn.ebtable.loadSessionState());
+      $('#loadGridStatus').on('click', () => {
+        const mixopts = { ...gridOpts, ...$.fn.ebtable.loadSessionState() };
         grid = $('#grid').ebtable(mixopts, basketTestdataKH).setFilterValues(mixopts.filters);
       });
     });
