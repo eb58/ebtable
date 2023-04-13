@@ -126,8 +126,8 @@ const dlgConfig = (opts) => {
       colNameFromId: (colid) => (myOpts.columns.find((c) => c.id === colid) || {}).name,
       getRender: (colname) => util.colDefFromName(colname).render,
       getMatch: (colname) => {
-        const matcher = util.colDefFromName(colname).match;
-        return matcher ? (typeof matcher === 'string' ? mx.matcher[matcher] : matcher) : mx.matcher['starts-with-matches'];
+        const match = util.colDefFromName(colname).match;
+        return (typeof match !== 'string' ? match:  mx.matcher[match]) || mx.matcher['starts-with-matches'];
       },
       checkConfig: (myopts, origData) => {
         myopts.columns.forEach((coldef) => {
@@ -139,19 +139,19 @@ const dlgConfig = (opts) => {
         });
         if (origData[0] && origData[0].length !== myopts.columns.length) {
           localStorage[localStorageKey] = '';
-          throw "Data definition and column definition don't match! " + origData[0].length + ' ' + myopts.columns.length;
+          throw Error("Data definition and column definition don't match! " + origData[0].length + ' ' + myopts.columns.length);
         }
         const ls = localStorage[localStorageKey];
         if (ls && ls.colorder && ls.colorder.length !== myopts.columns.length) {
           localStorage[localStorageKey] = '';
-          throw "Column definition and LocalStorage don't match!" + ls.colorder.length + ' ' + myopts.columns.length;
+          throw Error("Column definition and LocalStorage don't match!" + ls.colorder.length + ' ' + myopts.columns.length);
         }
         const msg = myopts.columns.reduce((acc, col) => {
           acc = col.technical && !col.invisible ? [...acc, `${col.name}: technical column must be invisible!`] : acc;
           acc = col.mandatory && col.invisible ? [...acc, `${col.name}:  mandatory column must be visible!`] : acc;
           return acc;
         }, '');
-        if (msg) throw msg;
+        if (msg) throw Error(msg);
       },
       getColWidths: () =>
         $(selGridId + '.ebtable th')
@@ -503,12 +503,13 @@ const dlgConfig = (opts) => {
         if (myOpts.selectionCol) {
           cls = cls + ' selectCol';
           if (myOpts.selectionCol.render) {
-            const x = `<td class="${cls}">${myOpts.selectionCol.render(origData, row, checked)}</td>`;
+            const x = `<td class='${cls}'>${myOpts.selectionCol.render(origData, row, checked)}</td>`;
             res += x.replace('input type', 'input id="check' + r + '"' + checked + disabled + ' type');
-          } else if (myOpts.selectionCol.singleSelection) {
-            res += `<td class=${cls}><input id="check${r}" type="radio" ${checked}  ${disabled} /></td>`;
-          } else if (!myOpts.selectionCol.singleSelection) {
-            res += `<td class=${cls}><input id="check${r}" type="checkbox" ${checked}  ${disabled} /></td>`;
+          } else {
+            res += `
+              <td class='${cls}'>
+                <input id='check${r}' type='${myOpts.selectionCol.singleSelection ? 'radio' : 'checkbox'}' ${checked}  ${disabled} />
+              </td>`;
           }
         }
 
@@ -528,44 +529,59 @@ const dlgConfig = (opts) => {
       return res;
     };
 
+    const ctrlsOnTop = (opts) => `
+      <div class='ctrl'>
+        <div id='ctrlLength'         style='float: left;'>${opts.selectLen}</div>
+        <div id='ctrlConfig'         style='float: left;'>${opts.configButton}</div>
+        <div id='ctrlClearFilter'    style='float: left;'>${opts.clearFilterButton}</div>
+        <div id='ctrlArrangeColumns' style='float: left;'>${opts.arrangeColumnsButton}</div>
+        <div id='ctrlPageAtTop'      style='float: right;'>${opts.browseBtns}</div>
+      </div>`;
+    const ctrlsOnBottom = (opts) => `
+      <div class='ctrl'>
+        <div id='ctrlInfo'           style='float: left;'>${opts.info}</div>
+        <div id='ctrlAddInfo'        style='float: left;'>${opts.addInfo}</div>
+        <div id='ctrlPageAtBottom'   style='float: right;'>${opts.browseBtns}</div>
+      </div>`;
+
     const initGrid = (a) => {
       const tableTemplate = _.template(
         `<div class='ebtable'>
-            <div class='ctrl' <%=ctrlStyle%>>
-              <div id='ctrlLength'         style='float: left;'><%= selectLen  %></div>
-              <div id='ctrlConfig'         style='float: left;'><%= configButton %></div>
-              <div id='ctrlClearFilter'    style='float: left;'><%= clearFilterButton %></div>
-              <div id='ctrlArrangeColumns' style='float: left;'><%= arrangeColumnsButton %></div>
-              <div id='ctrlPage1'          style='float: right;'><%= browseBtns %></div>
-            </div>
+            <%=ctrlsOnTop%>
             <div id='data' style='overflow-y:auto;overflow-x:auto; max-height:<%= bodyHeight %>px; width:100%'>
               <table <%= tblClass %>>
                 <thead><tr><%= head %></tr></thead>
                 <tbody><%= data %></tbody>
               </table>
             </div>
-            <div class='ctrl' <%=ctrlStyle%>>
-              <div id='ctrlInfo'    style='float: left;' class='ui-widget-content'><%= info %></div>
-              <div id='ctrlAddInfo' style='float: left;' class='ui-widget-content'><%= addInfo %></div>
-              <div id='ctrlPage2'   style='float: right;' ><%= browseBtns %></div>
-            </div>
+            <%=ctrlsOnBottom%>
           </div>`
       );
       a.html(
         tableTemplate({
           head: tableHead(),
           data: '', //tableData(pageCur),
-          selectLen: selectLenCtrl(),
-          configButton: configButton(),
-          clearFilterButton: clearFilterButton(),
-          arrangeColumnsButton: arrangeColumnsButton(),
-          browseBtns: pageBrowseCtrl,
-          info: '', //ctrlInfo TODO ???
-          addInfo: '', //ctrlAddInfo(), TODO ???
-          ctrlStyle: myOpts.flags.ctrls ? '' : 'style="display:none"',
           bodyWidth: myOpts.bodyWidth,
           bodyHeight: myOpts.bodyHeight,
-          tblClass: myOpts.flags.colsResizable ? 'class="ebtablefix"' : ''
+          tblClass: !myOpts.flags.colsResizable ? 'class="ebtablefix"' : '',
+          ctrlsOnTop:
+            myOpts.flags.ctrls || myOpts.flags.ctrlsOnTop
+              ? ctrlsOnTop({
+                  selectLen: selectLenCtrl(),
+                  configButton: configButton(),
+                  clearFilterButton: clearFilterButton(),
+                  arrangeColumnsButton: arrangeColumnsButton(),
+                  browseBtns: pageBrowseCtrl
+                })
+              : '',
+          ctrlsOnBottom:
+            myOpts.flags.ctrls || myOpts.flags.ctrlsOnBottom
+              ? ctrlsOnBottom({
+                  info: '',
+                  addInfo: '',
+                  browseBtns: pageBrowseCtrl
+                })
+              : ''
         })
       );
       filteringFcts.filterData();

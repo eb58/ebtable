@@ -1,6 +1,6 @@
 /* global QUnit, mx */
 
-QUnit.test('testset: easy ones 1', function(assert) {
+QUnit.test('testset: easy ones 1', (assert) => {
   assert.deepEqual(mx([[1, 2, 3], [4, 5, 6], [7, 8, 9]]), [[1, 2, 3], [4, 5, 6], [7, 8, 9]]);
 
   const m = mx([[1, 2], [3, 4]]);
@@ -10,7 +10,7 @@ QUnit.test('testset: easy ones 1', function(assert) {
 
 });
 
-QUnit.test('testset: easy ones 2', function(assert) {
+QUnit.test('testset: easy ones 2',  (assert) => {
   const  m = mx([[1, 2, 3], [4, 5, 6], [7, 8, 9]]);
   assert.deepEqual(m.rows([1, 2]), [[4, 5, 6], [7, 8, 9]]);
   assert.deepEqual(m.rows([0]), [[1, 2, 3]]);

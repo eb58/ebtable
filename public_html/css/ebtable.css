@@ -2,10 +2,9 @@
 .ebtable .ctrl .ui-selectmenu-button           { height: 15px; }
 .ebtable .ctrl .ui-selectmenu-button.ui-button { padding-top: 3px;padding-bottom: 3px;width: 50px; height: 14px;}
 
-.ebtable #ctrlInfo, .ebtable #ctrlAddInfo {  padding: 3px;  margin: 1px;}
+.ebtable #ctrlInfo, .ebtable #ctrlAddInfo { background: white; padding: 3px;  margin: 1px; font-size: 10px}
 
 .ebtable #data, .ebtable table{ width: 100%; border-collapse: collapse; }
-.ebtable #data, .ebtable #head{ background-color: #eaeaea;}
 
 /* styling of selection column */
 .ebtable #data .selectCol    { width: 30px;  margin:0;  padding: 2px 1px 2px 1px; text-align: center;}
@@ -24,7 +23,7 @@
 .ebtable #data tbody tr:nth-child(odd)  { background: #ffffff; }
 .ebtable #data tbody tr:focus { color: #3f51b5; border: #3f51b5 solid 4px;  }
 
-/* styling of table body tds */
+/* styling of table body cells */
 .ebtable #data tbody td            { padding: 2px 1px 2px 1px;}
 .ebtable #data tbody td.group      { background-color: #c7c7da;}
 .ebtable #data tbody td.groupheader{ background-color: #c3c3d0;}
@@ -33,12 +32,15 @@
 .ebtablefix, .ebtablefix th, .ebtablefix td { table-layout: fixed;  overflow: hidden;  text-overflow: ellipsis; }
 
 /* resize handle for table */
-.ebtable>div.ui-resizable-e { cursor: e-resize; width: 10px; }
+.ebtable > div.ui-resizable-e { cursor: e-resize; width: 10px; }
 
 /* resize handle for head of columns */
 .ebtable #data thead th .ui-resizable-e { cursor:col-resize; width:10px; height: 100%; }
 
 /* ConfigDlg */
 .configDlg .ebtableSelectable { list-style-type: none; padding:0; width: 100%; }
-.configDlg .ebtableSelectable li.visible  { margin: 3px 0 0 0;  padding: 3px; font-size: 10px; font-weight: bold; color:#555555; }
-.configDlg .ebtableSelectable li.invisible{ margin: 3px 0 0 0;  padding: 3px; font-size: 10px; font-weight: lighter; color:#aaaaaa; }
+.configDlg .ebtableSelectable li.visible  { margin: 3px 0 0 0;  padding: 3px; font-size: 10px; background:#3f51b5; color: white;  }
+.configDlg .ebtableSelectable li.invisible{ margin: 3px 0 0 0;  padding: 3px; font-size: 10px; background:#aaa; color: black; }
+
+.configDlg .ebtableSelectable li.visible::before    { content: "\2611  "; font-size: 12px }
+.configDlg .ebtableSelectable li.invisible::before  { content: "\2610  "; font-size: 12px }

@@ -26,8 +26,7 @@ const mx = (m, groupDef) => {
       initGroups: (groupDefs) => {
         if (!groupDefs.groupid) return;
         const groupsData = m.groupsData || {};
-        for (let r = 0; r < m.length; r++) {
-          const row = m[r];
+        m.forEach((row) => {
           const groupId = normalizeGroupId(row[groupDefs.groupid]);
           row.isGroupHeader = row[groupDefs.grouplabel] === groupDefs.grouphead;
           row.isGroupElement = groupId && !row.isGroupHeader;
@@ -37,12 +36,11 @@ const mx = (m, groupDef) => {
               groupname: row[groupDefs.groupname].trim()
             };
           }
-        }
-        for (let r = 0; r < m.length; r++) {
-          const row = m[r];
+        });
+        m.forEach((row) => {
           const groupId = normalizeGroupId(row[groupDefs.groupid]);
           row[groupDefs.groupsortstring] = groupId ? groupsData[groupId].groupname + ' ' + groupId : row[groupDefs.groupname];
-        }
+        });
         m.groupsdata = groupsData;
         return m;
       },
@@ -66,8 +64,7 @@ const mx = (m, groupDef) => {
       rowCmpCols: (colDefs, groups) => {
         colDefs = Array.isArray(colDefs) ? colDefs : [colDefs]; // [ {col:1,sortorder:asc,sortformat:fmtfct1},{col:3, sortorder:desc, sortformat:fmtfct2},... ]
         return (r1, r2) => {
-          for (let i = 0; i < colDefs.length; i++) {
-            const cdef = colDefs[i];
+          for (let cdef of colDefs) {
             const fmt = mx.sortformats[cdef.sortformat] || id;
             const x = prepareItem(r1, cdef.col, fmt, groups, cdef.sortorder);
             const y = prepareItem(r2, cdef.col, fmt, groups, cdef.sortorder);
@@ -75,7 +72,7 @@ const mx = (m, groupDef) => {
             if (typeof x === 'string' && typeof y === 'string') {
               ret = x.localeCompare(y);
             } else {
-              ret = x < y ? -1 : x > y ? 1 : 0;
+              ret = x - y;
             }
             if (ret !== 0) {
               const bAsc = !cdef.sortorder || cdef.sortorder.indexOf('desc') < 0;
@@ -90,7 +87,7 @@ const mx = (m, groupDef) => {
   //####################################  paging #######################
   const paging = (() => {
     let page = 0;
-    let pageSize = 10; // fcts.setPageSize(10);
+    let pageSize = 10;
     let pageMax = Math.floor((m.length - 1) / pageSize);
 
     const fcts = {
