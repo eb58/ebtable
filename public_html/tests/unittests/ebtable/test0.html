@@ -39,8 +39,8 @@
       // lang:'en'
     };
 
-    $().ready(function() {
-      QUnit.test('testset: easy ones', function(assert) {
+    $(() => {
+      QUnit.test('testset: easy ones', (assert) => {
         reinit('grid', opts, data);
         assert.ok(true, 'qunit works');
         assert.ok($('#grid table').length === 1, 'table exists');
@@ -59,7 +59,7 @@
         $('.backBtn').click();
         assert.equal(getCol('grid', 2).length, 2, 'back page works');
       });
-      QUnit.test('testset: sorting1', function(assert) {
+      QUnit.test('testset: sorting1', (assert) => {
         reinit('grid', opts, data);
         const tierartHead = $('th#Tierart');
         const datumHead = $('th#Datum');
@@ -73,7 +73,7 @@
         datumHead.click();
         assert.deepEqual(getCol('grid', 3), ['31.08.1915', '31.08.2016']);
       });
-      QUnit.test('testset: sorting2', function(assert) {
+      QUnit.test('testset: sorting2', (assert) => {
         const xopts = { ...opts }; // deep copy
 
         xopts.sortcolname = 'Flag';
@@ -93,7 +93,7 @@
         assert.deepEqual(getCol('grid', 3), ['31.08.2016', '31.08.1915']);
       });
 
-      QUnit.test('testset: filtering', function(assert) {
+      QUnit.test('testset: filtering', (assert) => {
         reinit('grid', opts, data);
         const tierartInput = $('#Tierart input');
         tierartInput.val('Yeti').trigger($.Event('keyup', { keyCode: 13 }));
