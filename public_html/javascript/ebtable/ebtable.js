@@ -6,7 +6,7 @@ const dlgConfig = (opts, callback) => {
   const listOfColumns = opts.listOfColumns.reduce(
     (acc, coldef) =>
       acc +
-      template(`<li id="<%=name%>" class="ui-widget-content <%=cls%>" <%=display%>> <%=name%></li>`)({
+      template(`<li id='<%=name%>' class='ui-widget-content <%=cls%>' <%=display%>> <%=name%></li>`)({
         name: coldef.name,
         cls: coldef.invisible ? 'invisible' : 'visible',
         display: coldef.technical || coldef.mandatory ? 'style="display:none"' : ''
@@ -461,15 +461,15 @@ const dlgConfig = (opts, callback) => {
       for (let c = 0; c < myOpts.columns.length; c++) {
         const coldef = myOpts.columns[myOpts.colorder[c]];
         if (!coldef.invisible) {
-          const t_inputfld = '<input type="text" id="<%=colid%>" value="<%=filter%> " title="<%=tooltip%>"/>';
-          const t_selectfld = '<select id="<%=colid%>"><%=opts%></select>';
+          const t_inputfld = '<input type="text" id="<%=id%>" value="<%=filter%>" title="<%=tooltip%>"/>';
+          const t_selectfld = '<select id="<%=id%>"><%=opts%></select>';
           const selOptions = (coldef.valuelist || []).reduce((acc, o) => acc + `<option${o === coldef.filter ? ' selected' : ''}>${o}</option>\n`, '');
           const t = coldef.valuelist ? t_selectfld : t_inputfld;
           const fld = template(t)({
-            colid: coldef.id,
-            opts: selOptions,
+            id: coldef.id,
             tooltip: coldef.tooltip,
-            filter: coldef.filter
+            filter: coldef.filter,
+            opts: selOptions
           });
           const thwidth = coldef.width ? `width:${coldef.width};` : '';
           const thstyle = coldef.css || coldef.width ? ` style="${thwidth} ${coldef.css || ''}` : '';
@@ -485,8 +485,8 @@ const dlgConfig = (opts, callback) => {
           res += template(hdrTemplate)({
             colname: coldef.name.replace(/-/g, '&#8209;').replace(/ /g, '&#0160;'),
             colid: coldef.id,
-            fld: fld,
-            thstyle: thstyle,
+            fld,
+            thstyle,
             tooltip: coldef.tooltip,
             filtersvisible: myOpts.flags.withFilter ? '' : ' style="display:none"'
           });
