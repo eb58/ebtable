@@ -2,13 +2,24 @@ const range = (n) => [...Array(n).keys()];
 
 const template = (str) => (opts) => Object.keys(opts).reduce((acc, key) => acc.replaceAll(`<%=${key}%>`, opts[key] || ''), str.replace(/<%= */g, '<%=').replace(/ *%>/g, '%>'));
 
-const dlgConfig = (opts) => {
+const dlgConfig = (opts, callback) => {
+  const listOfColumns = opts.listOfColumns.reduce(
+    (acc, coldef) =>
+      acc +
+      template(`<li id="<%=name%>" class="ui-widget-content <%=cls%>" <%=display%>> <%=name%></li>`)({
+        name: coldef.name,
+        cls: coldef.invisible ? 'invisible' : 'visible',
+        display: coldef.technical || coldef.mandatory ? 'style="display:none"' : ''
+      }),
+    ''
+  );
+
   const dlgTemplate = template(`
     <div id='<%=gridId%>configDlg' class='configDlg'>
       <ol id='<%=gridId%>selectable' class='ebtableSelectable'>
-        <%=listOfColumnNames%>
+        <%=listOfColumns%>
       </ol>
-    </div>`)(opts);
+    </div>`)({ ...opts, listOfColumns });
 
   const dlgOpts = {
     open: () => {
@@ -28,7 +39,14 @@ const dlgConfig = (opts) => {
     buttons: {}
   };
   dlgOpts.buttons[opts.okString] = function () {
-    opts.callBack();
+    const colDefs = $('#' + opts.gridId + 'configDlg li')
+      .toArray()
+      .reduce((acc, o) => {
+        const id = $(o).prop('id');
+        const invisible = $(o).hasClass('invisible');
+        return [...acc, { id, invisible }];
+      }, []);
+    callback(colDefs);
     $(this).dialog('destroy');
   };
   dlgOpts.buttons[opts.cancelString] = function () {
@@ -52,7 +70,7 @@ const dlgConfig = (opts) => {
   $.fn.ebtable = function (opts, data, hasMoreResults) {
     const stateUtil = {
       // saving/loading state
-      getStateAsJSON: function () {
+      getStateAsJSON: () => {
         const stateGeneral = {
           rowsPerPage: myOpts.rowsPerPage,
           colorderByName: myOpts.colorder.map((idx) => myOpts.columns[idx].name),
@@ -66,13 +84,9 @@ const dlgConfig = (opts) => {
         const state = { ...stateGeneral, ...stateWidth };
         return JSON.stringify(state);
       },
-      saveState: function saveState() {
-        localStorage[localStorageKey] = stateUtil.getStateAsJSON();
-      },
-      getState: function getState() {
-        return localStorage[localStorageKey] ? JSON.parse(localStorage[localStorageKey]) : null;
-      },
-      loadState: function loadState(state) {
+      saveState: () => (localStorage[localStorageKey] = stateUtil.getStateAsJSON()),
+      getState: () => (localStorage[localStorageKey] ? JSON.parse(localStorage[localStorageKey]) : null),
+      loadState: (state) => {
         if (!state) {
           util.setDefaultWidthForColumns();
           return;
@@ -328,7 +342,7 @@ const dlgConfig = (opts) => {
       sorting: (event) => {
         // sorting
         const colid = event.currentTarget.id;
-        if (!suppressSorting && colid && myOpts.flags.withsorting) {
+        if (!suppressSorting && colid && myOpts.flags.withSorting) {
           selectionFcts.deselectAllRows();
           myOpts.sortcolname = util.colNameFromId(colid);
           sortingFcts.sortToggle();
@@ -383,9 +397,9 @@ const dlgConfig = (opts) => {
                 const colid = $(o).attr('id');
                 const colname = util.colNameFromId(colid);
                 const col = util.colIdxFromName(colname);
-                const ren = util.getRender(colname);
-                const mat = util.getMatch(colname);
-                acc.push({ col: col, searchtext: val.trim(), render: ren, match: mat });
+                const render = util.getRender(colname);
+                const match = util.getMatch(colname);
+                acc.push({ col, searchtext: val.trim(), render, match });
               }
               return acc;
             },
@@ -406,14 +420,14 @@ const dlgConfig = (opts) => {
     };
 
     const ctrlAddInfo = () => (myOpts.addInfo && myOpts.addInfo(myOpts)) || '';
-    const configButton = () => (myOpts.flags.config ? `<button id='configButton' title='${util.translate('Spalten verwalten')}'><span>&#x2699;</span></button>` : '');
+    const configButton = () => (myOpts.flags.withConfigDialog ? `<button id='configButton' title='${util.translate('Spalten verwalten')}'>&#x2699;</button>` : '');
     const clearFilterButton = () =>
-      myOpts.flags.filter && myOpts.flags.clearFilterButton ? `<button id='clearFilterButton' title='${util.translate('Filter entfernen')}'><span>&#x26D2;</span></button>` : '';
+      myOpts.flags.withFilter && myOpts.flags.withClearFilterButton ? `<button id='clearFilterButton' title='${util.translate('Filter entfernen')}'>&#x26D2;</button>` : '';
     const arrangeColumnsButton = () =>
-      myOpts.flags.arrangeColumnsButton ? `<button id='arrangeColumnsButton' title='${util.translate('Spaltenbreite anpassen')}'><span>&hArr;</span></button>` : '';
+      myOpts.flags.withArrangeColumnsButton ? `<button id='arrangeColumnsButton' title='${util.translate('Spaltenbreite anpassen')}'>&hArr;</button>` : '';
 
     const selectLenCtrl = () => {
-      if (!myOpts.flags.pagelenctrl) return '';
+      if (!myOpts.flags.withPagelenctrl) return '';
       const options = myOpts.rowsPerPageSelectValues.reduce((acc, o) => {
         const selected = o === myOpts.rowsPerPage ? 'selected' : '';
         return acc + '<option value="' + o + '" ' + selected + '>' + o + '</option>\n';
@@ -474,7 +488,7 @@ const dlgConfig = (opts) => {
             fld: fld,
             thstyle: thstyle,
             tooltip: coldef.tooltip,
-            filtersvisible: myOpts.flags.filter ? '' : ' style="display:none"'
+            filtersvisible: myOpts.flags.withFilter ? '' : ' style="display:none"'
           });
         }
       }
@@ -566,7 +580,7 @@ const dlgConfig = (opts) => {
           bodyHeight: myOpts.bodyHeight,
           tblClass: !myOpts.flags.colsResizable ? 'class="ebtablefix"' : '',
           ctrlsOnTop:
-            myOpts.flags.ctrls || myOpts.flags.ctrlsOnTop
+            myOpts.flags.withPagingCtrls || myOpts.flags.withPagingCtrlsOnTop
               ? ctrlsOnTop({
                   selectLen: selectLenCtrl(),
                   configButton: configButton(),
@@ -576,7 +590,7 @@ const dlgConfig = (opts) => {
                 })
               : '',
           ctrlsOnBottom:
-            myOpts.flags.ctrls || myOpts.flags.ctrlsOnBottom
+            myOpts.flags.withPagingCtrls || myOpts.flags.withPagingCtrlsOnBottom
               ? ctrlsOnBottom({
                   info: '',
                   addInfo: '',
@@ -677,42 +691,21 @@ const dlgConfig = (opts) => {
         .button()
         .off()
         .on('click', () => {
-          const listOfColumnNames = myOpts.colorder.reduce((acc, idx) => {
-            const t = template('<li id="<%=name%>" class="ui-widget-content <%=cls%>"><%=name%></li>');
-            const colDef = myOpts.columns[idx];
-            return (
-              acc +
-              (colDef.technical || colDef.mandatory
-                ? ''
-                : t({
-                    name: colDef.name,
-                    cls: colDef.invisible ? 'invisible' : 'visible'
-                  }))
-            );
-          }, '');
           const dlgOpts = {
-            listOfColumnNames: listOfColumnNames,
+            listOfColumns: myOpts.colorder.map((colIdx) => myOpts.columns[colIdx]),
             gridId,
             okString: util.translate('OK'),
             cancelString: util.translate('Abbrechen'),
             title: util.translate('Spalten ausblenden und sortieren'),
-            anchor: '#' + gridId + ' #configButton',
-            callBack: function () {
-              $('#' + gridId + 'configDlg li.visible').each((idx, o) => {
-                myOpts.columns[util.colIdxFromName($(o).prop('id'))].invisible = false;
-              });
-              $('#' + gridId + 'configDlg li.invisible').each((idx, o) => {
-                myOpts.columns[util.colIdxFromName($(o).prop('id'))].invisible = true;
-              });
-              const colNames = [];
-              $('#' + gridId + 'configDlg li').each((idx, o) => colNames.push($(o).prop('id')));
-              myOpts.colorder = myOpts.columns.map((col, idx) => (col.technical || col.mandatory ? idx : util.colIdxFromName(colNames.shift())));
-              myOpts.saveState && myOpts.saveState();
-              myOpts.bodyWidth = Math.min(myOpts.bodyWidth || $(window).width() - 20, $(window).width() - 20);
-              redraw(pageCur, true);
-            }
+            anchor: '#' + gridId + ' #configButton'
           };
-          dlgConfig(dlgOpts);
+          dlgConfig(dlgOpts, (colDefs) => {
+            console.log(colDefs);
+            myOpts.colorder = colDefs.map((cd) => util.colIdxFromName(cd.id));
+            colDefs.forEach((cd) => (myOpts.columns[util.colIdxFromName(cd.id)].invisible = cd.invisible));
+            myOpts.saveState && myOpts?.saveState();
+            redraw(pageCur, true);
+          });
         });
       $(selGridId + '.firstBtn')
         .button()
@@ -786,15 +779,16 @@ const dlgConfig = (opts) => {
     const defOpts = {
       columns: [],
       flags: {
-        filter: true,
-        pagelenctrl: true,
-        config: true,
-        withsorting: true,
-        clearFilterButton: false,
-        arrangeColumnsButton: true,
+        withFilter: true,
+        withSorting: true,
+        withConfigDialog: true,
+        withPagelenctrl: true,
+        withClearFilterButton: false,
+        withArrangeColumnsButton: true,
+        withPagingCtrls: true,
         colsResizable: true,
-        jqueryuiTooltips: true,
-        ctrls: true
+        tableResizable: true,
+        jqueryuiTooltips: true
       },
       bodyHeight: Math.max(200, $(window).height() - 180),
       bodyWidth: '', //Math.max(700, $(window).width() - 40),
@@ -804,15 +798,14 @@ const dlgConfig = (opts) => {
       colorder: range(opts.columns.length), // [0,1,2,... ]
       selectionCol: false, // or true or
       // {
-      //   singleSelection: true,                                 // default: false
-      //   selectOnRowClick: true,                                // default: false
+      //   singleSelection: true,                             // default: false
+      //   selectOnRowClick: true,                            // default: false
       //   render : (origData, row, checked) => {},           // default: null
       //   onStartSelection: (rowNr, row, origData, b) => {}, // default: null
       //   onSelection: (rowNr, row, origData, b) => {},      // default: null
       //   onSelectAll: () => {}                              // default: null
-      //   onSelectAll: () => {}                              // default: null
+      //   onUnselectAll: () => {}                            // default: null
       // }
-
       saveState: stateUtil.saveState,
       loadState: stateUtil.loadState,
       getState: stateUtil.getState,
@@ -820,10 +813,7 @@ const dlgConfig = (opts) => {
       groupdefs: {}, // { grouplabel: 0, groupcnt: 1, groupid: 2, groupsortstring: 3, groupname: 4, grouphead: 'GA', groupelem: 'GB' },
       openGroups: [],
       hasMoreResults: hasMoreResults,
-      clickOnRowHandler: (rowData, row) => {
-        // just for documentation
-        util.log('clickOnRowHandler', rowData, row);
-      },
+      clickOnRowHandler: (rowData, row) => util.log('clickOnRowHandler', rowData, row), // just for documentation
       lang: 'de',
       afterRedraw: null,
       predefinedFilters: []
