@@ -129,7 +129,7 @@ const dlgConfig = (opts) => {
       getRender: (colname) => util.colDefFromName(colname).render,
       getMatch: (colname) => {
         const match = util.colDefFromName(colname).match;
-        return (typeof match !== 'string' ? match : mx.matcher[match]) || mx.matcher['starts-with-matches'];
+        return (typeof match !== 'string' ? match : mx.matcher[match]) || mx.matcher['matches'];
       },
       checkConfig: (myopts, origData) => {
         myopts.columns.forEach((coldef) => {

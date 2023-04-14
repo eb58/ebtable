@@ -124,21 +124,11 @@ const mx = (m, groupDef) => {
 // ##########  matcher ############
 
 mx.matcher = (() => {
-  const getFormattedDate = (date) => {
-    const d = ('0' + date.getDate()).slice(-2);
-    const m = ('0' + (date.getMonth() + 1)).slice(-2);
-    const y = date.getFullYear();
-    const hs = ('0' + date.getHours()).slice(-2);
-    const ms = ('0' + date.getMinutes()).slice(-2);
-    const ss = ('0' + date.getSeconds()).slice(-2);
-    return d + '.' + m + '.' + y + ' ' + hs + ':' + ms + ':' + ss;
-  };
   return {
-    matches: (str, searchTxt) => str.match(new RegExp('.*' + searchTxt, 'i')),
     contains: (str, searchTxt) => str.toLowerCase().includes(searchTxt.toLowerCase()),
     'starts-with': (str, searchTxt) => str.toLowerCase().startsWith(searchTxt.toLowerCase()),
-    'starts-with-matches': (str, searchTxt) => str.match(new RegExp('^' + searchTxt.replace(/\*/g, '.*'), 'i')),
-    'matches-date': (str, searchTxt) => getFormattedDate(new Date(parseInt(str))).startsWith(searchTxt)
+    matches: (str, searchTxt) => !!str.match(new RegExp('.*' + searchTxt.replace(/\*/g, '.*'), 'i')),
+    'starts-with-matches': (str, searchTxt) => !!str.match(new RegExp('^' + searchTxt.replace(/\*/g, '.*'), 'i'))
   };
 })();
 
