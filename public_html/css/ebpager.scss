@@ -4,6 +4,8 @@
     height: 22px;
     color: white;
     background: #3f51b5;
-    border-color: #3f51b5;
+    &:disabled{
+      background: gray;
+    }
   }
 }
