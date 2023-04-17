@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <title>unittest pager</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/start/jquery-ui.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/start/theme.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/qunit/2.19.4/qunit.min.css" />
+    <link rel="stylesheet" href="../../../css/ebpager.css" />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qunit/2.19.4/qunit.min.js"></script>
+    <script src="../../../javascript/ebtable/ebpager.js"></script>
+    <script>
+      const clearLocalStorage = () => Object.keys(localStorage).forEach((o) => o.includes('unittest') && delete localStorage[o]);
+
+      const initPager = (pagerid, opts) => {
+        clearLocalStorage();
+        $('#' + pagerid).pager(opts);
+      };
+
+      const opts = {
+        lengthOfData: 100,
+        rowsPerPageSelectValues: [5, 10, 25, 50],
+        rowsPerPage: 5,
+        pageCur: 0
+      };
+
+      $(() => {
+        initPager('pager', opts);
+        QUnit.test('testset: eb-pager 1', (assert) => {
+          assert.ok(true, 'qunit works');
+          assert.ok($('#eb-pager').length === 1, 'pager exists');
+          assert.ok($('#eb-pager .firstBtn').length === 1, 'button "goto first page" exists');
+          assert.ok($('#eb-pager .backBtn').length === 1, 'button "goto prev page" exists');
+          assert.ok($('#eb-pager .nextBtn').length === 1, 'button "goto next page" exists');
+          assert.ok($('#eb-pager .lastBtn').length === 1, 'button "goto last page" exists');
+          assert.ok($('#eb-pager select').length === 1, 'control select "page length" exists');
+          assert.ok($('#eb-pager #pageLenCtrl option').toArray().length === 4, 'control select "page length" has 4 items');
+          assert.ok($('#eb-pager #pageLenCtrl').val() === '5', 'control select "page length" has value 5');
+        });
+
+        QUnit.test('testset: eb-pager 2', (assert) => {
+          $('#eb-pager .nextBtn').click().click();
+          assert.ok($('#eb-pager #ctrlInfo').text().startsWith('11'), 'button "goto next page" works');
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <button id="btnSubmit">TEST</button>
+    <div id="pager"></div>
+    <div id="qunit"></div>
+    <div id="qunit-fixture"></div>
+  </body>
+</html>
