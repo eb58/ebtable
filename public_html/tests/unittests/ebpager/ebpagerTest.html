@@ -18,7 +18,7 @@
 
       const initPager = (pagerid, opts) => {
         clearLocalStorage();
-        $('#' + pagerid).pager(opts);
+        $('#' + pagerid).ebpager(opts);
       };
 
       const opts = {
@@ -32,25 +32,27 @@
         initPager('pager', opts);
         QUnit.test('testset: eb-pager 1', (assert) => {
           assert.ok(true, 'qunit works');
-          assert.ok($('#eb-pager').length === 1, 'pager exists');
-          assert.ok($('#eb-pager .firstBtn').length === 1, 'button "goto first page" exists');
-          assert.ok($('#eb-pager .backBtn').length === 1, 'button "goto prev page" exists');
-          assert.ok($('#eb-pager .nextBtn').length === 1, 'button "goto next page" exists');
-          assert.ok($('#eb-pager .lastBtn').length === 1, 'button "goto last page" exists');
-          assert.ok($('#eb-pager select').length === 1, 'control select "page length" exists');
-          assert.ok($('#eb-pager #pageLenCtrl option').toArray().length === 4, 'control select "page length" has 4 items');
-          assert.ok($('#eb-pager #pageLenCtrl').val() === '5', 'control select "page length" has value 5');
+          assert.ok($('.eb-pager').length === 1, 'pager exists');
+          assert.ok($('.eb-pager .firstBtn').length === 1, 'button "goto first page" exists');
+          assert.ok($('.eb-pager .prevBtn').length === 1, 'button "goto prev page" exists');
+          assert.ok($('.eb-pager .nextBtn').length === 1, 'button "goto next page" exists');
+          assert.ok($('.eb-pager .lastBtn').length === 1, 'button "goto last page" exists');
+          assert.ok($('.eb-pager select').length === 1, 'control select "page length" exists');
+          assert.ok($('.eb-pager #pageLenCtrl option').toArray().length === 4, 'control select "page length" has 4 items');
+          assert.ok($('.eb-pager #pageLenCtrl').val() === '5', 'control select "page length" has value 5');
         });
 
         QUnit.test('testset: eb-pager 2', (assert) => {
-          $('#eb-pager .nextBtn').click().click();
-          assert.ok($('#eb-pager #ctrlInfo').text().startsWith('11'), 'button "goto next page" works');
+          const selCtrlInfo = '.eb-pager .ctrlInfo';
+          $('.eb-pager .nextBtn').click().click();
+          assert.ok($(selCtrlInfo).text().startsWith('11'), 'button "goto next page" works');
+          $('.eb-pager .prevBtn').click();
+          assert.ok($(selCtrlInfo).text().startsWith('6'), 'button "goto prev page" works');
         });
       });
     </script>
   </head>
   <body>
-    <button id="btnSubmit">TEST</button>
     <div id="pager"></div>
     <div id="qunit"></div>
     <div id="qunit-fixture"></div>

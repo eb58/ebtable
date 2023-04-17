@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang='de'>
+<head>
+  <title>example pager</title>
+  <meta charset='UTF-8' />
+  <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/start/jquery-ui.min.css' />
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/start/theme.min.css' />
+  <link rel='stylesheet' href='../css/ebpager.css' />
+
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js'></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js'></script>
+  <script src='../javascript/ebtable/ebpager.js'></script>
+  <script>
+    const opts = {
+      lengthOfData: 100,
+      rowsPerPageSelectValues: [5, 10, 25, 50],
+      rowsPerPage: 5,
+      pageCur: 0
+    };
+
+    $(() => $('#pager').ebpager(opts));
+  </script>
+</head>
+<body>
+<div id='pager'></div>
+</body>
+</html>
