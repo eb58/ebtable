@@ -71,6 +71,7 @@ $.fn.ebpager = function (opts, callback) {
   addHandler('.prevBtn', () => setCurrentPage(currentPage - 1));
   addHandler('.nextBtn', () => setCurrentPage(currentPage + 1));
   addHandler('.lastBtn', () => setCurrentPage(currentPageMax));
+  setCurrentPage(0);
 
   return this;
 };
