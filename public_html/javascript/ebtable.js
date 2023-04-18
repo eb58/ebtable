@@ -34,7 +34,7 @@ const dlgConfig = (opts, callback) => {
     },
     title: opts.title,
     position: { my: 'left top', at: 'left bottom', of: opts.anchor },
-    width: '250px',
+    width: '300px',
     modal: true,
     buttons: {}
   };
