@@ -1,40 +1,29 @@
 <!DOCTYPE html>
 <html lang='de'>
 <head>
-  <title>Beispiel</title>
+  <title>MX-Library</title>
   <meta charset='UTF-8' />
   <meta name='viewport' content='width=device-width, initial-scale=1.0' />
   <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/start/jquery-ui.min.css' />
   <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/start/theme.min.css' />
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/qunit/2.19.4/qunit.min.css' />
+
   <link rel='stylesheet' href='../../css/ebtable.css' />
   <link rel='stylesheet' href='../../css/ebtableTest.css' />
 
   <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js'></script>
   <script src='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js'></script>
-  <script src='../../javascript/ebtable/ebtable.js'></script>
-  <script src='../../javascript/ebtable/mx.js'></script>
-  <script src='../../data/divTableData.js'></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/qunit/2.19.4/qunit.min.js'></script>
 
-  <script>
-    const opts = {
-      debug: true,
-      bodyWidth: '700px',
-      flags: {
-        filter: false
-      },
-      columns: [
-        { name: 'Tierart', match: 'contains', sortorder: 'desc' },
-        { name: 'Datum', sortformat: 'date-de', width: '150px', css: 'text-align: center' },
-        { name: 'Name' },
-        { name: 'Flag' }
-      ],
-      sortcolname: 'Tierart',
-      selectionCol: true
-    };
-    $(() => $('#grid').ebtable(opts, basketTestdata));
-  </script>
+  <script src='../../javascript/ebtable.js'></script>
+  <script src='../../javascript/mx.js'></script>
+  <script src='./mxtest1.js'></script>
+  <script src='./mxtest2.js'></script>
+  <script src='./mxtest-sortformats.js'></script>
+  <script src='./mxtest-matches.js'></script>
 </head>
 <body>
-<div id='grid'></div>
+<div id='qunit'></div>
+<div id='qunit-fixture'></div>
 </body>
 </html>

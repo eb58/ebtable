@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang='de'>
+<head>
+  <title>Beispiel</title>
+  <meta charset='UTF-8' />
+  <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/start/jquery-ui.min.css' />
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/start/theme.min.css' />
+  <link rel='stylesheet' href='../../css/ebtable.css' />
+  <link rel='stylesheet' href='../../css/ebtableTest.css' />
+
+  <style>
+      #grid .ebtable thead {
+          display: none;
+      }
+  </style>
+
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js'></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js'></script>
+
+  <script src='../../javascript/mx.js'></script>
+  <script src='../../javascript/ebtable.js'></script>
+  <script>
+    'use strict';
+    const mdks = [
+      { mdkid: 1, mdkname: 'Berlin-Brandenburg' },
+      { mdkid: 2, mdkname: 'Hamburg' },
+      { mdkid: 3, mdkname: 'Bremen' },
+      { mdkid: 11, mdkname: 'Schleswig-Holstein' },
+      { mdkid: 12, mdkname: 'Niedersachsen' },
+      { mdkid: 13, mdkname: 'Westfalen-Lippe' },
+      { mdkid: 14, mdkname: 'Nordrhein' },
+      { mdkid: 15, mdkname: 'Hessen' },
+      { mdkid: 16, mdkname: 'Rheinland-Pfalz' },
+      { mdkid: 17, mdkname: 'Saarland' },
+      { mdkid: 18, mdkname: 'Baden-Württemberg' },
+      { mdkid: 19, mdkname: 'Bayern' },
+      { mdkid: 21, mdkname: 'Mecklenburg-Vorpommern' },
+      { mdkid: 23, mdkname: 'Sachsen-Anhalt' },
+      { mdkid: 24, mdkname: 'Thüringen' },
+      { mdkid: 25, mdkname: 'Sachsen' },
+      { mdkid: 50, mdkname: 'itso' }
+    ];
+
+    //#######################################################################
+
+    const opts = {
+      debug: true,
+      rowsPerPage: 100,
+      bodyWidth: '200px',
+      columns: [{ name: 'mdkid', invisible: true }, { name: 'Mdkname' }],
+      selectionCol: {
+        singleSelection: true,
+        selectOnRowClick: true
+      },
+      flags: {
+        filter: false,
+        withSorting: false,
+        ctrls: false
+      }
+    };
+    $(() => {
+      const grid = $('#grid').ebtable(
+        opts,
+        mdks.map((mdk) => [mdk.mdkid, mdk.mdkname])
+      );
+      grid.setSelectedRows((row) => row[0] === 11);
+    });
+  </script>
+</head>
+<body>
+<div id='grid'></div>
+</body>
+</html>
