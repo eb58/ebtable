@@ -1,7 +1,7 @@
 $.fn.ebpager = function (opts, callback) {
   if (!opts.pagerId) throw Error('pagerId option must be set!');
   if (opts.lengthOfData === undefined) throw Error('length option must be set!');
-  if (opts.rowsPerPage !== opts.rowsPerPageSelectValues[0]) throw Error('rowsPerPage must be equal to first in rowsPerPageSelectValues!');
+  if (opts.rowsPerPageSelectValues && opts.rowsPerPage !== opts.rowsPerPageSelectValues[0]) throw Error('rowsPerPage must be equal to first in rowsPerPageSelectValues!');
 
   const template = (str) => (opts) => Object.keys(opts).reduce((acc, key) => acc.replaceAll(`<%=${key}%>`, opts[key] || ''), str.replace(/<%= */g, '<%=').replace(/ *%>/g, '%>'));
   const translate = (str) => $.fn.ebpager.lang[myOpts.lang || 'de'][str] || str;

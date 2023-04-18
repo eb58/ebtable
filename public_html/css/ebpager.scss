@@ -1,10 +1,16 @@
-.eb-pager  {
+.eb-pager {
   button,
   select {
     height: 22px;
     color: white;
     background: #3f51b5;
-    &:disabled{
+    display: inline-flex;
+    justify-content: center; /* center the content horizontally */
+    align-items: center; /* center the content vertically */
+    border-color: transparent;
+    margin-bottom: 2px;
+
+    &:disabled {
       background: gray;
     }
   }
