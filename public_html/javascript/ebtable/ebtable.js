@@ -6,28 +6,28 @@ const dlgConfig = (opts, callback) => {
   const listOfColumns = opts.listOfColumns.reduce(
     (acc, coldef) =>
       acc +
-      template(`<li id='<%=name%>' class='ui-widget-content <%=cls%>' <%=display%>> <%=name%></li>`)({
+      template('<li id="<%=name%>" class="ui-widget-content <%=cls%>" style="<%=style%>"><%=name%></li>')({
         name: coldef.name,
         cls: coldef.invisible ? 'invisible' : 'visible',
-        display: coldef.technical || coldef.mandatory ? 'style="display:none"' : ''
+        style: coldef.technical || coldef.mandatory ? 'display:none' : ''
       }),
     ''
   );
 
-  const dlgTemplate = template(`
-    <div id='<%=gridId%>configDlg' class='configDlg'>
-      <ol id='<%=gridId%>selectable' class='ebtableSelectable'>
-        <%=listOfColumns%>
+  const dlgTemplate = `
+    <div id='configDlg' class='configDlg'>
+      <ol id='listOfColumns' class='ebtableSelectable'>
+        ${listOfColumns}
       </ol>
-    </div>`)({ ...opts, listOfColumns });
+    </div>`
 
   const dlgOpts = {
     open: () => {
-      $('ol#' + opts.gridId + 'selectable').sortable();
-      $('#' + opts.gridId + 'configDlg li')
+      $('#configDlg #listOfColumns').sortable();
+      $('#configDlg #listOfColumns li')
         .off('click')
         .on('click', (event) => {
-          $('#' + opts.gridId + 'configDlg [id="' + event.target.id + '"]')
+          $('#configDlg [id="' + event.target.id + '"]')
             .toggleClass('invisible')
             .toggleClass('visible');
         });
@@ -39,7 +39,7 @@ const dlgConfig = (opts, callback) => {
     buttons: {}
   };
   dlgOpts.buttons[opts.okString] = function () {
-    const colDefs = $('#' + opts.gridId + 'configDlg li')
+    const colDefs = $('#configDlg li')
       .toArray()
       .reduce((acc, o) => {
         const id = $(o).prop('id');
@@ -372,13 +372,10 @@ const dlgConfig = (opts, callback) => {
     };
 
     const filteringFcts = {
-      getFilterValues: () => {
-        const filter = {};
-        $(selGridId + 'thead th input[type=text],' + selGridId + 'thead th select').each((idx, o) => {
-          if ($.trim($(o).val())) filter[o.id] = $(o).val().trim();
-        });
-        return filter;
-      },
+      getFilterValues: () =>
+        $(selGridId + 'thead th input[type=text],' + selGridId + 'thead th select')
+          .toArray()
+          .reduce((acc, o) => (!$(o).val()?.trim() ? acc : { ...acc, [o.id]: $(o).val().trim() }), {}),
       setFilterValues: (filter, n = 0) => {
         if (Object.keys(filter).length === 0) return;
         $(selGridId + 'thead th input[type=text],' + selGridId + 'thead th select').each((idx, o) => $(o).val(filter[o.id]));
@@ -583,11 +580,11 @@ const dlgConfig = (opts, callback) => {
             myOpts.flags.withPagingCtrls || myOpts.flags.withPagingCtrlsOnTop
               ? ctrlsOnTop({
                   selectLen: selectLenCtrl(),
-                  configButton: configButton(),
-                  clearFilterButton: clearFilterButton(),
+            configButton: configButton(),
+            clearFilterButton: clearFilterButton(),
                   arrangeColumnsButton: arrangeColumnsButton(),
                   browseBtns: pageBrowseCtrl
-                })
+          })
               : '',
           ctrlsOnBottom:
             myOpts.flags.withPagingCtrls || myOpts.flags.withPagingCtrlsOnBottom
@@ -693,7 +690,6 @@ const dlgConfig = (opts, callback) => {
         .on('click', () => {
           const dlgOpts = {
             listOfColumns: myOpts.colorder.map((colIdx) => myOpts.columns[colIdx]),
-            gridId,
             okString: util.translate('OK'),
             cancelString: util.translate('Abbrechen'),
             title: util.translate('Spalten ausblenden und sortieren'),
