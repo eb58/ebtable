@@ -905,7 +905,8 @@ const dlgConfig = (opts, callback) => {
       '<%=start%> bis <%=end%> von <%=count%> Zeilen <%=filtered%> <%=cntSelected%>': '<%=start%> to <%=end%> of <%=count%> shown entries <%= filtered %> <%=cntSelected%>',
       'Spalten verwalten': 'Configure Columns',
       'Filter entfernen': 'Remove all filters',
-      'Spalten ausblenden und sortieren': 'Sort and hide columns',
+      'Spaltenbreite anpassen': 'Adjust width of columns',
+      'Spalten ausblenden und umsortieren': 'Reorder and hide columns',
       OK: 'OK',
       Abbrechen: 'Cancel'
     }
