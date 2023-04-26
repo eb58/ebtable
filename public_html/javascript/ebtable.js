@@ -450,20 +450,20 @@ const checkConfig = (myOpts, origData) => {
     const tableHead = () => {
       let res = myOpts.selectionCol ? '<th class="selectCol"><input id="checkAll" type="checkbox"></th>' : '';
       for (let c = 0; c < myOpts.columns.length; c++) {
-        const coldef = myOpts.columns[myOpts.colorder[c]];
-        if (!coldef.invisible) {
+        const colDef = myOpts.columns[myOpts.colorder[c]];
+        if (!colDef.invisible) {
           const inputFld = '<input type="text" id="<%=id%>" value="<%=filter%>" title="<%=tooltip%>"/>';
           const selectFld = '<select id="<%=id%>"><%=opts%></select>';
-          const selOptions = (coldef.valuelist || []).reduce((acc, o) => acc + `<option${o === coldef.filter ? ' selected' : ''}>${o}</option>\n`, '');
-          const t = coldef.valuelist ? selectFld : inputFld;
+          const selOptions = (colDef.valuelist || []).reduce((acc, o) => acc + `<option${o === colDef.filter ? ' selected' : ''}>${o}</option>\n`, '');
+          const t = colDef.valuelist ? selectFld : inputFld;
           const fld = template(t)({
-            id: coldef.id,
-            tooltip: coldef.tooltip,
-            filter: coldef.filter,
+            id: colDef.id,
+            tooltip: colDef.tooltip,
+            filter: colDef.filter,
             opts: selOptions
           });
-          const thWidth = coldef.width ? `width:${coldef.width};` : '';
-          const thStyle = coldef.css || coldef.width ? ` style="${thWidth} ${coldef.css || ''}` : '';
+          const thWidth = colDef.width ? `width:${colDef.width};` : '';
+          const thStyle = colDef.css || colDef.width ? ` style="${thWidth} ${colDef.css || ''}` : '';
           const hdrTemplate = `
               <th id='<%=colid%>'<%=thStyle%> title="<%=tooltip%>" tabindex=0>
                 <div style='display:inline-flex'>
@@ -474,11 +474,11 @@ const checkConfig = (myOpts, origData) => {
               </th>`;
           // &#8209; = non breakable hyphen : &#0160; = non breakable space
           res += template(hdrTemplate)({
-            colname: coldef.name.replace(/-/g, '&#8209;').replace(/ /g, '&#0160;'),
-            colid: coldef.id,
+            colname: colDef.name.replace(/-/g, '&#8209;').replace(/ /g, '&#0160;'),
+            colid: colDef.id,
             fld,
             thStyle,
-            tooltip: coldef.tooltip,
+            tooltip: colDef.tooltip,
             filtersVisible: myOpts.flags.withFilter ? '' : ' style="display:none"'
           });
         }
