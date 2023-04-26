@@ -137,7 +137,7 @@ const checkConfig = (myOpts, origData) => {
       const openGroups = Object.keys(origData.groupsdata || []).reduce((acc, key) => (origData.groupsdata[key].isOpen ? [...acc, Number(key)] : acc), []);
       sessionStorage[sessionStorageKey] = JSON.stringify({
         pageCur: self.getPageCur(),
-        filters: filteringFcts.getFilterValues(),
+        filters: filteringFunctions.getFilterValues(),
         myOpts: { ...myOpts, openGroups }
       });
     };
@@ -358,7 +358,7 @@ const checkConfig = (myOpts, origData) => {
       }
     };
 
-    const filteringFcts = {
+    const filteringFunctions = {
       getFilterValues: () =>
         $(selGridId + 'thead th input[type=text],' + selGridId + 'thead th select')
           .toArray()
@@ -366,7 +366,7 @@ const checkConfig = (myOpts, origData) => {
       setFilterValues: (filter, n = 0) => {
         if (Object.keys(filter).length === 0) return;
         $(selGridId + 'thead th input[type=text],' + selGridId + 'thead th select').each((idx, o) => $(o).val(filter[o.id]));
-        filteringFcts.filterData();
+        filteringFunctions.filterData();
         pageCurMax = Math.floor(Math.max(0, tblData.length - 1) / myOpts.rowsPerPage);
         pageCur = n;
         redraw(pageCur);
@@ -397,7 +397,7 @@ const checkConfig = (myOpts, origData) => {
       filtering: (event) => {
         util.log('filtering', event);
         selectionFunctions.deselectAllRows();
-        filteringFcts.filterData();
+        filteringFunctions.filterData();
         pageCur = 0;
         redraw(pageCur);
       }
@@ -583,7 +583,7 @@ const checkConfig = (myOpts, origData) => {
               : ''
         })
       );
-      filteringFcts.filterData();
+      filteringFunctions.filterData();
       redraw(pageCur);
     };
 
@@ -631,11 +631,11 @@ const checkConfig = (myOpts, origData) => {
       $(selGridId + 'thead input[type=text]')
         .off()
         .on('keypress', reloading)
-        .on('keyup', filteringFcts.filtering)
+        .on('keyup', filteringFunctions.filtering)
         .on('click', ignoreSorting);
       $(selGridId + 'thead select')
         .off()
-        .on('change', filteringFcts.filtering)
+        .on('change', filteringFunctions.filtering)
         .on('click', ignoreSorting);
       if (myOpts.flags.colsResizable) {
         $(selGridId + '.ebtable').resizable({
@@ -721,7 +721,7 @@ const checkConfig = (myOpts, origData) => {
           $(selGridId + 'thead input[type=text]').val('');
           $(selGridId + 'thead select option:selected').prop('selected', false);
           myOpts.reloadData && myOpts.reloadData();
-          filteringFcts.filtering();
+          filteringFunctions.filtering();
         });
       $(selGridId + 'table tbody tr td')
         .off()
@@ -843,8 +843,8 @@ const checkConfig = (myOpts, origData) => {
     // ##########  Exports ############
     self.util = util;
     $.extend(self, {
-      getFilterValues: filteringFcts.getFilterValues,
-      setFilterValues: filteringFcts.setFilterValues,
+      getFilterValues: filteringFunctions.getFilterValues,
+      setFilterValues: filteringFunctions.setFilterValues,
       iterateSelectedValues: selectionFunctions.iterateSelectedValues,
       getSelectedRows: selectionFunctions.getSelectedRows,
       setSelectedRows: selectionFunctions.setSelectedRows,
@@ -853,7 +853,7 @@ const checkConfig = (myOpts, origData) => {
       redrawAddInfo,
       toggleGroupIsOpen: (groupId) => {
         origData.groupsdata[groupId].isOpen = !origData.groupsdata[groupId].isOpen;
-        filteringFcts.filterData();
+        filteringFunctions.filterData();
         pageCur = Math.min(pageCur, pageCurMax);
         redraw(pageCur);
       },
@@ -869,7 +869,7 @@ const checkConfig = (myOpts, origData) => {
           groupsdata[groupid].isOpen = true;
         }
       });
-      filteringFcts.filterData();
+      filteringFunctions.filterData();
       redraw(pageCur);
     }
 
