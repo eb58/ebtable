@@ -1,8 +1,7 @@
-.ebtable .ctrl .ui-button                      { padding-top: 1px;  padding-bottom: 1px; height: 22px; }
-.ebtable .ctrl .ui-selectmenu-button           { height: 15px; }
-.ebtable .ctrl .ui-selectmenu-button.ui-button { padding-top: 3px;padding-bottom: 3px;width: 50px; height: 14px;}
+.ebtable .ctrl .ui-button                      { padding-top: 1px; padding-bottom: 1px; height: 30px; background: #3f51b5; color: white}
+.ebtable .ctrl .ui-selectmenu-button.ui-button { padding-top: 7px; padding-bottom: 0; width: 50px; height: 21px; }
 
-.ebtable #ctrlInfo, .ebtable #ctrlAddInfo { background: white; padding: 3px;  margin: 1px; font-size: 10px}
+.ebtable #ctrlInfo, .ebtable #ctrlAddInfo { background: white; padding: 3px;  margin: 1px; font-size: 10px; }
 
 .ebtable #data, .ebtable table{ width: 100%; border-collapse: collapse; }
 

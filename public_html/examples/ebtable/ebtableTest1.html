@@ -41,8 +41,8 @@
       selectionCol: true
     };
     $(() => {
-      $('#grid').ebtable(opts, basketTestdata);
-      $('#saveGridStatus').on('click', grid.saveSessionState);
+      const grid = $('#grid').ebtable(opts, basketTestdata);
+      $('#saveGridStatus').on('click', () => grid.saveSessionState());
       $('#loadGridStatus').on('click', () => {
         const mixOpts = {...opts, ...$.fn.ebtable.loadSessionState()};
         $('#grid').ebtable(mixOpts, basketTestdata).setFilterValues(mixOpts.filters);

@@ -1,4 +1,5 @@
 const range = (n) => [...Array(n).keys()];
+const uniq = (a) => Array.from(new Set(a));
 
 const template = (str) => (opts) => Object.keys(opts).reduce((acc, key) => acc.replaceAll(`<%=${key}%>`, opts[key] || ''), str.replace(/<%= */g, '<%=').replace(/ *%>/g, '%>'));
 
@@ -111,21 +112,19 @@ const checkConfig = (myOpts, origData) => {
           return;
         }
         myOpts.rowsPerPage = state.rowsPerPage;
-        const x1 = state.colorderByName.map((n) => util.colIdxFromName(n)).filter((n) => n >= 0);
-        const x2 = myOpts.columns.map((_, idx) => idx);
-        myOpts.colorder = Array.from(new Set([...x1, ...x2]));
+        const cols1 = state.colorderByName.map((n) => util.colIdxFromName(n)).filter((n) => n >= 0);
+        const cols2 = myOpts.columns.map((_, idx) => idx);
+        myOpts.colorder = uniq([...cols1, ...cols2]);
         if (myOpts.flags.colsResizable) {
           myOpts.bodyWidth = state.bodyWidth;
-          state.colWidths &&
-            Array.isArray(state.colwidths) &&
-            state.colWidths.forEach(function (col) {
-              const colDef = util.colDefFromName(col.name);
-              if (colDef) {
-                colDef.width = col.width + 'px';
-              }
-            });
+          if (Array.isArray(state.colWidths)) {
+            state.colWidths
+              .map((col) => util.colDefFromName(col.name))
+              .filter((colDef) => !!colDef)
+              .forEach((colDef) => (colDef.width = col.width + 'px'));
+          }
         }
-        state.invisibleColnames.forEach(function (colname) {
+        state.invisibleColnames.forEach((colname) => {
           const n = util.colIdxFromName(colname);
           if (n >= 0) {
             myOpts.columns[n].invisible = true;
@@ -135,11 +134,11 @@ const checkConfig = (myOpts, origData) => {
     };
 
     const saveSessionState = () => {
-      const openGroups = getOpenGroups();
+      const openGroups = Object.keys(origData.groupsdata || []).reduce((acc, key) => (origData.groupsdata[key].isOpen ? [...acc, Number(key)] : acc), []);
       sessionStorage[sessionStorageKey] = JSON.stringify({
         pageCur: self.getPageCur(),
         filters: filteringFcts.getFilterValues(),
-        myOpts: {...myOpts,  openGroups: openGroups}
+        myOpts: { ...myOpts, openGroups }
       });
     };
 
@@ -171,15 +170,11 @@ const checkConfig = (myOpts, origData) => {
           .filter((o) => o.name),
       setDefaultWidthForColumns: () => {
         if (myOpts.flags.colsResizable) {
-          $(selGridId + '#data table').removeClass('ebtablefix');
           $(selGridId + '#data table th').removeAttr('style');
-          const colWidths = util.getColWidths();
-          colWidths &&
-            colWidths.forEach(function (o) {
-              const id = util.colIdFromName(o.name);
-              $(selGridId + 'table th#' + id).width(o.width);
-            });
-          $(selGridId + '#data table').addClass('ebtablefix');
+          util
+            .getColWidths()
+            .map((o) => ({ id: util.colIdFromName(o.name), width: o.width }))
+            .forEach((x) => $(selGridId + 'table th#' + x.id).width(x.width));
           stateUtil.saveState();
         }
       }
@@ -216,10 +211,10 @@ const checkConfig = (myOpts, origData) => {
       $(selGridId + '#data tbody').html(tableData(pageCur));
       $(selGridId + '#data input[type=checkbox]')
         .off()
-        .on('change', selectionFcts.selectRows);
+        .on('change', selectionFunctions.selectRows);
       $(selGridId + '#data input[type=radio]')
         .off()
-        .on('change', selectionFcts.selectRows);
+        .on('change', selectionFunctions.selectRows);
       myOpts.selectionCol &&
         myOpts.selectionCol.selectOnRowClick &&
         $(selGridId + '#data tbody tr td')
@@ -231,7 +226,7 @@ const checkConfig = (myOpts, origData) => {
       myOpts.afterRedraw && myOpts.afterRedraw($(gridId));
     };
 
-    const selectionFcts = {
+    const selectionFunctions = {
       selectRow: (rowNr, row, b) => {
         // b = true/false ~ on/off
         if (!row || row.disabled) return;
@@ -243,9 +238,7 @@ const checkConfig = (myOpts, origData) => {
         const groupid = row[gc.groupid];
         if (gc && groupid && row[gc.grouplabel] === gc.grouphead) {
           util.log('Groupheader ' + (b ? 'selected!' : 'unselected!'), groupid, row[gc.grouplabel]);
-          origData.getGroupRows(gc, groupid).forEach(function (o) {
-            o.selected = b;
-          });
+          origData.getGroupRows(gc, groupid).forEach((o) => (o.selected = b));
           for (let i = 0; i < tblData.length; i++) {
             if (tblData[i][gc.groupid] === groupid) {
               $(selGridId + '#check' + i).prop('checked', b);
@@ -267,18 +260,18 @@ const checkConfig = (myOpts, origData) => {
         if (event.target.id === 'checkAll') {
           if (checked) {
             myOpts.selectionCol.onSelectAll && myOpts.selectionCol.onSelectAll();
-            tblData.forEach((row, rowNr) => selectionFcts.selectRow(rowNr, tblData[rowNr], checked));
+            tblData.forEach((row, rowNr) => selectionFunctions.selectRow(rowNr, tblData[rowNr], checked));
           } else {
-            selectionFcts.deselectAllRows();
+            selectionFunctions.deselectAllRows();
           }
         } else {
           if (myOpts.selectionCol && myOpts.selectionCol.singleSelection) {
-            tblData.forEach(function (row, rowNr) {
-              if (row.selected) selectionFcts.selectRow(rowNr, row, false);
+            tblData.forEach( (row, rowNr) => {
+              if (row.selected) selectionFunctions.selectRow(rowNr, row, false);
             });
           }
           const rowNr = event.target.id.replace('check', '');
-          selectionFcts.selectRow(rowNr, tblData[rowNr], checked);
+          selectionFunctions.selectRow(rowNr, tblData[rowNr], checked);
           $(selGridId + '#checkAll').prop('checked', false);
         }
       },
@@ -289,7 +282,7 @@ const checkConfig = (myOpts, origData) => {
         } else if (myOpts.selectionCol.onSelection) {
           origData.forEach((row, rowNr) => {
             if (row.selected) {
-              selectionFcts.selectRow(rowNr, row, false);
+              selectionFunctions.selectRow(rowNr, row, false);
             }
           });
         }
@@ -303,7 +296,7 @@ const checkConfig = (myOpts, origData) => {
         tblData.forEach((row) => (row.selected = predicateFct(row)));
         redraw(pageCur);
       },
-      unselect: () => selectionFcts.setSelectedRows(() => false)
+      unselect: () => selectionFunctions.setSelectedRows(() => false)
     };
 
     const sortingFunctions = {
@@ -337,7 +330,7 @@ const checkConfig = (myOpts, origData) => {
         // sorting
         const colid = event.currentTarget.id;
         if (!suppressSorting && colid && myOpts.flags.withSorting) {
-          selectionFcts.deselectAllRows();
+          selectionFunctions.deselectAllRows();
           myOpts.sortcolname = util.colNameFromId(colid);
           sortingFunctions.sortToggle();
           if (myOpts.hasMoreResults && myOpts.reloadData) {
@@ -403,7 +396,7 @@ const checkConfig = (myOpts, origData) => {
       },
       filtering: (event) => {
         util.log('filtering', event);
-        selectionFcts.deselectAllRows();
+        selectionFunctions.deselectAllRows();
         filteringFcts.filterData();
         pageCur = 0;
         redraw(pageCur);
@@ -427,13 +420,13 @@ const checkConfig = (myOpts, origData) => {
     };
 
     const pageBrowseCtrl = `
-            <button class='firstBtn'><span class='ui-icon ui-icon-seek-first'/></button>
-            <button class='backBtn'><span  class='ui-icon ui-icon-seek-prev' /></button>
-            <button class='nextBtn'><span  class='ui-icon ui-icon-seek-next' /></button>
-            <button class='lastBtn'><span  class='ui-icon ui-icon-seek-end'  /></button>`;
+      <button class='firstBtn'>&#8676;</button>
+      <button class='backBtn'>&larr;</button>
+      <button class='nextBtn'>&rarr;</button>
+      <button class='lastBtn'>&#8677;</button>`;
 
     const ctrlInfo = () => {
-      const cntSel = selectionFcts.getSelectedRows().length;
+      const cntSel = selectionFunctions.getSelectedRows().length;
       const startRow = Math.min(myOpts.rowsPerPage * pageCur + 1, tblData.length);
       const endRow = Math.min(startRow + myOpts.rowsPerPage - 1, tblData.length);
       const filtered = origData.length === tblData.length ? '' : template(util.translate('(<%=len%> Eintr&auml;ge)'))({ len: origData.length });
@@ -755,7 +748,7 @@ const checkConfig = (myOpts, origData) => {
         });
       $(selGridId + '#data input[type=checkbox]', selGridId + '#data input[type=radio]')
         .off()
-        .on('change', selectionFcts.selectRows);
+        .on('change', selectionFunctions.selectRows);
       $(selGridId + '#arrangeColumnsButton')
         .button()
         .off()
@@ -847,17 +840,15 @@ const checkConfig = (myOpts, origData) => {
 
     myOpts.flags.jqueryuiTooltips && self.tooltip();
 
-    const getOpenGroups = () => Object.keys(origData.groupsdata || []).reduce((acc, key) => (origData.groupsdata[key].isOpen ? [...acc, parseInt(key)] : acc), []);
-
     // ##########  Exports ############
     self.util = util;
     $.extend(self, {
       getFilterValues: filteringFcts.getFilterValues,
       setFilterValues: filteringFcts.setFilterValues,
-      iterateSelectedValues: selectionFcts.iterateSelectedValues,
-      getSelectedRows: selectionFcts.getSelectedRows,
-      setSelectedRows: selectionFcts.setSelectedRows,
-      unselect: selectionFcts.unselect,
+      iterateSelectedValues: selectionFunctions.iterateSelectedValues,
+      getSelectedRows: selectionFunctions.getSelectedRows,
+      setSelectedRows: selectionFunctions.setSelectedRows,
+      unselect: selectionFunctions.unselect,
       saveSessionState,
       redrawAddInfo,
       toggleGroupIsOpen: (groupId) => {
