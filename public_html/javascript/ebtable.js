@@ -78,7 +78,7 @@ const dlgConfig = (opts, callback) => {
         };
         const stateWidth = myOpts.flags.colsResizable
           ? {
-              colwidths: util.getColWidths()
+              colWidths: util.getColWidths()
             }
           : {};
         const state = { ...stateGeneral, ...stateWidth };
@@ -97,12 +97,12 @@ const dlgConfig = (opts, callback) => {
         myOpts.colorder = Array.from(new Set([...x1, ...x2]));
         if (myOpts.flags.colsResizable) {
           myOpts.bodyWidth = state.bodyWidth;
-          state.colwidths &&
+          state.colWidths &&
             Array.isArray(state.colwidths) &&
-            state.colwidths.forEach(function (col) {
-              const coldef = util.colDefFromName(col.name);
-              if (coldef) {
-                coldef.width = col.width + 'px';
+            state.colWidths.forEach(function (col) {
+              const colDef = util.colDefFromName(col.name);
+              if (colDef) {
+                colDef.width = col.width + 'px';
               }
             });
         }
@@ -145,24 +145,24 @@ const dlgConfig = (opts, callback) => {
         const match = util.colDefFromName(colname).match;
         return (typeof match !== 'string' ? match : mx.matcher[match]) || mx.matcher['matches'];
       },
-      checkConfig: (myopts, origData) => {
-        myopts.columns.forEach((coldef) => {
-          // set reasonable defaults for coldefs
-          coldef.technical = coldef.technical || false;
-          coldef.invisible = coldef.invisible || false;
-          coldef.mandatory = coldef.mandatory || false;
-          coldef.sortorder = coldef.sortorder || 'asc';
-        });
-        if (origData[0] && origData[0].length !== myopts.columns.length) {
+      checkConfig: (myOpts, origData) => {
+        // set reasonable defaults for colDefs
+        myOpts.columns = myOpts.columns.map((colDef) => ({
+          technical: colDef.technical || false,
+          invisible: colDef.invisible|| false,
+          mandatory: colDef.mandatory || false,
+          sortorder: 'asc'
+        }));
+        if (origData[0] && origData[0].length !== myOpts.columns.length) {
           localStorage[localStorageKey] = '';
-          throw Error("Data definition and column definition don't match! " + origData[0].length + ' ' + myopts.columns.length);
+          throw Error("Data definition and column definition don't match! " + origData[0].length + ' ' + myOpts.columns.length);
         }
         const ls = localStorage[localStorageKey];
-        if (ls && ls.colorder && ls.colorder.length !== myopts.columns.length) {
+        if (ls && ls.colorder && ls.colorder.length !== myOpts.columns.length) {
           localStorage[localStorageKey] = '';
-          throw Error("Column definition and LocalStorage don't match!" + ls.colorder.length + ' ' + myopts.columns.length);
+          throw Error("Column definition and LocalStorage don't match!" + ls.colorder.length + ' ' + myOpts.columns.length);
         }
-        const msg = myopts.columns.reduce((acc, col) => {
+        const msg = myOpts.columns.reduce((acc, col) => {
           acc = col.technical && !col.invisible ? [...acc, `${col.name}: technical column must be invisible!`] : acc;
           acc = col.mandatory && col.invisible ? [...acc, `${col.name}:  mandatory column must be visible!`] : acc;
           return acc;
@@ -580,11 +580,11 @@ const dlgConfig = (opts, callback) => {
             myOpts.flags.withPagingCtrls || myOpts.flags.withPagingCtrlsOnTop
               ? ctrlsOnTop({
                   selectLen: selectLenCtrl(),
-            configButton: configButton(),
-            clearFilterButton: clearFilterButton(),
+                  configButton: configButton(),
+                  clearFilterButton: clearFilterButton(),
                   arrangeColumnsButton: arrangeColumnsButton(),
                   browseBtns: pageBrowseCtrl
-          })
+                })
               : '',
           ctrlsOnBottom:
             myOpts.flags.withPagingCtrls || myOpts.flags.withPagingCtrlsOnBottom

@@ -1,4 +1,4 @@
-$.fn.ebpager = function (opts, callback) {
+$.fn.ebpager = function (opts) {
   if (!opts.pagerId) throw Error('pagerId option must be set!');
   if (opts.lengthOfData === undefined) throw Error('length option must be set!');
   if (opts.rowsPerPageSelectValues && opts.rowsPerPage !== opts.rowsPerPageSelectValues[0]) throw Error('rowsPerPage must be equal to first in rowsPerPageSelectValues!');
@@ -7,7 +7,7 @@ $.fn.ebpager = function (opts, callback) {
   const translate = (str) => $.fn.ebpager.lang[myOpts.lang || 'de'][str] || str;
 
   const defOpts = {
-    withPagelenctrl: true,
+    withPageLengthCtrl: true,
     rowsPerPageSelectValues: [5, 10, 25, 50, 100],
     rowsPerPage: 5
   };
@@ -17,7 +17,7 @@ $.fn.ebpager = function (opts, callback) {
   let currentPage = 0;
 
   const selectLenCtrl = () => {
-    if (!myOpts.withPagelenctrl) return '';
+    if (!myOpts.withPageLengthCtrl) return '';
     const options = myOpts.rowsPerPageSelectValues.reduce((acc, o) => {
       return acc + `<option value='${o}' ${o === myOpts.rowsPerPage ? 'selected' : ''}>${o}</option>`;
     }, '');
@@ -55,12 +55,12 @@ $.fn.ebpager = function (opts, callback) {
 
   const setCurrentPage = (n) => {
     currentPage = Math.min(Math.max(0, n), currentPageMax);
-    $('#' + myOpts.pagerId + ' .ctrlInfo').text(ctrlInfo());
-    $('#' + myOpts.pagerId + ' .firstBtn').prop('disabled', currentPage === 0);
-    $('#' + myOpts.pagerId + ' .prevBtn').prop('disabled', currentPage === 0);
-    $('#' + myOpts.pagerId + ' .nextBtn').prop('disabled', currentPage === currentPageMax);
-    $('#' + myOpts.pagerId + ' .lastBtn').prop('disabled', currentPage === currentPageMax);
-    callback && callback(currentPage);
+    $(`#${myOpts.pagerId}.ctrlInfo`).text(ctrlInfo());
+    $(`#${myOpts.pagerId}.firstBtn`).prop('disabled', currentPage === 0);
+    $(`#${myOpts.pagerId}.prevBtn`).prop('disabled', currentPage === 0);
+    $(`#${myOpts.pagerId}.nextBtn`).prop('disabled', currentPage === currentPageMax);
+    $(`#${myOpts.pagerId}.lastBtn`).prop('disabled', currentPage === currentPageMax);
+    $.publish('ebpager:current-page', currentPage);
   };
   const addHandler = (selector, action) =>
     $('#' + myOpts.pagerId + ' ' + selector)
