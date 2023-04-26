@@ -1,5 +1,5 @@
 const basketTestdata = [
-  ['Wolperdinger', '31.08.1915', 'Herder, Johann Gottfried', 5],
+  ['Wolpertinger', '31.08.1915', 'Herder, Johann Gottfried', 5],
   ['Yeti        ', '31.08.2016', 'Lichtenberg, Georg Christoph ', 31],
   ['Esel        ', '05.08.2011', 'Liebig, Ellen,', 1],
   ['Affe        ', '10.06.2013', 'Heine, Heinrich', 2],
@@ -22,7 +22,7 @@ const basketTestdata = [
 ];
 
 const basketGroupedTestdata = [
-  ['  ', 1, -1, 'Wolperdinger', '31.08.1915', 'Herder, Johann Gottfried', 5],
+  ['  ', 1, -1, 'Wolpertinger', '31.08.1915', 'Herder, Johann Gottfried', 5],
   ['  ', 1, -1, 'Yeti        ', '31.08.2016', 'Lichtenberg, Georg Christoph ', 31],
   ['GA', 5, 10, 'Säugetiere  ', '', '', 0],
   ['GB', 1, 10, 'Esel        ', '05.08.2011', 'Liebig, Ellen,', 1],

@@ -20,7 +20,7 @@
     <script src='./testHelpers.js'></script>
     <script>
       const data = [
-        ['Wolperdinger', '31.08.1915', 5],
+        ['Wolpertinger', '31.08.1915', 5],
         ['Yeti        ', '31.08.2016', 31]
       ];
 
@@ -61,11 +61,11 @@
           reinit('grid', opts, data);
           const tierartHead = $('th#Tierart');
           const datumHead = $('th#Datum');
-          assert.deepEqual(getCol('grid', 2), ['Wolperdinger', 'Yeti']);
+          assert.deepEqual(getCol('grid', 2), ['Wolpertinger', 'Yeti']);
           tierartHead.click();
-          assert.deepEqual(getCol('grid', 2), ['Yeti', 'Wolperdinger']);
+          assert.deepEqual(getCol('grid', 2), ['Yeti', 'Wolpertinger']);
           tierartHead.click();
-          assert.deepEqual(getCol('grid', 2), ['Wolperdinger', 'Yeti']);
+          assert.deepEqual(getCol('grid', 2), ['Wolpertinger', 'Yeti']);
           datumHead.click();
           assert.deepEqual(getCol('grid', 3), ['31.08.2016', '31.08.1915']);
           datumHead.click();
@@ -99,7 +99,7 @@
           tierartInput.val('y').trigger($.Event('keyup', { keyCode: 13 }));
           assert.deepEqual(getCol('grid', 2), ['Yeti'], 'filtering for y');
           tierartInput.val('e').trigger($.Event('keyup', { keyCode: 13 }));
-          assert.deepEqual(getCol('grid', 2), ['Wolperdinger', 'Yeti']  , 'filtering for e');
+          assert.deepEqual(getCol('grid', 2), ['Wolpertinger', 'Yeti']  , 'filtering for e');
         });
         clearLocalStorage();
       });

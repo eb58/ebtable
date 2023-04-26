@@ -20,7 +20,7 @@
   <script src='./testHelpers.js'></script>
   <script>
     const data = [
-      ['Wolperdinger', '31.08.1915', 'Herder, Johann Gottfried', 5],
+      ['Wolpertinger', '31.08.1915', 'Herder, Johann Gottfried', 5],
       ['Yeti        ', '31.08.2016', 'Lichtenberg, Georg Christoph ', 31],
       ['Esel        ', '05.08.2011', 'Liebig, Ellen,', 1],
       ['Affe        ', '10.06.2013', 'Heine, Heinrich', 2],
@@ -81,7 +81,7 @@
         tierartHead.click();
         assert.deepEqual(getCol('grid', 2), ['Affe', 'Biene', 'Einhorn', 'Esel', 'Fliege', 'Forelle', 'Hase', 'Hummel', 'Hund', 'Karpfen']);
         tierartHead.click();
-        assert.deepEqual(getCol('grid', 2), ['Yeti', 'Wolperdinger', 'Wespe', 'Maus', 'Lindwurm', 'Karpfen', 'Hund', 'Hummel', 'Hase', 'Forelle']);
+        assert.deepEqual(getCol('grid', 2), ['Yeti', 'Wolpertinger', 'Wespe', 'Maus', 'Lindwurm', 'Karpfen', 'Hund', 'Hummel', 'Hase', 'Forelle']);
       });
       QUnit.test('testset: filtering', (assert) => {
         reinit('grid', opts, data);
@@ -91,7 +91,7 @@
         tierartInput.val('y').trigger($.Event('keyup', { keyCode: 13 }));
         assert.deepEqual(getCol('grid', 2), ['Yeti'], 'filtering for y ok');
         tierartInput.val('e').trigger($.Event('keyup', { keyCode: 13 }));
-        assert.deepEqual(getCol('grid', 2), ['Yeti', 'Wolperdinger', 'Wespe', 'Karpfen', 'Hummel', 'Hase', 'Forelle', 'Fliege', 'Esel', 'Einhorn']);
+        assert.deepEqual(getCol('grid', 2), ['Yeti', 'Wolpertinger', 'Wespe', 'Karpfen', 'Hummel', 'Hase', 'Forelle', 'Fliege', 'Esel', 'Einhorn']);
       });
     });
   </script>

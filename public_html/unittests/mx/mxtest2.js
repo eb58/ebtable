@@ -1,7 +1,7 @@
 /* global QUnit */
 
 const tblData = [
-  ['  ', 1, -1, 'Wolperdinger', '31.08.1915', 'Herder, Johann Gottfried', 5],
+  ['  ', 1, -1, 'Wolpertinger', '31.08.1915', 'Herder, Johann Gottfried', 5],
   ['  ', 1, -1, 'Yeti        ', '31.08.2016', 'Lichtenberg, Georg Christoph ', 31],
   ['GA', 5, 10, 'Säugetiere  ', '', '', 0],
   ['GB', 1, 10, 'Esel        ', '05.08.2011', 'Liebig, Ellen,', 1],
@@ -38,7 +38,7 @@ QUnit.test('testset: grouping functions', function(assert) {
   });
   let fg = m.filterGroups(groupingCols, m.groupsdata);
   assert.deepEqual(fg, [
-    ['  ', 1, -1, 'Wolperdinger', 'Wolperdinger', '31.08.1915', 'Herder, Johann Gottfried', 5],
+    ['  ', 1, -1, 'Wolpertinger', 'Wolpertinger', '31.08.1915', 'Herder, Johann Gottfried', 5],
     ['  ', 1, -1, 'Yeti        ', 'Yeti        ', '31.08.2016', 'Lichtenberg, Georg Christoph ', 31],
     ['GA', 5, 10, 'Säugetiere 10', 'Säugetiere  ', '', '', 0],
     ['GA', 4, 20, 'Insekten 20', 'Insekten    ', '', '', 0],
@@ -48,7 +48,7 @@ QUnit.test('testset: grouping functions', function(assert) {
   m.groupsdata[20].isOpen = true;
   fg = m.filterGroups(groupingCols, m.groupsdata);
   assert.deepEqual(fg, [
-    ['  ', 1, -1, 'Wolperdinger', 'Wolperdinger', '31.08.1915', 'Herder, Johann Gottfried', 5],
+    ['  ', 1, -1, 'Wolpertinger', 'Wolpertinger', '31.08.1915', 'Herder, Johann Gottfried', 5],
     ['  ', 1, -1, 'Yeti        ', 'Yeti        ', '31.08.2016', 'Lichtenberg, Georg Christoph ', 31],
     ['GA', 5, 10, 'Säugetiere 10', 'Säugetiere  ', '', '', 0],
     ['GA', 4, 20, 'Insekten 20', 'Insekten    ', '', '', 0],
@@ -62,7 +62,7 @@ QUnit.test('testset: grouping functions', function(assert) {
       sortorder: 'asc',
       sortformat: 'date-de'
     }])), [
-      ['  ', 1, -1, 'Wolperdinger', 'Wolperdinger', '31.08.1915', 'Herder, Johann Gottfried', 5],
+      ['  ', 1, -1, 'Wolpertinger', 'Wolpertinger', '31.08.1915', 'Herder, Johann Gottfried', 5],
       ['  ', 1, -1, 'Yeti        ', 'Yeti        ', '31.08.2016', 'Lichtenberg, Georg Christoph ', 31],
       ['  ', 1, -1, 'Einhorn     ', 'Einhorn     ', '04.11.2017', 'Goethe, Johann Wolfgang', 63],
       ['GA', 5, 10, 'Säugetiere 10', 'Säugetiere  ', '', '', 0],
@@ -91,7 +91,7 @@ QUnit.test('testset: sorting functions', function(assert) {
     sortorder: 'asc',
     sortformat: 'date-de'
   }])), [
-    ['  ', 1, -1, 'Wolperdinger', 'Wolperdinger', '31.08.1915', 'Herder, Johann Gottfried', 5],
+    ['  ', 1, -1, 'Wolpertinger', 'Wolpertinger', '31.08.1915', 'Herder, Johann Gottfried', 5],
     ['  ', 1, -1, 'Yeti        ', 'Yeti        ', '31.08.2016', 'Lichtenberg, Georg Christoph ', 31],
     ['  ', 1, -1, 'Einhorn     ', 'Einhorn     ', '04.11.2017', 'Goethe, Johann Wolfgang', 63],
     ['GA', 5, 10, 'Säugetiere 10', 'Säugetiere  ', '', '', 0],
@@ -120,14 +120,14 @@ QUnit.test('testset: sorting functions', function(assert) {
     ['GB', 1, 10, 'Säugetiere 10', 'Esel        ', '05.08.2011', 'Liebig, Ellen,', 1],
     ['  ', 1, -1, 'Einhorn     ', 'Einhorn     ', '04.11.2017', 'Goethe, Johann Wolfgang', 63],
     ['  ', 1, -1, 'Yeti        ', 'Yeti        ', '31.08.2016', 'Lichtenberg, Georg Christoph ', 31],
-    ['  ', 1, -1, 'Wolperdinger', 'Wolperdinger', '31.08.1915', 'Herder, Johann Gottfried', 5]
+    ['  ', 1, -1, 'Wolpertinger', 'Wolpertinger', '31.08.1915', 'Herder, Johann Gottfried', 5]
   ]);
   assert.deepEqual(m.sort(m.rowCmpCols([{ col: 3, sortorder: 'desc' }, { col: 0, sortorder: 'asc' }, {
     col: 4,
     sortorder: 'desc'
   }])), [
     ['  ', 1, -1, 'Yeti        ', 'Yeti        ', '31.08.2016', 'Lichtenberg, Georg Christoph ', 31],
-    ['  ', 1, -1, 'Wolperdinger', 'Wolperdinger', '31.08.1915', 'Herder, Johann Gottfried', 5],
+    ['  ', 1, -1, 'Wolpertinger', 'Wolpertinger', '31.08.1915', 'Herder, Johann Gottfried', 5],
     ['GA', 5, 10, 'Säugetiere 10', 'Säugetiere  ', '', '', 0],
     ['GB', 1, 10, 'Säugetiere 10', 'Esel        ', '05.08.2011', 'Liebig, Ellen,', 1],
     ['GB', 1, 10, 'Säugetiere 10', 'Affe        ', '10.06.2013', 'Heine, Heinrich', 2],

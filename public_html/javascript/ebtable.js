@@ -19,7 +19,7 @@ const dlgConfig = (opts, callback) => {
       <ol id='listOfColumns' class='ebtableSelectable'>
         ${listOfColumns}
       </ol>
-    </div>`
+    </div>`;
 
   const dlgOpts = {
     open: () => {
@@ -148,10 +148,11 @@ const dlgConfig = (opts, callback) => {
       checkConfig: (myOpts, origData) => {
         // set reasonable defaults for colDefs
         myOpts.columns = myOpts.columns.map((colDef) => ({
-          technical: colDef.technical || false,
-          invisible: colDef.invisible|| false,
-          mandatory: colDef.mandatory || false,
-          sortorder: 'asc'
+          technical: false,
+          invisible: false,
+          mandatory: false,
+          sortorder: 'asc',
+          ...colDef
         }));
         if (origData[0] && origData[0].length !== myOpts.columns.length) {
           localStorage[localStorageKey] = '';
@@ -250,7 +251,7 @@ const dlgConfig = (opts, callback) => {
         myOpts.selectionCol.onStartSelection && myOpts.selectionCol.onStartSelection(rowNr, row, origData, b);
 
         row.selected = b;
-        const gc = myOpts.groupdefs;
+        const gc = myOpts.groupDefs;
         const groupid = row[gc.groupid];
         if (gc && groupid && row[gc.grouplabel] === gc.grouphead) {
           util.log('Groupheader ' + (b ? 'selected!' : 'unselected!'), groupid, row[gc.grouplabel]);
@@ -402,7 +403,7 @@ const dlgConfig = (opts, callback) => {
             },
             [...myOpts.predefinedFilters]
           );
-        tblData = mx(origData.filterGroups(myOpts.groupdefs, origData.groupsdata));
+        tblData = mx(origData.filterGroups(myOpts.groupDefs, origData.groupsdata));
         tblData = mx(tblData.filterData(filters));
         pageCurMax = Math.floor(Math.max(0, tblData.length - 1) / myOpts.rowsPerPage);
         sortingFcts.doSort();
@@ -424,7 +425,7 @@ const dlgConfig = (opts, callback) => {
       myOpts.flags.withArrangeColumnsButton ? `<button id='arrangeColumnsButton' title='${util.translate('Spaltenbreite anpassen')}'>&hArr;</button>` : '';
 
     const selectLenCtrl = () => {
-      if (!myOpts.flags.withPagelenctrl) return '';
+      if (!myOpts.flags.withPageLengthCtrl) return '';
       const options = myOpts.rowsPerPageSelectValues.reduce((acc, o) => {
         const selected = o === myOpts.rowsPerPage ? 'selected' : '';
         return acc + '<option value="' + o + '" ' + selected + '>' + o + '</option>\n';
@@ -500,7 +501,7 @@ const dlgConfig = (opts, callback) => {
 
       let res = '';
       const startRow = myOpts.rowsPerPage * pageNr;
-      const gc = myOpts.groupdefs;
+      const gc = myOpts.groupDefs;
       for (let r = startRow; r < Math.min(startRow + myOpts.rowsPerPage, tblData.length); r++) {
         const row = tblData[r];
 
@@ -778,7 +779,7 @@ const dlgConfig = (opts, callback) => {
         withFilter: true,
         withSorting: true,
         withConfigDialog: true,
-        withPagelenctrl: true,
+        withPageLengthCtrl: true,
         withClearFilterButton: false,
         withArrangeColumnsButton: true,
         withPagingCtrls: true,
@@ -806,7 +807,7 @@ const dlgConfig = (opts, callback) => {
       loadState: stateUtil.loadState,
       getState: stateUtil.getState,
       sortmaster: [], // [{ col:1, sortorder:asc, sortformat:fct1 },{ col:2, sortorder:asc-fix }]
-      groupdefs: {}, // { grouplabel: 0, groupcnt: 1, groupid: 2, groupsortstring: 3, groupname: 4, grouphead: 'GA', groupelem: 'GB' },
+      groupDefs: {}, // { grouplabel: 0, groupcnt: 1, groupid: 2, groupsortstring: 3, groupname: 4, grouphead: 'GA', groupelem: 'GB' },
       openGroups: [],
       hasMoreResults: hasMoreResults,
       clickOnRowHandler: (rowData, row) => util.log('clickOnRowHandler', rowData, row), // just for documentation
@@ -828,7 +829,7 @@ const dlgConfig = (opts, callback) => {
     const localStorageKey = 'ebtable-' + docTitle + '-' + gridId + '-v1.0';
     const myOpts = { ...defOpts, ...opts };
 
-    let origData = mx(data, myOpts.groupdefs);
+    let origData = mx(data, myOpts.groupDefs);
     let tblData = origData;
     let pageCurMax = Math.floor(Math.max(0, origData.length - 1) / myOpts.rowsPerPage);
     let pageCur = Math.min(Math.max(0, myOpts.pageCur), pageCurMax);
@@ -839,7 +840,7 @@ const dlgConfig = (opts, callback) => {
       myOpts.loadState(myOpts.getState());
     }
 
-    myOpts.columns.forEach((coldef) => (coldef.id = coldef.name.replace(/[^\w]/g, '')));
+    myOpts.columns = myOpts.columns.map((c) => ({ ...c, id: c.name.replace(/[^\w]/g, '') }));
 
     initGrid(this);
     initActions();
@@ -872,7 +873,7 @@ const dlgConfig = (opts, callback) => {
       getPageCur: () => pageCur,
       getData: () => origData,
       setData: (data) => {
-        origData = mx(data, myOpts.groupdefs);
+        origData = mx(data, myOpts.groupDefs);
         tblData = origData;
         pageCurMax = Math.floor(Math.max(0, origData.length - 1) / myOpts.rowsPerPage);
         pageCur = Math.min(pageCur, pageCurMax);
