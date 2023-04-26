@@ -56,6 +56,25 @@ const dlgConfig = (opts, callback) => {
   $(dlgTemplate).dialog(dlgOpts);
 };
 
+const checkConfig = (myOpts, origData) => {
+  // set reasonable defaults for colDefs
+  if (origData[0] && origData[0].length !== myOpts.columns.length) {
+    localStorage[myOpts.localStorageKey] = '';
+    throw Error("Data definition and column definition don't match! " + origData[0].length + ' ' + myOpts.columns.length);
+  }
+  const ls = localStorage[myOpts.localStorageKey];
+  if (ls?.colorder && ls.colorder.length !== myOpts.columns.length) {
+    localStorage[myOpts.localStorageKey] = '';
+    throw Error("Column definition and localStorage don't match!" + ls.colorder.length + ' ' + myOpts.columns.length);
+  }
+  const msg = myOpts.columns.reduce((acc, col) => {
+    acc = col.technical && !col.invisible ? [...acc, `${col.name}: technical column must be invisible!`] : acc;
+    acc = col.mandatory && col.invisible ? [...acc, `${col.name}:  mandatory column must be visible!`] : acc;
+    return acc;
+  }, '');
+  if (msg) throw Error(msg);
+};
+
 (function ($) {
   const docTitle = $(document).prop('title').replace(/ /g, '');
   const sessionStorageKey = 'ebtable-' + docTitle + '-v1.0';
@@ -115,21 +134,14 @@ const dlgConfig = (opts, callback) => {
       }
     };
 
-    const sessionStateUtil = (() => {
-      // saving/loading state
-      const saveSessionState = () => {
-        const openGroups = getOpenGroups();
-        sessionStorage[sessionStorageKey] = JSON.stringify({
-          pageCur: self.getPageCur(),
-          filters: filteringFcts.getFilterValues(),
-          myopts: $.extend({}, myOpts, { openGroups: openGroups })
-        });
-      };
-      return {
-        // api
-        saveSessionState: saveSessionState
-      };
-    })();
+    const saveSessionState = () => {
+      const openGroups = getOpenGroups();
+      sessionStorage[sessionStorageKey] = JSON.stringify({
+        pageCur: self.getPageCur(),
+        filters: filteringFcts.getFilterValues(),
+        myOpts: {...myOpts,  openGroups: openGroups}
+      });
+    };
 
     // ##############################################################################
 
@@ -145,31 +157,7 @@ const dlgConfig = (opts, callback) => {
         const match = util.colDefFromName(colname).match;
         return (typeof match !== 'string' ? match : mx.matcher[match]) || mx.matcher['matches'];
       },
-      checkConfig: (myOpts, origData) => {
-        // set reasonable defaults for colDefs
-        myOpts.columns = myOpts.columns.map((colDef) => ({
-          technical: false,
-          invisible: false,
-          mandatory: false,
-          sortorder: 'asc',
-          ...colDef
-        }));
-        if (origData[0] && origData[0].length !== myOpts.columns.length) {
-          localStorage[localStorageKey] = '';
-          throw Error("Data definition and column definition don't match! " + origData[0].length + ' ' + myOpts.columns.length);
-        }
-        const ls = localStorage[localStorageKey];
-        if (ls && ls.colorder && ls.colorder.length !== myOpts.columns.length) {
-          localStorage[localStorageKey] = '';
-          throw Error("Column definition and LocalStorage don't match!" + ls.colorder.length + ' ' + myOpts.columns.length);
-        }
-        const msg = myOpts.columns.reduce((acc, col) => {
-          acc = col.technical && !col.invisible ? [...acc, `${col.name}: technical column must be invisible!`] : acc;
-          acc = col.mandatory && col.invisible ? [...acc, `${col.name}:  mandatory column must be visible!`] : acc;
-          return acc;
-        }, '');
-        if (msg) throw Error(msg);
-      },
+
       getColWidths: () =>
         $(selGridId + '.ebtable th')
           .toArray()
@@ -318,27 +306,32 @@ const dlgConfig = (opts, callback) => {
       unselect: () => selectionFcts.setSelectedRows(() => false)
     };
 
-    const sortingFcts = {
+    const sortingFunctions = {
       showSortingIndicators: () => {
-        const colid = util.colIdFromName(myOpts.sortcolname);
-        const colidx = util.colIdxFromName(myOpts.sortcolname);
-        const coldef = myOpts.columns[colidx];
-        const bAsc = coldef.sortorder === 'asc';
+        const colId = util.colIdFromName(myOpts.sortcolname);
+        const colIdx = util.colIdxFromName(myOpts.sortcolname);
+        const colDef = myOpts.columns[colIdx];
+        const bAsc = colDef.sortorder === 'asc';
         $(`${selGridId} thead div .sort-indicator`).text('');
-        $(`${selGridId} thead #${colid} div .sort-indicator`).html(bAsc ? '&#x25B2' : '&#x25BC'); // triangle up/down
+        $(`${selGridId} thead #${colId} div .sort-indicator`).html(bAsc ? '&#x25B2' : '&#x25BC'); // triangle up/down
       },
       getSortState: () => {
-        const colidx = util.colIdxFromName(myOpts.sortcolname);
-        const coldef = myOpts.columns[colidx];
-        const sortDefs = $.extend([], coldef.sortmaster || myOpts.sortmaster);
-        if (!coldef.sortmaster || coldef.sortmaster.map((x) => x.col).indexOf(colidx) < 0) {
-          sortDefs.push({ col: colidx, sortorder: coldef.sortorder });
+        const colIdx = util.colIdxFromName(myOpts.sortcolname);
+        const colDef = myOpts.columns[colIdx];
+        const sortDefs = [...(colDef.sortmaster || myOpts.sortmaster || [])];
+        if (!colDef.sortmaster || colDef.sortmaster.map((x) => x.col).indexOf(colIdx) < 0) {
+          sortDefs.push({ col: colIdx, sortorder: colDef.sortorder });
         }
         return sortDefs;
       },
       sortToggle: () => {
-        const sortToggleS = { desc: 'asc', asc: 'desc', 'desc-fix': 'desc-fix', 'asc-fix': 'asc-fix' };
-        sortingFcts.getSortState().forEach((o) => (myOpts.columns[o.col].sortorder = sortToggleS[myOpts.columns[o.col].sortorder] || 'asc'));
+        const sortToggleS = {
+          desc: 'asc',
+          asc: 'desc',
+          'desc-fix': 'desc-fix',
+          'asc-fix': 'asc-fix'
+        };
+        sortingFunctions.getSortState().forEach((o) => (myOpts.columns[o.col].sortorder = sortToggleS[myOpts.columns[o.col].sortorder] || 'asc'));
       },
       sorting: (event) => {
         // sorting
@@ -346,11 +339,11 @@ const dlgConfig = (opts, callback) => {
         if (!suppressSorting && colid && myOpts.flags.withSorting) {
           selectionFcts.deselectAllRows();
           myOpts.sortcolname = util.colNameFromId(colid);
-          sortingFcts.sortToggle();
+          sortingFunctions.sortToggle();
           if (myOpts.hasMoreResults && myOpts.reloadData) {
             myOpts.reloadData();
           } else {
-            sortingFcts.doSort();
+            sortingFunctions.doSort();
             pageCur = 0;
             redraw(pageCur);
           }
@@ -358,12 +351,12 @@ const dlgConfig = (opts, callback) => {
       },
       doSort: () => {
         if (myOpts.sortcolname) {
-          sortingFcts.showSortingIndicators();
-          const colidx = util.colIdxFromName(myOpts.sortcolname);
-          const coldef = myOpts.columns[colidx];
-          const sortDefs = $.extend([], coldef.sortmaster || myOpts.sortmaster);
-          if (!coldef.sortmaster || coldef.sortmaster.map((x) => x.col).indexOf(colidx) < 0) {
-            sortDefs.push({ col: colidx, sortformat: coldef.sortformat, sortorder: coldef.sortorder });
+          sortingFunctions.showSortingIndicators();
+          const colIdx = util.colIdxFromName(myOpts.sortcolname);
+          const colDef = myOpts.columns[colIdx];
+          const sortDefs = [...(colDef.sortmaster || myOpts.sortmaster || [])];
+          if (!colDef.sortmaster || colDef.sortmaster.map((x) => x.col).indexOf(colIdx) < 0) {
+            sortDefs.push({ col: colIdx, sortformat: colDef.sortformat, sortorder: colDef.sortorder });
           }
           sortDefs.forEach((o) => (o.sortorder = myOpts.columns[o.col].sortorder || 'desc'));
           tblData = tblData.sort(tblData.rowCmpCols(sortDefs, origData.groupsdata));
@@ -406,7 +399,7 @@ const dlgConfig = (opts, callback) => {
         tblData = mx(origData.filterGroups(myOpts.groupDefs, origData.groupsdata));
         tblData = mx(tblData.filterData(filters));
         pageCurMax = Math.floor(Math.max(0, tblData.length - 1) / myOpts.rowsPerPage);
-        sortingFcts.doSort();
+        sortingFunctions.doSort();
       },
       filtering: (event) => {
         util.log('filtering', event);
@@ -459,34 +452,34 @@ const dlgConfig = (opts, callback) => {
       for (let c = 0; c < myOpts.columns.length; c++) {
         const coldef = myOpts.columns[myOpts.colorder[c]];
         if (!coldef.invisible) {
-          const t_inputfld = '<input type="text" id="<%=id%>" value="<%=filter%>" title="<%=tooltip%>"/>';
-          const t_selectfld = '<select id="<%=id%>"><%=opts%></select>';
+          const inputFld = '<input type="text" id="<%=id%>" value="<%=filter%>" title="<%=tooltip%>"/>';
+          const selectFld = '<select id="<%=id%>"><%=opts%></select>';
           const selOptions = (coldef.valuelist || []).reduce((acc, o) => acc + `<option${o === coldef.filter ? ' selected' : ''}>${o}</option>\n`, '');
-          const t = coldef.valuelist ? t_selectfld : t_inputfld;
+          const t = coldef.valuelist ? selectFld : inputFld;
           const fld = template(t)({
             id: coldef.id,
             tooltip: coldef.tooltip,
             filter: coldef.filter,
             opts: selOptions
           });
-          const thwidth = coldef.width ? `width:${coldef.width};` : '';
-          const thstyle = coldef.css || coldef.width ? ` style="${thwidth} ${coldef.css || ''}` : '';
+          const thWidth = coldef.width ? `width:${coldef.width};` : '';
+          const thStyle = coldef.css || coldef.width ? ` style="${thWidth} ${coldef.css || ''}` : '';
           const hdrTemplate = `
-              <th id='<%=colid%>'<%=thstyle%> title="<%=tooltip%>" tabindex=0>
+              <th id='<%=colid%>'<%=thStyle%> title="<%=tooltip%>" tabindex=0>
                 <div style='display:inline-flex'>
                   <%=colname%>
                   <span class='sort-indicator'></span>
                 </div>
-                <div<%=filtersvisible%>><%=fld%></div>
+                <div<%=filtersVisible%>><%=fld%></div>
               </th>`;
           // &#8209; = non breakable hyphen : &#0160; = non breakable space
           res += template(hdrTemplate)({
             colname: coldef.name.replace(/-/g, '&#8209;').replace(/ /g, '&#0160;'),
             colid: coldef.id,
             fld,
-            thstyle,
+            thStyle,
             tooltip: coldef.tooltip,
-            filtersvisible: myOpts.flags.withFilter ? '' : ' style="display:none"'
+            filtersVisible: myOpts.flags.withFilter ? '' : ' style="display:none"'
           });
         }
       }
@@ -627,14 +620,14 @@ const dlgConfig = (opts, callback) => {
 
       $(selGridId + 'thead th')
         .off()
-        .on('click', sortingFcts.sorting)
+        .on('click', sortingFunctions.sorting)
         .on('keydown', (ev) => {
           if (ev.which === 32) {
             // key space
             if ($(ev.target).prop('class') === 'selectCol' || $(ev.target).prop('id') === 'checkAll') {
               $(selGridId + '#checkAll').click();
             } else {
-              sortingFcts.sorting(ev);
+              sortingFunctions.sorting(ev);
             }
           }
           const idx = $(ev.target).index();
@@ -821,20 +814,27 @@ const dlgConfig = (opts, callback) => {
       opts.flags = { ...defOpts.flags, ...opts.flags };
       if (opts.flags.colsResizable) opts.saveState = defOpts.saveState;
       opts.saveState = typeof opts.saveState === 'boolean' ? stateUtil.saveState : opts.saveState;
+      opts.columns = opts.columns.map((colDef) => ({
+        technical: false,
+        invisible: false,
+        mandatory: false,
+        sortorder: 'asc',
+        ...colDef
+      }));
     }
 
     const gridId = this[0].id;
     const self = this;
     const selGridId = '#' + gridId + ' ';
     const localStorageKey = 'ebtable-' + docTitle + '-' + gridId + '-v1.0';
-    const myOpts = { ...defOpts, ...opts };
+    const myOpts = { ...defOpts, ...opts, localStorageKey };
 
     let origData = mx(data, myOpts.groupDefs);
     let tblData = origData;
     let pageCurMax = Math.floor(Math.max(0, origData.length - 1) / myOpts.rowsPerPage);
     let pageCur = Math.min(Math.max(0, myOpts.pageCur), pageCurMax);
 
-    util.checkConfig(myOpts, origData);
+    checkConfig(myOpts, origData);
 
     if (myOpts.saveState && myOpts.getState) {
       myOpts.loadState(myOpts.getState());
@@ -858,28 +858,16 @@ const dlgConfig = (opts, callback) => {
       getSelectedRows: selectionFcts.getSelectedRows,
       setSelectedRows: selectionFcts.setSelectedRows,
       unselect: selectionFcts.unselect,
-      saveSessionState: sessionStateUtil.saveSessionState,
-      redrawAddInfo: redrawAddInfo,
-
-      toggleGroupIsOpen: (groupid) => {
-        origData.groupsdata[groupid].isOpen = !origData.groupsdata[groupid].isOpen;
+      saveSessionState,
+      redrawAddInfo,
+      toggleGroupIsOpen: (groupId) => {
+        origData.groupsdata[groupId].isOpen = !origData.groupsdata[groupId].isOpen;
         filteringFcts.filterData();
         pageCur = Math.min(pageCur, pageCurMax);
         redraw(pageCur);
       },
-      groupIsOpen: (groupid) => origData.groupsdata[groupid].isOpen,
-      setSortColname: (colname) => (myOpts.sortcolname = colname),
-      getSortColname: () => myOpts.sortcolname,
-      getPageCur: () => pageCur,
-      getData: () => origData,
-      setData: (data) => {
-        origData = mx(data, myOpts.groupDefs);
-        tblData = origData;
-        pageCurMax = Math.floor(Math.max(0, origData.length - 1) / myOpts.rowsPerPage);
-        pageCur = Math.min(pageCur, pageCurMax);
-        filteringFcts.filterData();
-        redraw(pageCur);
-      }
+      groupIsOpen: (groupId) => origData.groupsdata[groupId].isOpen,
+      getPageCur: () => pageCur
     });
 
     if (myOpts.openGroups && myOpts.openGroups.length) {

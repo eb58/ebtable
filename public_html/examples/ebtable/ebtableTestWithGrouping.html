@@ -126,7 +126,7 @@
       },
       reloadData: () => {
         const ss = $.fn.ebtable.loadSessionState();
-        const myOpts = $.extend(true, {}, gridOpts, ss.myopts);
+        const myOpts = $.extend(true, {}, gridOpts, ss.myOpts);
         grid = $('#grid').ebtable(myOpts, data);
       }
     };
@@ -135,7 +135,7 @@
       $('#saveGridStatus').on('click', grid.saveSessionState());
       $('#loadGridStatus').on('click', function() {
         const ss = $.extend($.fn.ebtable.loadSessionState());
-        const myOpts = $.extend(true, {}, gridOpts, ss ? ss.myopts : {});
+        const myOpts = $.extend(true, {}, gridOpts, ss ? ss.myOpts : {});
         grid = $('#grid').ebtable(myOpts, data).setFilterValues(ss.filters);
       });
     });
