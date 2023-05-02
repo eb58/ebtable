@@ -5,12 +5,12 @@ const template = (str) => (opts) => Object.keys(opts).reduce((acc, key) => acc.r
 
 const dlgConfig = (opts, callback) => {
   const listOfColumns = opts.listOfColumns.reduce(
-    (acc, coldef) =>
+    (acc, colDef) =>
       acc +
       template('<li id="<%=name%>" class="ui-widget-content <%=cls%>" style="<%=style%>"><%=name%></li>')({
-        name: coldef.name,
-        cls: coldef.invisible ? 'invisible' : 'visible',
-        style: coldef.technical || coldef.mandatory ? 'display:none' : ''
+        name: colDef.name,
+        cls: colDef.invisible ? 'invisible' : 'visible',
+        style: colDef.technical || colDef.mandatory ? 'display:none' : ''
       }),
     ''
   );
@@ -25,13 +25,11 @@ const dlgConfig = (opts, callback) => {
   const dlgOpts = {
     open: () => {
       $('#configDlg #listOfColumns').sortable();
-      $('#configDlg #listOfColumns li')
-        .off('click')
-        .on('click', (event) => {
-          $('#configDlg [id="' + event.target.id + '"]')
-            .toggleClass('invisible')
-            .toggleClass('visible');
-        });
+      $('#configDlg #listOfColumns li').on('click', (event) =>
+        $('#configDlg [id="' + event.target.id + '"]')
+          .toggleClass('invisible')
+          .toggleClass('visible')
+      );
     },
     title: opts.title,
     position: { my: 'left top', at: 'left bottom', of: opts.anchor },
@@ -121,7 +119,7 @@ const checkConfig = (myOpts, origData) => {
             state.colWidths
               .map((col) => util.colDefFromName(col.name))
               .filter((colDef) => !!colDef)
-              .forEach((colDef) => (colDef.width = col.width + 'px'));
+              .forEach((colDef) => (colDef.width = colDef.width + 'px'));
           }
         }
         state.invisibleColnames.forEach((colname) => {
@@ -162,10 +160,10 @@ const checkConfig = (myOpts, origData) => {
           .toArray()
           .map((o) => {
             const id = $(o).prop('id');
-            const w = Math.max(20, $(o).width());
+            const width = Math.max(20, $(o).width());
             const name = util.colNameFromId(id);
-            util.log($(o).prop('id'), w, name);
-            return { name: name, width: w };
+            util.log($(o).prop('id'), width, name);
+            return { name, width };
           })
           .filter((o) => o.name),
       setDefaultWidthForColumns: () => {
@@ -197,11 +195,7 @@ const checkConfig = (myOpts, origData) => {
         .html(addInfo);
     };
 
-    const redraw = (pageCur, withHeader) => {
-      if (withHeader) {
-        $(selGridId + 'thead tr').html(tableHead());
-        initHeaderActions();
-      }
+    const redraw = (pageCur) => {
       const addInfo = ctrlAddInfo();
       $(selGridId + '.ebtable').width(myOpts.bodyWidth);
       $(selGridId + '#ctrlInfo').html(ctrlInfo());
@@ -209,21 +203,21 @@ const checkConfig = (myOpts, origData) => {
         .toggle(!!addInfo)
         .html(addInfo);
       $(selGridId + '#data tbody').html(tableData(pageCur));
-      $(selGridId + '#data input[type=checkbox]')
-        .off()
-        .on('change', selectionFunctions.selectRows);
-      $(selGridId + '#data input[type=radio]')
-        .off()
-        .on('change', selectionFunctions.selectRows);
+      $(selGridId + '#data input[type=checkbox]').on('change', selectionFunctions.selectRows);
+      $(selGridId + '#data input[type=radio]').on('change', selectionFunctions.selectRows);
       myOpts.selectionCol &&
         myOpts.selectionCol.selectOnRowClick &&
-        $(selGridId + '#data tbody tr td')
-          .off()
-          .on('click', (e) => {
-            if (!$(e.target).is('input')) $(e.target).parent().find('input').trigger('click');
-          });
+        $(selGridId + '#data tbody tr td').on('click', (e) => {
+          if (!$(e.target).is('input')) $(e.target).parent().find('input').trigger('click');
+        });
       myOpts.selectionCol && myOpts.selectionCol.singleSelection && $(selGridId + '#checkAll').hide();
       myOpts.afterRedraw && myOpts.afterRedraw($(gridId));
+    };
+
+    const redrawWithHeader = (pageCur) => {
+      $(selGridId + 'thead tr').html(tableHead());
+      initHeaderActions();
+      redraw(pageCur);
     };
 
     const selectionFunctions = {
@@ -266,7 +260,7 @@ const checkConfig = (myOpts, origData) => {
           }
         } else {
           if (myOpts.selectionCol && myOpts.selectionCol.singleSelection) {
-            tblData.forEach( (row, rowNr) => {
+            tblData.forEach((row, rowNr) => {
               if (row.selected) selectionFunctions.selectRow(rowNr, row, false);
             });
           }
@@ -597,22 +591,19 @@ const checkConfig = (myOpts, origData) => {
     };
 
     const initHeaderActions = () => {
-      $(selGridId + 'table')
-        .off()
-        .on('keydown', (ev) => {
-          if ($(ev.target).parent().is($('head'))) {
-            console.log('in head');
-          }
+      $(selGridId + 'table').on('keydown', (ev) => {
+        if ($(ev.target).parent().is($('head'))) {
+          console.log('in head');
+        }
 
-          if ($(ev.target).parent().is($('tbody'))) {
-            const idx = $(ev.target).index();
-            if (ev.which === 40) $($(selGridId + 'tbody tr').toArray()[idx + 1]).myFocus(); // arrow down
-            if (ev.which === 38) $($(selGridId + 'tbody tr').toArray()[idx - 1]).myFocus(); // arrow up
-          }
-        });
+        if ($(ev.target).parent().is($('tbody'))) {
+          const idx = $(ev.target).index();
+          if (ev.which === 38) $($(selGridId + 'tbody tr').toArray()[idx - 1]).myFocus(); // arrow up
+          if (ev.which === 40) $($(selGridId + 'tbody tr').toArray()[idx + 1]).myFocus(); // arrow down
+        }
+      });
 
       $(selGridId + 'thead th')
-        .off()
         .on('click', sortingFunctions.sorting)
         .on('keydown', (ev) => {
           if (ev.which === 32) {
@@ -629,12 +620,10 @@ const checkConfig = (myOpts, origData) => {
           if (ev.which === 40) $(selGridId + 'tbody tr:first').myFocus(); // arrow down
         });
       $(selGridId + 'thead input[type=text]')
-        .off()
         .on('keypress', reloading)
         .on('keyup', filteringFunctions.filtering)
         .on('click', ignoreSorting);
       $(selGridId + 'thead select')
-        .off()
         .on('change', filteringFunctions.filtering)
         .on('click', ignoreSorting);
       if (myOpts.flags.colsResizable) {
@@ -673,7 +662,6 @@ const checkConfig = (myOpts, origData) => {
       });
       $(selGridId + '#configButton')
         .button()
-        .off()
         .on('click', () => {
           const dlgOpts = {
             listOfColumns: myOpts.colorder.map((colIdx) => myOpts.columns[colIdx]),
@@ -687,7 +675,7 @@ const checkConfig = (myOpts, origData) => {
             myOpts.colorder = colDefs.map((cd) => util.colIdxFromName(cd.id));
             colDefs.forEach((cd) => (myOpts.columns[util.colIdxFromName(cd.id)].invisible = cd.invisible));
             myOpts.saveState && myOpts?.saveState();
-            redraw(pageCur, true);
+            redrawWithHeader(pageCur);
           });
         });
       $(selGridId + '.firstBtn')
@@ -716,7 +704,6 @@ const checkConfig = (myOpts, origData) => {
         });
       $(selGridId + '#clearFilterButton')
         .button()
-        .off()
         .on('click', () => {
           $(selGridId + 'thead input[type=text]').val('');
           $(selGridId + 'thead select option:selected').prop('selected', false);
@@ -724,34 +711,21 @@ const checkConfig = (myOpts, origData) => {
           filteringFunctions.filtering();
         });
       $(selGridId + 'table tbody tr td')
-        .off()
         .on('click', (ev) => {
+          console.log('AAA');
           const row = $(ev.target).parent();
           const idx = $(row).index();
           const rowData = tblData[pageCur * myOpts.rowsPerPage + idx];
           myOpts.clickOnRowHandler && myOpts.clickOnRowHandler(rowData, $(row));
         })
         .on('keydown', (ev) => {
-          console.log(ev.target);
-          if (ev.which === 38) {
-            // arrow up
-            const row = $(ev.target).parent();
-            const idx = $(row).index() - 1;
-            $(selGridId + 'tbody tr:nth.child(' + idx + ')').myFocus();
-          }
-          if (ev.which === 40) {
-            // arrow down
-            const row = $(ev.target).parent();
-            const idx = $(row).index() + 1;
-            $(selGridId + 'tbody tr:nth.child(' + idx + ')').focus();
-          }
+          const row = $(ev.target).parent();
+          if (ev.which === 38) $(selGridId + 'tbody tr:nth.child(' + $(row).index() - 1 + ')').myFocus(); // arrow up
+          if (ev.which === 40) $(selGridId + 'tbody tr:nth.child(' + $(row).index() + 1 + ')').myFocus(); // arrow down
         });
-      $(selGridId + '#data input[type=checkbox]', selGridId + '#data input[type=radio]')
-        .off()
-        .on('change', selectionFunctions.selectRows);
+      $(selGridId + '#data input[type=checkbox]', selGridId + '#data input[type=radio]').on('change', selectionFunctions.selectRows);
       $(selGridId + '#arrangeColumnsButton')
         .button()
-        .off()
         .on('click', util.setDefaultWidthForColumns);
 
       initHeaderActions();
@@ -864,9 +838,9 @@ const checkConfig = (myOpts, origData) => {
     if (myOpts.openGroups && myOpts.openGroups.length) {
       myOpts.loadGroupContent && myOpts.loadGroupContent(myOpts.openGroups, self);
       myOpts.openGroups.forEach((groupid) => {
-        const groupsdata = origData.groupsdata;
-        if (groupsdata && groupsdata[groupid]) {
-          groupsdata[groupid].isOpen = true;
+        const groupsData = origData.groupsdata;
+        if (groupsData && groupsData[groupid]) {
+          groupsData[groupid].isOpen = true;
         }
       });
       filteringFunctions.filterData();
@@ -876,7 +850,7 @@ const checkConfig = (myOpts, origData) => {
     return this;
   };
 
-  // ##########  langs ############
+  // ##########  language ############
   $.fn.ebtable.lang = {
     de: {},
     en: {
