@@ -342,7 +342,7 @@ const checkConfig = (myOpts, origData) => {
           const colIdx = util.colIdxFromName(myOpts.sortcolname);
           const colDef = myOpts.columns[colIdx];
           const sortDefs = [...(colDef.sortmaster || myOpts.sortmaster || [])];
-          if (!colDef.sortmaster || colDef.sortmaster.map((x) => x.col).indexOf(colIdx) < 0) {
+          if (!colDef.sortmaster || !colDef.sortmaster.map((x) => x.col).includes(colIdx)) {
             sortDefs.push({ col: colIdx, sortformat: colDef.sortformat, sortorder: colDef.sortorder });
           }
           sortDefs.forEach((o) => (o.sortorder = myOpts.columns[o.col].sortorder || 'desc'));
